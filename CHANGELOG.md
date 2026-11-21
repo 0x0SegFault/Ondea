@@ -2,6 +2,13 @@
 
 All notable changes to Ondea are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.1.0] – 2026-11-21
+
+### Added
+- Ovulation tests (LH): a positive test sets the ovulation estimate to the next day, until the temperature confirms it.
+- "How this date is set": tap the source of the date on Today to see each sign, which one is in use, and change your usual ovulation day.
+- Setup can ask for your usual ovulation day (optional).
+
 ## [1.0.0] – 2026-11-21
 
 First release.

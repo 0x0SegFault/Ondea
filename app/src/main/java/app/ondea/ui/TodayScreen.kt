@@ -24,6 +24,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.EditNote
 import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material3.Icon
 import androidx.compose.material.icons.outlined.Thermostat
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
@@ -61,6 +63,7 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
     var pickStart by rememberSaveable { mutableStateOf(false) }
     var confirmStop by rememberSaveable { mutableStateOf(false) }
     var suggestNew by rememberSaveable { mutableStateOf(false) }
+    var explain by rememberSaveable { mutableStateOf(false) }
 
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 12.dp),
@@ -103,7 +106,7 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
                 Text(stringResource(R.string.new_cycle))
             }
         } else {
-            Status(engine, forecast)
+            Status(engine, forecast, onExplain = { explain = true })
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                 val palette = CycleColors.current
                 StatTile(stringResource(R.string.stat_fertile), forecast.fertileStart.dayMonth() + "–" + forecast.fertileEnd.dayMonth(), palette.fertile, weight = 1.6f)
@@ -158,6 +161,13 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
     if (pickStart) {
         PastDatePickerDialog(today, today, onPicked = vm::startCycle, onDismiss = { pickStart = false })
     }
+    if (explain && forecast != null) {
+        OvulationSheet(
+            engine = engine,
+            onSetDay = { day -> vm.updateSettings { it.copy(ovulationDay = day) } },
+            onDismiss = { explain = false },
+        )
+    }
     if (suggestNew) {
         ConfirmDialog(
             stringResource(R.string.new_cycle), stringResource(R.string.new_cycle_suggest),
@@ -173,7 +183,7 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
 }
 
 @Composable
-private fun Status(engine: CycleEngine, f: Forecast) {
+private fun Status(engine: CycleEngine, f: Forecast, onExplain: () -> Unit) {
     val palette = CycleColors.current
     val today = engine.today
     val inFertile = !today.isBefore(f.fertileStart) && !today.isAfter(f.fertileEnd)
@@ -202,6 +212,7 @@ private fun Status(engine: CycleEngine, f: Forecast) {
             detail = when {
                 f.mucusToday == 4 -> stringResource(R.string.eggwhite_today)
                 f.window.waitingFor == Waiting.MUCUS -> stringResource(R.string.waiting_mucus, f.fertileEnd.dayMonth())
+                f.ovulationSource == OvulationSource.LH_TEST -> stringResource(R.string.waiting_temperature_after_lh, f.ovulation.dayMonth())
                 f.ovulationSource == OvulationSource.MUCUS -> stringResource(R.string.waiting_temperature_after_peak, f.ovulation.dayMonth())
                 f.ovulationSource == OvulationSource.TEMPERATURE -> stringResource(R.string.fertile_until_confirmed, f.fertileEnd.dayMonth())
                 else -> stringResource(R.string.ovulation_expected, f.ovulation.dayMonth())
@@ -226,13 +237,21 @@ private fun Status(engine: CycleEngine, f: Forecast) {
             color = MaterialTheme.colorScheme.onSurfaceVariant)
         val source = when (f.ovulationSource) {
             OvulationSource.TEMPERATURE -> R.string.source_temperature
+            OvulationSource.LH_TEST -> R.string.source_lh
             OvulationSource.MUCUS -> R.string.source_mucus
             OvulationSource.PREDICTED ->
                 if (engine.data.settings.ovulationDay != null) R.string.source_setting else R.string.source_prediction
         }
-        Surface(shape = CircleShape, color = accent.copy(alpha = 0.12f)) {
-            Text(stringResource(source), style = MaterialTheme.typography.labelMedium, color = accent,
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp))
+        // Tapping the source explains the date and lets the user change it.
+        Surface(onClick = onExplain, shape = CircleShape, color = accent.copy(alpha = 0.12f)) {
+            Row(
+                Modifier.padding(start = 12.dp, end = 10.dp, top = 6.dp, bottom = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                Text(stringResource(source), style = MaterialTheme.typography.labelMedium, color = accent)
+                Icon(Icons.Outlined.Tune, stringResource(R.string.why_title), Modifier.size(16.dp), tint = accent)
+            }
         }
     }
 }

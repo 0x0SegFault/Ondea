@@ -194,6 +194,19 @@ fun DayDetails(entry: DayEntry?, onChange: ((DayEntry) -> DayEntry) -> Unit) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
+        Label(stringResource(R.string.lh_test))
+        ChoiceChips(
+            labels = listOf(R.string.lh_none, R.string.lh_negative, R.string.lh_positive).map { stringResource(it) },
+            selected = entry?.lh ?: 0,
+            accent = palette.ovulation,
+            onSelect = { v -> onChange { it.copy(lh = v) } },
+        )
+        Text(
+            stringResource(R.string.lh_hint),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+
         Label(stringResource(R.string.other))
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             ToggleChip(stringResource(R.string.intercourse), Icons.Outlined.Favorite, entry?.intercourse == true, palette.ovulation) { v ->

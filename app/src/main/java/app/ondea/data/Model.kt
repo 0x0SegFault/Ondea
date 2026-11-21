@@ -46,10 +46,12 @@ data class DayEntry(
     /** Reading may be off (illness, alcohol, short sleep, measured late); excluded from analysis. */
     val disturbed: Boolean = false,
     val intercourse: Boolean = false,
+    /** Ovulation (LH) test: 0 not done, 1 negative, 2 positive. */
+    val lh: Int = 0,
     val note: String = "",
 ) {
     val isEmpty: Boolean
-        get() = tempC == null && flow == 0 && mucus == 0 && !disturbed && !intercourse && note.isBlank()
+        get() = tempC == null && flow == 0 && mucus == 0 && lh == 0 && !disturbed && !intercourse && note.isBlank()
 }
 
 fun AppData.withEntry(entry: DayEntry): AppData {

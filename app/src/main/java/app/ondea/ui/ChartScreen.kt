@@ -146,6 +146,7 @@ fun ChartScreen(s: UiState.Ready) {
                     window == null -> R.string.summary_no_signs
                     window.source == OvulationSource.TEMPERATURE && window.closed -> R.string.summary_confirmed
                     window.source == OvulationSource.TEMPERATURE -> R.string.summary_waiting_mucus
+                    window.source == OvulationSource.LH_TEST -> R.string.summary_lh
                     window.source == OvulationSource.MUCUS -> R.string.summary_mucus_only
                     else -> R.string.summary_predicted
                 },
@@ -156,6 +157,7 @@ fun ChartScreen(s: UiState.Ready) {
 
         SectionCard(title = stringResource(R.string.how_it_works_title), icon = Icons.Outlined.Lightbulb) {
             Text(stringResource(R.string.how_it_works_temperature), style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.how_it_works_lh), style = MaterialTheme.typography.bodyMedium)
             Text(stringResource(R.string.how_it_works_mucus), style = MaterialTheme.typography.bodyMedium)
             Text(stringResource(R.string.how_it_works_prediction), style = MaterialTheme.typography.bodyMedium)
         }

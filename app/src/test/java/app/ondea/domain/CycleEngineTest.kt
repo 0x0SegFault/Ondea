@@ -146,4 +146,32 @@ class CycleEngineTest {
         assertEquals(start.plusDays(20), f.fertileEnd)
         assertEquals(start.plusDays(15), f.ovulation) // temperature wins for the estimate
     }
+
+    @Test
+    fun `positive ovulation test moves ovulation to the next day`() {
+        val entries = temps(start, 12, riseDay = 99).map {
+            if (it.date == start.plusDays(10).toEpochDay()) it.copy(lh = 2) else it
+        }
+        val f = CycleEngine(data(start, entries = entries), start.plusDays(11)).forecast!!
+        assertEquals(OvulationSource.LH_TEST, f.ovulationSource)
+        assertEquals(start.plusDays(11), f.ovulation)
+        assertEquals(Waiting.TEMPERATURE, f.window.waitingFor)
+    }
+
+    @Test
+    fun `temperature wins over the ovulation test`() {
+        val entries = temps(start, 20, riseDay = 17).map {
+            if (it.date == start.plusDays(10).toEpochDay()) it.copy(lh = 2) else it
+        }
+        val f = CycleEngine(data(start, entries = entries), start.plusDays(19)).forecast!!
+        assertEquals(OvulationSource.TEMPERATURE, f.ovulationSource)
+        assertEquals(start.plusDays(15), f.ovulation)
+    }
+
+    @Test
+    fun `negative ovulation tests change nothing`() {
+        val entries = temps(start, 8, riseDay = 99).map { it.copy(lh = 1) }
+        val f = CycleEngine(data(start, entries = entries), start.plusDays(7)).forecast!!
+        assertEquals(OvulationSource.PREDICTED, f.ovulationSource)
+    }
 }

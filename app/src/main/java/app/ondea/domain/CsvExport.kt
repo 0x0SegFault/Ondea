@@ -8,7 +8,7 @@ import java.util.Locale
 object CsvExport {
     fun build(data: AppData): String {
         val engine = CycleEngine(data, LocalDate.now())
-        val sb = StringBuilder("date,cycle_day,temperature_c,disturbed,period_flow,mucus,intercourse,note\n")
+        val sb = StringBuilder("date,cycle_day,temperature_c,disturbed,period_flow,mucus,lh_test,intercourse,note\n")
         for (e in data.entries) {
             val date = LocalDate.ofEpochDay(e.date)
             val cycleDay = engine.cycleIndexOf(date)?.let { CycleEngine.days(engine.cycles[it].start, date) + 1 }
@@ -18,6 +18,7 @@ object CsvExport {
                 .append(e.disturbed).append(',')
                 .append(FLOW_NAMES.getOrElse(e.flow) { "" }).append(',')
                 .append(MUCUS_NAMES.getOrElse(e.mucus) { "" }).append(',')
+                .append(LH_NAMES.getOrElse(e.lh) { "" }).append(',')
                 .append(e.intercourse).append(',')
                 .append(quote(e.note)).append('\n')
         }
@@ -25,6 +26,7 @@ object CsvExport {
     }
 
     private val FLOW_NAMES = listOf("", "spotting", "light", "medium", "heavy")
+    private val LH_NAMES = listOf("", "negative", "positive")
     private val MUCUS_NAMES = listOf("", "dry", "sticky", "creamy", "egg_white")
 
     private fun quote(s: String): String =

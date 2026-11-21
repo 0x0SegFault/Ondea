@@ -1,0 +1,3 @@
+Anota tus tests de ovulación (LH). Un test positivo mueve la estimación de la ovulación.
+Nuevo: toca el origen de la fecha en Hoy para ver cómo se fija y cambiar tu día de ovulación habitual.
+La configuración puede pedir tu día de ovulación habitual.

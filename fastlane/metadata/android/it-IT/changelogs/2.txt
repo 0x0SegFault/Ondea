@@ -1,0 +1,3 @@
+Registra i test di ovulazione (LH). Un test positivo sposta la stima dell'ovulazione.
+Novità: tocca l'origine della data in Oggi per vedere come viene stabilita e cambiare il tuo giorno di ovulazione abituale.
+La configurazione può chiedere il tuo giorno di ovulazione abituale.

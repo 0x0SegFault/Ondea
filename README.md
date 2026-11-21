@@ -131,7 +131,7 @@ The build is reproducible. F-Droid builds the app from source, checks that the r
 
 1. Tag the release: `git tag -a v1.0.0 -m "Ondea 1.0.0" && git push origin v1.0.0`.
 2. Build the signed APK and attach it to the GitHub release as `ondea-1.0.0.apk`.
-3. In [`fdroid/io.github.x0x0segfault.ondea.yml`](fdroid/io.github.x0x0segfault.ondea.yml), replace `COMMIT_HASH` and `SIGNING_KEY` (the file shows the commands).
+3. In [`fdroid/io.github.x0x0segfault.ondea.yml`](fdroid/io.github.x0x0segfault.ondea.yml), set the build entry to the latest tag: `versionName`, `versionCode`, and `commit` (full hash: `git rev-list -n 1 vX.Y.Z`). `AllowedAPKSigningKeys` is the SHA-256 of the release certificate.
 4. Fork [fdroiddata](https://gitlab.com/fdroid/fdroiddata), add the file as `metadata/io.github.x0x0segfault.ondea.yml` and open a merge request with the "App inclusion" template.
 
 For a new version: increase `versionCode` and `versionName`, add `fastlane/metadata/android/<lang>/changelogs/<versionCode>.txt`, push a `vX.Y.Z` tag and attach `ondea-X.Y.Z.apk` to the release. F-Droid finds the new tag automatically.

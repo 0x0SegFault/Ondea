@@ -28,6 +28,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -53,6 +54,8 @@ fun OnboardingScreen(onDone: (Settings, LocalDate) -> Unit) {
     var cycleLength by rememberSaveable { mutableIntStateOf(28) }
     var periodLength by rememberSaveable { mutableIntStateOf(5) }
     var fahrenheit by rememberSaveable { mutableStateOf(false) }
+    var knowsOvulation by rememberSaveable { mutableStateOf(false) }
+    var ovulationDay by rememberSaveable { mutableIntStateOf(14) }
     var accepted by rememberSaveable { mutableStateOf(false) }
     var pickDate by rememberSaveable { mutableStateOf(false) }
 
@@ -84,7 +87,24 @@ fun OnboardingScreen(onDone: (Settings, LocalDate) -> Unit) {
         Step(3, stringResource(R.string.period_length)) {
             NumberStepper(periodLength, 2..10, stringResource(R.string.n_days, periodLength)) { periodLength = it }
         }
-        Step(4, stringResource(R.string.unit)) {
+        Step(4, stringResource(R.string.ovulation_day_onboarding), stringResource(R.string.ovulation_day_onboarding_hint)) {
+            Row(
+                Modifier.fillMaxWidth().clip(MaterialTheme.shapes.medium)
+                    .toggleable(value = knowsOvulation, role = Role.Switch, onValueChange = {
+                        knowsOvulation = it
+                        if (it) ovulationDay = (cycleLength - 14).coerceIn(8, 35)
+                    })
+                    .padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(stringResource(R.string.know_ovulation_day), Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
+                Switch(checked = knowsOvulation, onCheckedChange = null)
+            }
+            if (knowsOvulation) {
+                NumberStepper(ovulationDay, 8..35, stringResource(R.string.day_n, ovulationDay)) { ovulationDay = it }
+            }
+        }
+        Step(5, stringResource(R.string.unit)) {
             SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
                 listOf(false, true).forEachIndexed { i, f ->
                     SegmentedButton(
@@ -113,7 +133,15 @@ fun OnboardingScreen(onDone: (Settings, LocalDate) -> Unit) {
         Button(
             enabled = accepted,
             onClick = {
-                onDone(Settings(cycleLength = cycleLength, periodLength = periodLength, fahrenheit = fahrenheit), lastPeriod)
+                onDone(
+                    Settings(
+                        cycleLength = cycleLength,
+                        periodLength = periodLength,
+                        ovulationDay = if (knowsOvulation) ovulationDay else null,
+                        fahrenheit = fahrenheit,
+                    ),
+                    lastPeriod,
+                )
             },
             modifier = Modifier.fillMaxWidth().height(56.dp),
         ) { Text(stringResource(R.string.start), style = MaterialTheme.typography.titleMedium) }

@@ -151,7 +151,7 @@
     <string name="cycle_length_hint" tools:ignore="PluralsCandidate">Used until enough cycles are recorded. Currently predicting with %d days.</string>
     <string name="ovulation_day_auto">Find my ovulation day automatically</string>
     <string name="ovulation_day_auto_hint">Currently expected on cycle day %d, learnt from your cycles.</string>
-    <string name="ovulation_day_manual_hint">Set the cycle day on which you usually ovulate, e.g. from ovulation tests. Temperature and mucus still take priority once observed.</string>
+    <string name="ovulation_day_manual_hint">Set the cycle day on which you usually ovulate. Temperature, ovulation tests and mucus take priority once observed.</string>
     <string name="section_reminder">Reminder</string>
     <string name="reminder_daily">Daily reminder</string>
     <string name="reminder_daily_hint">A discreet notification to take your temperature</string>
@@ -205,4 +205,31 @@
     <string name="msg_restore_done">Backup restored</string>
     <string name="msg_restore_failed">Could not restore this backup</string>
     <string name="msg_wiped">All data erased</string>
+
+    <!-- Ovulation test and "How this date is set" -->
+    <string name="lh_test">Ovulation test (LH)</string>
+    <string name="lh_none">Not done</string>
+    <string name="lh_negative">Negative</string>
+    <string name="lh_positive">Positive</string>
+    <string name="lh_hint">Ovulation usually happens 1 to 2 days after the first positive test.</string>
+    <string name="source_lh">Estimated from your ovulation test</string>
+    <string name="waiting_temperature_after_lh">Positive ovulation test. Ovulation likely around %s.</string>
+    <string name="summary_lh">Ovulation estimated from the positive ovulation test. Not yet confirmed by temperature.</string>
+    <string name="how_it_works_lh">Ovulation tests (LH): ovulation usually happens 1 to 2 days after the first positive test. Until the temperature confirms it, Ondea uses the day after that test.</string>
+    <string name="why_title">How this date is set</string>
+    <string name="why_intro">Ondea uses the strongest sign it has for this cycle. Each sign you log can change the date.</string>
+    <string name="sign_temperature">Temperature rise</string>
+    <string name="sign_lh">Ovulation test</string>
+    <string name="sign_mucus">Cervical mucus peak</string>
+    <string name="sign_prediction">Prediction</string>
+    <string name="sign_not_yet">Not seen yet in this cycle</string>
+    <string name="sign_ovulation_on">Ovulation around %s</string>
+    <string name="sign_positive_on">Positive on %s</string>
+    <string name="sign_peak_on">Peak on %s</string>
+    <string name="prediction_detail" tools:ignore="PluralsCandidate">Cycle day %1$d: average cycle of %2$d days minus a luteal phase of %3$d days</string>
+    <string name="prediction_setting_detail">Cycle day %d: your usual ovulation day</string>
+    <string name="in_use">In use</string>
+    <string name="ovulation_day_onboarding">Usual ovulation day</string>
+    <string name="ovulation_day_onboarding_hint">Optional. If you don\'t know it, Ondea learns it from your signs.</string>
+    <string name="know_ovulation_day">I know my usual ovulation day</string>
 </resources>

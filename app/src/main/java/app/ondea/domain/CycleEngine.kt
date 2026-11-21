@@ -14,9 +14,11 @@ data class CycleAnalysis(
     val naturalLength: Int?,
     val shift: Shift?,
     val mucus: MucusSign,
+    /** First day with a positive ovulation (LH) test. */
+    val lhPositiveIndex: Int?,
 )
 
-enum class OvulationSource { TEMPERATURE, MUCUS, PREDICTED }
+enum class OvulationSource { TEMPERATURE, LH_TEST, MUCUS, PREDICTED }
 
 /** What the fertile phase is still waiting for before it can be considered over. */
 enum class Waiting { TEMPERATURE, MUCUS }
@@ -85,9 +87,10 @@ data class Forecast(
  *
  * Signs, from strongest to weakest:
  *  1. Temperature: the 3-over-6 rule ([ShiftDetector]) confirms ovulation happened.
- *  2. Cervical mucus ([MucusDetector]): the first sign opens the fertile window, the peak day
+ *  2. Ovulation (LH) test: ovulation is estimated the day after the first positive test.
+ *  3. Cervical mucus ([MucusDetector]): the first sign opens the fertile window, the peak day
  *     estimates ovulation, and the fertile phase only ends 3 days after the peak.
- *  3. Calendar prediction: ovulation on the user's usual ovulation day if set, otherwise
+ *  4. Calendar prediction: ovulation on the user's usual ovulation day if set, otherwise
  *     (average cycle length - luteal phase). The luteal phase is learnt from cycles with a
  *     confirmed temperature rise, 14 days by default.
  *
@@ -126,6 +129,7 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
                 naturalLength = natural,
                 shift = ShiftDetector.detect(days.map { e -> e?.takeIf { !it.disturbed }?.tempC }),
                 mucus = MucusDetector.analyze(days.map { it?.mucus ?: 0 }),
+                lhPositiveIndex = days.indexOfFirst { it?.lh == 2 }.takeIf { it >= 0 },
             )
         }
 
@@ -157,6 +161,8 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         val m = c.mucus
         val (ov, source) = when {
             shift != null -> shift.ovulationIndex to OvulationSource.TEMPERATURE
+            // Ovulation follows the LH surge by about 24-36 h (Direito et al., Fertil Steril 2013).
+            c.lhPositiveIndex != null -> c.lhPositiveIndex + 1 to OvulationSource.LH_TEST
             m.peakIndex != null -> m.peakIndex to OvulationSource.MUCUS
             isCurrent -> predictedOvulationIndex to OvulationSource.PREDICTED
             else -> return null
