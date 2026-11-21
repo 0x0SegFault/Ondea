@@ -15,7 +15,7 @@ Binaries: https://github.com/0x0SegFault/ondea/releases/download/v%v/ondea-%v.ap
 Builds:
   - versionName: 1.1.0
     versionCode: 2
-    commit: COMMIT_HASH
+    commit: 0513d1cdf1b3c2b6bd69093640c618f553098218
     subdir: app
     gradle:
       - yes
