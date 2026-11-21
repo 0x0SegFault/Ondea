@@ -37,7 +37,7 @@
     <string name="late_hint">Si vos règles ont commencé, démarrez un nouveau cycle.</string>
     <string name="maybe_pregnant">Votre température reste haute depuis %d jours. Cela peut être un signe de grossesse : pensez à faire un test.</string>
     <string name="ovulation_confirmed">Ovulation confirmée</string>
-    <string name="ovulated_on">Ovulation vers le %1$s. Prochaines règles attendues vers le %2$s.</string>
+    <string name="ovulated_on">Ovulation vers le %1$s. Les jours fertiles de ce cycle sont passés. Prochaines règles attendues vers le %2$s.</string>
     <string name="peak_fertility">Pic de fertilité</string>
     <string name="fertile_window">Période fertile</string>
     <string name="ovulation_expected">Ovulation prévue vers le %s.</string>
@@ -108,9 +108,9 @@
     <string name="summary_predicted">Aucun signe d\'ovulation pour l\'instant : les jours colorés sont une prévision.</string>
     <string name="summary_no_signs">Aucune hausse de température ni aucun pic de glaire n\'a été détecté dans ce cycle.</string>
     <string name="how_it_works_title">Comment ça marche</string>
-    <string name="how_it_works_temperature">Température : après l\'ovulation, la progestérone fait monter la température au repos d\'environ 0,2 à 0,5 °C jusqu\'aux règles suivantes. Quand 3 mesures consécutives sont plus hautes que les 6 précédentes, et que la troisième dépasse ce niveau (la ligne de couverture) d\'au moins 0,2 °C, l\'ovulation est confirmée. Elle a très probablement eu lieu la veille de la première mesure haute.</string>
+    <string name="how_it_works_temperature">Température : après l\'ovulation, la progestérone fait monter la température au repos d\'environ 0,2 à 0,5 °C jusqu\'aux règles suivantes. Quand 3 mesures consécutives sont plus hautes que les 6 précédentes, et que la troisième dépasse ce niveau (la ligne de couverture) d\'au moins 0,2 °C, l\'ovulation est confirmée. Elle a très probablement eu lieu la veille de la première mesure haute. La hausse arrive après l\'ovulation : elle la confirme mais ne peut pas l\'annoncer. Ondea s\'en sert pour apprendre votre jour d\'ovulation pour les cycles suivants.</string>
     <string name="how_it_works_mucus">Glaire cervicale : le premier signe de glaire ouvre la période fertile. Le jour du pic (P) est le dernier jour de la glaire de meilleure qualité, et l\'ovulation a généralement lieu dans la journée qui l\'entoure. Selon le double contrôle de la méthode symptothermique, la phase fertile ne se termine que lorsque les deux signes concordent : la hausse de température est confirmée et 3 jours se sont écoulés depuis le pic.</string>
-    <string name="how_it_works_prediction">Avant l\'apparition de tout signe, la période fertile est prévue d\'après vos cycles précédents ou votre jour d\'ovulation habituel : les 5 jours précédant l\'ovulation, le jour de l\'ovulation et le lendemain. Les spermatozoïdes peuvent survivre jusqu\'à 5 jours, et l\'ovule environ 1 jour.</string>
+    <string name="how_it_works_prediction">Avant l\'apparition de tout signe, la période fertile est prévue d\'après vos ovulations confirmées précédentes, votre jour d\'ovulation habituel ou la durée de votre cycle. Elle couvre les 5 jours précédant l\'ovulation, le jour de l\'ovulation et le lendemain. Elle commence 5 jours avant votre ovulation récente la plus précoce, car la période fertile change d\'un cycle à l\'autre. Les spermatozoïdes peuvent survivre jusqu\'à 5 jours, et l\'ovule environ 1 jour.</string>
     <string name="legend_period">Règles</string>
     <string name="legend_period_predicted">Règles prévues</string>
     <string name="legend_mucus">Glaire</string>
@@ -201,6 +201,18 @@
     <string name="ovulation_day_onboarding">Jour d\'ovulation habituel</string>
     <string name="ovulation_day_onboarding_hint">Facultatif. Si vous ne le connaissez pas, Ondea l\'apprend à partir de vos signes.</string>
     <string name="know_ovulation_day">Je connais mon jour d\'ovulation habituel</string>
+    <string name="sources_title">Science et sources</string>
+    <string name="sources_hint">Les études derrière chaque prévision</string>
+    <string name="sources_intro">Ondea suit ces études et méthodes. Touchez une étude pour l\'ouvrir.</string>
+    <string name="src_wilcox1995">Chances de conception pour chaque jour avant l\'ovulation.</string>
+    <string name="src_wilcox2000">La période fertile change d\'un cycle à l\'autre, même avec des cycles réguliers.</string>
+    <string name="src_ecochard2001">Moment de la hausse de température et du pic de glaire, comparé à l\'ovulation vue à l\'échographie.</string>
+    <string name="src_direito2013">L\'ovulation suit le pic de LH (test d\'ovulation positif) d\'environ 1 à 2 jours.</string>
+    <string name="src_frank2007">La méthode symptothermique : le double contrôle température et glaire.</string>
+    <string name="src_fehring2006">Durée et variabilité des phases avant et après l\'ovulation.</string>
+    <string name="src_bull2019">Le jour d\'ovulation varie beaucoup d\'une personne à l\'autre et d\'un cycle à l\'autre.</string>
+    <string name="src_sensiplan">Les règles de la méthode Sensiplan (règle des 3 sur 6, pic de glaire).</string>
+    <string name="why_timing">La température monte après l\'ovulation. Elle confirme l\'ovulation et apprend à Ondea votre rythme pour les cycles suivants. La glaire cervicale et les tests d\'ovulation arrivent avant l\'ovulation : utilisez-les pour choisir le moment des rapports dans ce cycle.</string>
     <plurals name="period_late">
         <item quantity="one">Règles en retard de %d jour</item>
         <item quantity="many">Règles en retard de %d jours</item>
@@ -210,5 +222,10 @@
         <item quantity="one">Période fertile dans %d jour</item>
         <item quantity="many">Période fertile dans %d jours</item>
         <item quantity="other">Période fertile dans %d jours</item>
+    </plurals>
+    <plurals name="prediction_learned_detail">
+        <item quantity="one">Jour %1$d du cycle : votre dernière ovulation confirmée</item>
+        <item quantity="many">Jour %1$d du cycle : moyenne de vos %2$d dernières ovulations confirmées</item>
+        <item quantity="other">Jour %1$d du cycle : moyenne de vos %2$d dernières ovulations confirmées</item>
     </plurals>
 </resources>

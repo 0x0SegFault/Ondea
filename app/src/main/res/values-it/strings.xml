@@ -37,7 +37,7 @@
     <string name="late_hint">Se le mestruazioni sono iniziate, inizia un nuovo ciclo.</string>
     <string name="maybe_pregnant">La tua temperatura è alta da %d giorni. Può essere un segno di gravidanza: valuta di fare un test.</string>
     <string name="ovulation_confirmed">Ovulazione confermata</string>
-    <string name="ovulated_on">Ovulazione intorno al %1$s. Prossime mestruazioni previste intorno al %2$s.</string>
+    <string name="ovulated_on">Ovulazione intorno al %1$s. I giorni fertili di questo ciclo sono passati. Prossime mestruazioni previste intorno al %2$s.</string>
     <string name="peak_fertility">Picco di fertilità</string>
     <string name="fertile_window">Finestra fertile</string>
     <string name="ovulation_expected">Ovulazione prevista intorno al %s.</string>
@@ -108,9 +108,9 @@
     <string name="summary_predicted">Ancora nessun segno di ovulazione: i giorni evidenziati sono una previsione.</string>
     <string name="summary_no_signs">In questo ciclo non è stato trovato né un rialzo della temperatura né un picco del muco.</string>
     <string name="how_it_works_title">Come funziona</string>
-    <string name="how_it_works_temperature">Temperatura: dopo l\'ovulazione il progesterone alza la temperatura a riposo di circa 0,2–0,5 °C fino alle mestruazioni successive. Quando 3 misurazioni consecutive sono più alte delle 6 precedenti e la terza supera quel livello (la linea di copertura) di almeno 0,2 °C, l\'ovulazione è confermata. Molto probabilmente è avvenuta il giorno prima della prima misurazione alta.</string>
+    <string name="how_it_works_temperature">Temperatura: dopo l\'ovulazione il progesterone alza la temperatura a riposo di circa 0,2–0,5 °C fino alle mestruazioni successive. Quando 3 misurazioni consecutive sono più alte delle 6 precedenti e la terza supera quel livello (la linea di copertura) di almeno 0,2 °C, l\'ovulazione è confermata. Molto probabilmente è avvenuta il giorno prima della prima misurazione alta. Il rialzo arriva dopo l\'ovulazione: la conferma ma non può annunciarla. Ondea lo usa per imparare il tuo giorno di ovulazione per i cicli successivi.</string>
     <string name="how_it_works_mucus">Muco cervicale: il primo segno di muco apre la finestra fertile. Il giorno del picco (P) è l\'ultimo giorno con il muco di qualità migliore, e l\'ovulazione di solito avviene entro un giorno da esso. Secondo il doppio controllo del metodo sintotermico, la fase fertile termina solo quando entrambi i segni concordano: il rialzo della temperatura è confermato e sono passati 3 giorni dal picco.</string>
-    <string name="how_it_works_prediction">Prima che compaia qualsiasi segno, la finestra fertile viene prevista in base ai tuoi cicli precedenti o al tuo giorno di ovulazione abituale: i 5 giorni prima dell\'ovulazione, il giorno dell\'ovulazione e il giorno successivo. Gli spermatozoi possono sopravvivere fino a 5 giorni, l\'ovulo circa 1 giorno.</string>
+    <string name="how_it_works_prediction">Prima che compaia qualsiasi segno, la finestra fertile viene prevista in base alle tue ovulazioni confermate precedenti, al tuo giorno di ovulazione abituale o alla durata del ciclo. Comprende i 5 giorni prima dell\'ovulazione, il giorno dell\'ovulazione e il giorno successivo. Inizia 5 giorni prima della tua ovulazione recente più precoce, perché la finestra fertile cambia da un ciclo all\'altro. Gli spermatozoi possono sopravvivere fino a 5 giorni, l\'ovulo circa 1 giorno.</string>
     <string name="legend_period">Mestruazioni</string>
     <string name="legend_period_predicted">Mestruazioni previste</string>
     <string name="legend_mucus">Muco</string>
@@ -201,6 +201,18 @@
     <string name="ovulation_day_onboarding">Giorno di ovulazione abituale</string>
     <string name="ovulation_day_onboarding_hint">Facoltativo. Se non lo conosci, Ondea lo impara dai tuoi segni.</string>
     <string name="know_ovulation_day">Conosco il mio giorno di ovulazione abituale</string>
+    <string name="sources_title">Scienza e fonti</string>
+    <string name="sources_hint">Gli studi dietro ogni previsione</string>
+    <string name="sources_intro">Ondea segue questi studi e metodi. Tocca uno studio per aprirlo.</string>
+    <string name="src_wilcox1995">Probabilità di concepimento per ogni giorno prima dell\'ovulazione.</string>
+    <string name="src_wilcox2000">La finestra fertile cambia da un ciclo all\'altro, anche nei cicli regolari.</string>
+    <string name="src_ecochard2001">Quando avvengono il rialzo della temperatura e il picco del muco, rispetto all\'ovulazione vista con l\'ecografia.</string>
+    <string name="src_direito2013">L\'ovulazione segue il picco di LH (test di ovulazione positivo) di circa 1–2 giorni.</string>
+    <string name="src_frank2007">Il metodo sintotermico: il doppio controllo di temperatura e muco.</string>
+    <string name="src_fehring2006">Durata e variabilità delle fasi prima e dopo l\'ovulazione.</string>
+    <string name="src_bull2019">Il giorno dell\'ovulazione varia molto tra persone e tra cicli.</string>
+    <string name="src_sensiplan">Le regole del metodo Sensiplan (regola del 3 su 6, picco del muco).</string>
+    <string name="why_timing">La temperatura sale dopo l\'ovulazione. Conferma l\'ovulazione e insegna a Ondea il tuo andamento per i cicli successivi. Il muco cervicale e i test di ovulazione arrivano prima dell\'ovulazione: usali per scegliere il momento dei rapporti in questo ciclo.</string>
     <plurals name="period_late">
         <item quantity="one">Mestruazioni in ritardo di %d giorno</item>
         <item quantity="many">Mestruazioni in ritardo di %d giorni</item>
@@ -210,5 +222,10 @@
         <item quantity="one">Finestra fertile tra %d giorno</item>
         <item quantity="many">Finestra fertile tra %d giorni</item>
         <item quantity="other">Finestra fertile tra %d giorni</item>
+    </plurals>
+    <plurals name="prediction_learned_detail">
+        <item quantity="one">Giorno %1$d del ciclo: la tua ultima ovulazione confermata</item>
+        <item quantity="many">Giorno %1$d del ciclo: media delle tue ultime %2$d ovulazioni confermate</item>
+        <item quantity="other">Giorno %1$d del ciclo: media delle tue ultime %2$d ovulazioni confermate</item>
     </plurals>
 </resources>

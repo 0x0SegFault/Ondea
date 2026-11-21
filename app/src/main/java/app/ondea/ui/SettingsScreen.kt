@@ -28,6 +28,7 @@ import androidx.compose.material.icons.outlined.Egg
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Loop
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Restore
@@ -83,6 +84,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
     var restoreUri by remember { mutableStateOf<Uri?>(null) }
     var confirmWipe by rememberSaveable { mutableStateOf(false) }
     var lockUnavailable by rememberSaveable { mutableStateOf(false) }
+    var showSources by rememberSaveable { mutableStateOf(false) }
 
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         reminderOn = granted
@@ -224,6 +226,8 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             val version = remember { context.packageManager.getPackageInfo(context.packageName, 0).versionName }
             Text("${stringResource(R.string.app_name)} $version", style = MaterialTheme.typography.titleSmall)
             Text(stringResource(R.string.about_text), style = MaterialTheme.typography.bodyMedium)
+            ClickRow(Icons.Outlined.MenuBook, palette.ovulation, stringResource(R.string.sources_title),
+                stringResource(R.string.sources_hint)) { showSources = true }
             Text(stringResource(R.string.about_science), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(stringResource(R.string.disclaimer_full), style = MaterialTheme.typography.bodySmall,
@@ -250,6 +254,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
         ConfirmDialog(stringResource(R.string.erase_all), stringResource(R.string.erase_confirm),
             stringResource(R.string.erase), onConfirm = vm::wipe, onDismiss = { confirmWipe = false })
     }
+    if (showSources) SourcesSheet(onDismiss = { showSources = false })
     if (lockUnavailable) {
         ConfirmDialog(stringResource(R.string.app_lock), stringResource(R.string.app_lock_unavailable),
             stringResource(R.string.ok), onConfirm = {}, onDismiss = { lockUnavailable = false })

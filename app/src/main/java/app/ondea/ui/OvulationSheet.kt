@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.ondea.R
@@ -63,6 +64,8 @@ fun OvulationSheet(engine: CycleEngine, onSetDay: (Int?) -> Unit, onDismiss: () 
             Text(stringResource(R.string.why_title), style = MaterialTheme.typography.titleLarge)
             Text(stringResource(R.string.why_intro), style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.why_timing), style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant)
 
             SignRow(
                 Icons.Outlined.Thermostat, palette.ovulation, stringResource(R.string.sign_temperature),
@@ -82,6 +85,10 @@ fun OvulationSheet(engine: CycleEngine, onSetDay: (Int?) -> Unit, onDismiss: () 
             SignRow(
                 Icons.Outlined.CalendarMonth, palette.fertile, stringResource(R.string.sign_prediction),
                 if (usualDay != null) stringResource(R.string.prediction_setting_detail, usualDay)
+                else if (engine.pastOvulations.isNotEmpty()) pluralStringResource(
+                    R.plurals.prediction_learned_detail, engine.pastOvulations.size,
+                    engine.predictedOvulationIndex + 1, engine.pastOvulations.size,
+                )
                 else stringResource(
                     R.string.prediction_detail,
                     engine.predictedOvulationIndex + 1, engine.avgCycleLength, engine.avgLutealLength,

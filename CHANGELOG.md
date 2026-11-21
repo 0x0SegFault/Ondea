@@ -8,6 +8,11 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 - Ovulation tests (LH): a positive test sets the ovulation estimate to the next day, until the temperature confirms it.
 - "How this date is set": tap the source of the date on Today to see each sign, which one is in use, and change your usual ovulation day.
 - Setup can ask for your usual ovulation day (optional).
+- Predictions learn your ovulation day from confirmed cycles; the predicted window opens before the earliest recent ovulation.
+- Science and sources page in Settings, and [docs/SCIENCE.md](docs/SCIENCE.md).
+
+### Changed
+- Texts explain that the temperature rise confirms ovulation afterwards; mucus and ovulation tests come before it.
 
 ## [1.0.0] – 2026-11-21
 

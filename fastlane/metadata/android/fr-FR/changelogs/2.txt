@@ -1,3 +1,5 @@
 Notez vos tests d'ovulation (LH). Un test positif déplace l'estimation de l'ovulation.
 Nouveau : touchez la source de la date sur Aujourd'hui pour voir comment elle est fixée et changer votre jour d'ovulation habituel.
 La configuration peut demander votre jour d'ovulation habituel.
+Les prévisions apprennent votre jour d'ovulation après un cycle confirmé.
+Nouvelle page : Science et sources.

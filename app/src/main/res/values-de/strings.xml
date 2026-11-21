@@ -37,7 +37,7 @@
     <string name="late_hint">Wenn deine Periode begonnen hat, starte einen neuen Zyklus.</string>
     <string name="maybe_pregnant">Deine Temperatur ist seit %d Tagen erhöht. Das kann ein Zeichen für eine Schwangerschaft sein: Ein Test könnte sinnvoll sein.</string>
     <string name="ovulation_confirmed">Eisprung bestätigt</string>
-    <string name="ovulated_on">Eisprung um den %1$s. Nächste Periode etwa am %2$s erwartet.</string>
+    <string name="ovulated_on">Eisprung um den %1$s. Die fruchtbaren Tage dieses Zyklus sind vorbei. Nächste Periode etwa am %2$s erwartet.</string>
     <string name="peak_fertility">Höchste Fruchtbarkeit</string>
     <string name="fertile_window">Fruchtbares Fenster</string>
     <string name="ovulation_expected">Eisprung um den %s erwartet.</string>
@@ -108,9 +108,9 @@
     <string name="summary_predicted">Noch kein Zeichen für einen Eisprung: Die markierten Tage sind eine Vorhersage.</string>
     <string name="summary_no_signs">In diesem Zyklus wurde weder ein Temperaturanstieg noch ein Schleimhöhepunkt gefunden.</string>
     <string name="how_it_works_title">So funktioniert\'s</string>
-    <string name="how_it_works_temperature">Temperatur: Nach dem Eisprung erhöht Progesteron die Ruhetemperatur um etwa 0,2–0,5 °C bis zur nächsten Periode. Wenn 3 aufeinanderfolgende Messungen höher sind als die 6 davor und die dritte mindestens 0,2 °C über diesem Niveau (der Hilfslinie) liegt, ist der Eisprung bestätigt. Er fand höchstwahrscheinlich am Tag vor der ersten hohen Messung statt.</string>
+    <string name="how_it_works_temperature">Temperatur: Nach dem Eisprung erhöht Progesteron die Ruhetemperatur um etwa 0,2–0,5 °C bis zur nächsten Periode. Wenn 3 aufeinanderfolgende Messungen höher sind als die 6 davor und die dritte mindestens 0,2 °C über diesem Niveau (der Hilfslinie) liegt, ist der Eisprung bestätigt. Er fand höchstwahrscheinlich am Tag vor der ersten hohen Messung statt. Der Anstieg kommt nach dem Eisprung: Er bestätigt ihn, kann ihn aber nicht ankündigen. Ondea nutzt ihn, um deinen Eisprungtag für die nächsten Zyklen zu lernen.</string>
     <string name="how_it_works_mucus">Zervixschleim: Das erste Schleimzeichen öffnet das fruchtbare Fenster. Der Höhepunkt (P) ist der letzte Tag mit der besten Schleimqualität; der Eisprung findet meist innerhalb eines Tages davor oder danach statt. Nach der doppelten Kontrolle der symptothermalen Methode endet die fruchtbare Phase erst, wenn beide Zeichen übereinstimmen: Der Temperaturanstieg ist bestätigt und seit dem Höhepunkt sind 3 Tage vergangen.</string>
-    <string name="how_it_works_prediction">Bevor ein Zeichen auftritt, wird das fruchtbare Fenster aus deinen bisherigen Zyklen oder deinem üblichen Eisprungtag vorhergesagt: die 5 Tage vor dem Eisprung, der Tag des Eisprungs und der Tag danach. Spermien können bis zu 5 Tage überleben, die Eizelle etwa 1 Tag.</string>
+    <string name="how_it_works_prediction">Bevor ein Zeichen auftritt, wird das fruchtbare Fenster aus deinen bisher bestätigten Eisprüngen, deinem üblichen Eisprungtag oder deiner Zykluslänge vorhergesagt. Es umfasst die 5 Tage vor dem Eisprung, den Tag des Eisprungs und den Tag danach. Es beginnt 5 Tage vor deinem frühesten Eisprung der letzten Zyklen, weil sich das fruchtbare Fenster von Zyklus zu Zyklus ändert. Spermien können bis zu 5 Tage überleben, die Eizelle etwa 1 Tag.</string>
     <string name="legend_period">Periode</string>
     <string name="legend_period_predicted">Erwartete Periode</string>
     <string name="legend_mucus">Schleim</string>
@@ -201,6 +201,18 @@
     <string name="ovulation_day_onboarding">Üblicher Eisprungtag</string>
     <string name="ovulation_day_onboarding_hint">Optional. Wenn du ihn nicht kennst, lernt Ondea ihn aus deinen Zeichen.</string>
     <string name="know_ovulation_day">Ich kenne meinen üblichen Eisprungtag</string>
+    <string name="sources_title">Wissenschaft und Quellen</string>
+    <string name="sources_hint">Die Studien hinter jeder Vorhersage</string>
+    <string name="sources_intro">Ondea folgt diesen Studien und Methoden. Tippe auf eine Studie, um sie zu öffnen.</string>
+    <string name="src_wilcox1995">Empfängniswahrscheinlichkeit für jeden Tag vor dem Eisprung.</string>
+    <string name="src_wilcox2000">Das fruchtbare Fenster ändert sich von Zyklus zu Zyklus, auch bei regelmäßigen Zyklen.</string>
+    <string name="src_ecochard2001">Zeitpunkt von Temperaturanstieg und Schleimhöhepunkt im Vergleich zum per Ultraschall gesehenen Eisprung.</string>
+    <string name="src_direito2013">Der Eisprung folgt dem LH-Anstieg (positiver Ovulationstest) nach etwa 1 bis 2 Tagen.</string>
+    <string name="src_frank2007">Die symptothermale Methode: doppelte Kontrolle durch Temperatur und Schleim.</string>
+    <string name="src_fehring2006">Länge und Schwankung der Phasen vor und nach dem Eisprung.</string>
+    <string name="src_bull2019">Der Eisprungtag schwankt stark zwischen Personen und zwischen Zyklen.</string>
+    <string name="src_sensiplan">Die Regeln der Sensiplan-Methode (3-über-6-Regel, Schleimhöhepunkt).</string>
+    <string name="why_timing">Die Temperatur steigt nach dem Eisprung. Sie bestätigt den Eisprung und zeigt Ondea dein Muster für die nächsten Zyklen. Zervixschleim und Ovulationstests kommen vor dem Eisprung: Nutze sie, um in diesem Zyklus den Zeitpunkt für Geschlechtsverkehr zu wählen.</string>
     <plurals name="period_late">
         <item quantity="one">Periode %d Tag überfällig</item>
         <item quantity="other">Periode %d Tage überfällig</item>
@@ -208,5 +220,9 @@
     <plurals name="fertile_in">
         <item quantity="one">Fruchtbares Fenster in %d Tag</item>
         <item quantity="other">Fruchtbares Fenster in %d Tagen</item>
+    </plurals>
+    <plurals name="prediction_learned_detail">
+        <item quantity="one">Zyklustag %1$d: dein letzter bestätigter Eisprung</item>
+        <item quantity="other">Zyklustag %1$d: Durchschnitt deiner letzten %2$d bestätigten Eisprünge</item>
     </plurals>
 </resources>

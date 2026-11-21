@@ -52,7 +52,7 @@
     <string name="late_hint">If your period has started, start a new cycle.</string>
     <string name="maybe_pregnant" tools:ignore="PluralsCandidate">Your temperature has stayed high for %d days. This can be a sign of pregnancy: consider taking a test.</string>
     <string name="ovulation_confirmed">Ovulation confirmed</string>
-    <string name="ovulated_on">Ovulation around %1$s. Next period expected around %2$s.</string>
+    <string name="ovulated_on">Ovulation around %1$s. The fertile days of this cycle have passed. Next period expected around %2$s.</string>
     <string name="peak_fertility">Peak fertility</string>
     <string name="fertile_window">Fertile window</string>
     <string name="ovulation_expected">Ovulation expected around %s.</string>
@@ -131,9 +131,9 @@
     <string name="summary_predicted">No sign of ovulation yet: the shaded days are a prediction.</string>
     <string name="summary_no_signs">No temperature rise or mucus peak was found in this cycle.</string>
     <string name="how_it_works_title">How it works</string>
-    <string name="how_it_works_temperature">Temperature: after ovulation, progesterone raises your resting temperature by about 0.2–0.5 °C until your next period. When 3 readings in a row are higher than the 6 before them, and the third is at least 0.2 °C above that level (the coverline), ovulation is confirmed. It most likely happened the day before the first high reading.</string>
+    <string name="how_it_works_temperature">Temperature: after ovulation, progesterone raises your resting temperature by about 0.2–0.5 °C until your next period. When 3 readings in a row are higher than the 6 before them, and the third is at least 0.2 °C above that level (the coverline), ovulation is confirmed. It most likely happened the day before the first high reading. The rise comes after ovulation: it confirms ovulation but cannot announce it. Ondea uses it to learn your ovulation day for the next cycles.</string>
     <string name="how_it_works_mucus">Cervical mucus: the first sign of mucus opens the fertile window. The peak day (P) is the last day of the best-quality mucus, and ovulation usually happens within a day of it. Following the symptothermal double check, the fertile phase only ends when both signs agree: the temperature rise is confirmed and 3 days have passed since the peak.</string>
-    <string name="how_it_works_prediction">Before any sign appears, the fertile window is predicted from your past cycles or from your usual ovulation day: the 5 days before ovulation, ovulation day and the day after. Sperm can survive up to 5 days, and the egg about 1 day.</string>
+    <string name="how_it_works_prediction">Before any sign appears, the fertile window is predicted from your past confirmed ovulations, your usual ovulation day, or your cycle length. It covers the 5 days before ovulation, ovulation day and the day after. It opens 5 days before your earliest recent ovulation, because the fertile window changes from cycle to cycle. Sperm can survive up to 5 days, and the egg about 1 day.</string>
     <string name="legend_period">Period</string>
     <string name="legend_period_predicted">Expected period</string>
     <string name="legend_mucus">Mucus</string>
@@ -232,4 +232,20 @@
     <string name="ovulation_day_onboarding">Usual ovulation day</string>
     <string name="ovulation_day_onboarding_hint">Optional. If you don\'t know it, Ondea learns it from your signs.</string>
     <string name="know_ovulation_day">I know my usual ovulation day</string>
+    <string name="sources_title">Science and sources</string>
+    <string name="sources_hint">The studies behind each prediction</string>
+    <string name="sources_intro">Ondea follows these studies and methods. Tap a study to open it.</string>
+    <string name="src_wilcox1995">Chance of conception for each day before ovulation.</string>
+    <string name="src_wilcox2000">The fertile window changes from cycle to cycle, even in regular cycles.</string>
+    <string name="src_ecochard2001">When the temperature rise and the mucus peak happen, compared with ovulation seen on ultrasound.</string>
+    <string name="src_direito2013">Ovulation follows the LH surge (a positive ovulation test) by about 1 to 2 days.</string>
+    <string name="src_frank2007">The symptothermal method: the temperature and mucus double check.</string>
+    <string name="src_fehring2006">Length and variability of the phases before and after ovulation.</string>
+    <string name="src_bull2019">The ovulation day varies a lot between people and between cycles.</string>
+    <string name="src_sensiplan">The rules of the Sensiplan method (3-over-6 rule, mucus peak).</string>
+    <string name="why_timing">The temperature rises after ovulation. It confirms ovulation and teaches Ondea your pattern for the next cycles. Cervical mucus and ovulation tests come before ovulation: use them to time intercourse in this cycle.</string>
+    <plurals name="prediction_learned_detail">
+        <item quantity="one">Cycle day %1$d: your last confirmed ovulation</item>
+        <item quantity="other">Cycle day %1$d: average of your last %2$d confirmed ovulations</item>
+    </plurals>
 </resources>

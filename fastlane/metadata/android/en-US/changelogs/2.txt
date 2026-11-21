@@ -1,3 +1,5 @@
 Log ovulation tests (LH). A positive test moves the ovulation estimate.
 New: tap the source of the date on Today to see how it is set and change your usual ovulation day.
 Setup can ask for your usual ovulation day.
+Predictions learn your ovulation day after one confirmed cycle.
+New page: Science and sources.

@@ -73,7 +73,10 @@ After ovulation, progesterone raises the resting temperature by about 0.2–0.5 
 
 1. **Temperature (3-over-6 rule).** The *coverline* is the highest of the 6 valid readings before a given day. When 3 consecutive readings are above it and the 3rd is at least **0.2 °C** higher, ovulation is confirmed. If the 3rd is less than 0.2 °C higher, a 4th reading above the coverline is needed. Ovulation is estimated as the day before the first high reading. Readings marked *disturbed* (illness, alcohol, short night, late measurement) are ignored.
 2. **Cervical mucus (double check).** The first sticky or wetter mucus opens the fertile window. The *peak day* is the last day of the best-quality mucus, recognised once the quality drops; ovulation usually happens within a day of it. The fertile phase ends only when **both** the temperature rise is confirmed **and** 3 days have passed since the peak.
-3. **Prediction.** Before any sign, ovulation is predicted on your usual ovulation day (if set), or at *average cycle length − luteal phase*. The average uses your last 6 complete cycles, and the luteal phase is learnt from cycles with a confirmed rise (14 days by default). The fertile window covers the 5 days before ovulation, ovulation day and the day after; the **peak days** are the 2 days before ovulation and ovulation day.
+3. **Ovulation test (LH).** Ovulation is estimated the day after the first positive test.
+4. **Prediction.** Before any sign, ovulation is predicted on your usual ovulation day (if set), or on the average of your last confirmed ovulation days, or at *average cycle length − luteal phase*. The window opens 5 days before your earliest recent ovulation. The average uses your last 6 complete cycles, and the luteal phase is learnt from cycles with a confirmed rise (14 days by default). The fertile window covers the 5 days before ovulation, ovulation day and the day after; the **peak days** are the 2 days before ovulation and ovulation day.
+
+Each rule and its source are listed in [docs/SCIENCE.md](docs/SCIENCE.md). The temperature rise comes **after** ovulation: it confirms ovulation and improves the next predictions. Mucus and ovulation tests come **before** ovulation.
 
 The algorithm is plain Kotlin in [`app/src/main/java/app/ondea/domain/`](app/src/main/java/app/ondea/domain) and is fully unit-tested.
 

@@ -174,4 +174,25 @@ class CycleEngineTest {
         val f = CycleEngine(data(start, entries = entries), start.plusDays(7)).forecast!!
         assertEquals(OvulationSource.PREDICTED, f.ovulationSource)
     }
+
+    @Test
+    fun `one confirmed cycle moves the next prediction to the learnt ovulation day`() {
+        val c2 = start.plusDays(30)
+        // Cycle 1: rise on day 19, so ovulation on day 18 (index 17). Default would be index 13.
+        val e = CycleEngine(data(start, c2, entries = temps(start, 30, riseDay = 19)), c2.plusDays(2))
+        assertEquals(listOf(17), e.pastOvulations)
+        assertEquals(c2.plusDays(17), e.forecast!!.ovulation)
+        assertEquals(c2.plusDays(12), e.forecast!!.fertileStart)
+    }
+
+    @Test
+    fun `predicted window opens before the earliest recent ovulation`() {
+        val c2 = start.plusDays(28)
+        val c3 = c2.plusDays(28)
+        // Ovulation index 11 in cycle 1, 15 in cycle 2: predict 13, open the window at 11 - 5 = 6.
+        val entries = temps(start, 28, riseDay = 13) + temps(c2, 28, riseDay = 17)
+        val f = CycleEngine(data(start, c2, c3, entries = entries), c3.plusDays(1)).forecast!!
+        assertEquals(c3.plusDays(13), f.ovulation)
+        assertEquals(c3.plusDays(6), f.fertileStart)
+    }
 }

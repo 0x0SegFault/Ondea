@@ -90,7 +90,8 @@ data class Forecast(
  *  2. Ovulation (LH) test: ovulation is estimated the day after the first positive test.
  *  3. Cervical mucus ([MucusDetector]): the first sign opens the fertile window, the peak day
  *     estimates ovulation, and the fertile phase only ends 3 days after the peak.
- *  4. Calendar prediction: ovulation on the user's usual ovulation day if set, otherwise
+ *  4. Calendar prediction: ovulation on the user's usual ovulation day if set, otherwise the
+ *     average confirmed ovulation day of the last finished cycles, otherwise
  *     (average cycle length - luteal phase). The luteal phase is learnt from cycles with a
  *     confirmed temperature rise, 14 days by default.
  *
@@ -107,6 +108,10 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
     val avgLutealLength: Int
     /** 0-based index where ovulation is expected when no sign has shown it yet. */
     val predictedOvulationIndex: Int
+    /** Earliest recent ovulation; the predicted window starts 5 days before it so an early cycle is not missed. */
+    private val earliestOvulationIndex: Int
+    /** Confirmed ovulation days (0-based) of the last finished cycles, used for prediction. */
+    val pastOvulations: List<Int>
     val current: CycleAnalysis?
     val forecast: Forecast?
     private val windows: List<Window?>
@@ -143,8 +148,16 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
             .takeLast(6)
         avgLutealLength = if (luteal.isNotEmpty()) luteal.average().roundToInt().coerceIn(10, 16) else 14
 
+        // Learn the ovulation day itself from finished cycles with a confirmed temperature rise.
+        // The fertile window varies even in regular cycles (Wilcox et al., BMJ 2000), so the
+        // predicted window opens 5 days before the earliest recent ovulation.
+        pastOvulations = cycles.filter { it.end != null && it.shift != null }.map { it.shift!!.ovulationIndex }.takeLast(6)
+        val fallback = (avgCycleLength - avgLutealLength - 1).coerceAtLeast(settings.periodLength)
         predictedOvulationIndex = settings.ovulationDay?.let { it - 1 }
-            ?: (avgCycleLength - avgLutealLength - 1).coerceAtLeast(settings.periodLength)
+            ?: pastOvulations.takeIf { it.isNotEmpty() }?.average()?.roundToInt()
+            ?: fallback
+        earliestOvulationIndex = if (settings.ovulationDay != null) predictedOvulationIndex
+        else minOf(predictedOvulationIndex, pastOvulations.minOrNull() ?: predictedOvulationIndex)
 
         current = cycles.lastOrNull()?.takeIf { it.end == null && !it.start.isAfter(today) }
         windows = cycles.map { windowFor(it, isCurrent = it == current) }
@@ -175,7 +188,8 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
             mucusClose != null -> maxOf(mucusClose, ov + 1)
             else -> ov + 1
         }
-        val start = minOf(ov - 5, m.firstIndex ?: Int.MAX_VALUE).coerceAtLeast(0)
+        val earliest = if (source == OvulationSource.PREDICTED) earliestOvulationIndex else ov
+        val start = minOf(earliest - 5, ov - 5, m.firstIndex ?: Int.MAX_VALUE).coerceAtLeast(0)
         return Window(
             ovulationIndex = ov,
             source = source,
@@ -246,7 +260,7 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
             for (p in futurePeriodStarts) {
                 if (date.inRange(p, p.plusDays(settings.periodLength - 1L))) periodPredicted = true
                 val ov = p.plusDays(predictedOvulationIndex.toLong())
-                if (date.inRange(ov.minusDays(5), ov.plusDays(1))) fertilePredicted = true
+                if (date.inRange(p.plusDays(earliestOvulationIndex - 5L), ov.plusDays(1))) fertilePredicted = true
                 if (date.inRange(ov.minusDays(2), ov)) peak = true
                 if (date == ov) ovulationPredicted = true
             }

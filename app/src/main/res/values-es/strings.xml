@@ -37,7 +37,7 @@
     <string name="late_hint">Si te ha bajado la regla, empieza un nuevo ciclo.</string>
     <string name="maybe_pregnant">Tu temperatura lleva %d días alta. Puede ser una señal de embarazo: plantéate hacer una prueba.</string>
     <string name="ovulation_confirmed">Ovulación confirmada</string>
-    <string name="ovulated_on">Ovulación hacia el %1$s. Próxima regla prevista hacia el %2$s.</string>
+    <string name="ovulated_on">Ovulación hacia el %1$s. Los días fértiles de este ciclo ya han pasado. Próxima regla prevista hacia el %2$s.</string>
     <string name="peak_fertility">Fertilidad máxima</string>
     <string name="fertile_window">Ventana fértil</string>
     <string name="ovulation_expected">Ovulación prevista hacia el %s.</string>
@@ -108,9 +108,9 @@
     <string name="summary_predicted">Todavía no hay señales de ovulación: los días sombreados son una previsión.</string>
     <string name="summary_no_signs">En este ciclo no se encontró ninguna subida de temperatura ni pico del moco.</string>
     <string name="how_it_works_title">Cómo funciona</string>
-    <string name="how_it_works_temperature">Temperatura: tras la ovulación, la progesterona eleva la temperatura en reposo entre 0,2 y 0,5 °C hasta la siguiente regla. Cuando 3 mediciones seguidas son más altas que las 6 anteriores y la tercera supera ese nivel (la línea de cobertura) en al menos 0,2 °C, la ovulación queda confirmada. Lo más probable es que ocurriera el día antes de la primera medición alta.</string>
+    <string name="how_it_works_temperature">Temperatura: tras la ovulación, la progesterona eleva la temperatura en reposo entre 0,2 y 0,5 °C hasta la siguiente regla. Cuando 3 mediciones seguidas son más altas que las 6 anteriores y la tercera supera ese nivel (la línea de cobertura) en al menos 0,2 °C, la ovulación queda confirmada. Lo más probable es que ocurriera el día antes de la primera medición alta. La subida llega después de la ovulación: la confirma, pero no puede anunciarla. Ondea la usa para aprender tu día de ovulación para los próximos ciclos.</string>
     <string name="how_it_works_mucus">Moco cervical: la primera señal de moco abre la ventana fértil. El día pico (P) es el último día con el moco de mejor calidad, y la ovulación suele producirse en el día anterior o posterior. Según el doble control del método sintotérmico, la fase fértil solo termina cuando ambas señales coinciden: la subida de temperatura está confirmada y han pasado 3 días desde el pico.</string>
-    <string name="how_it_works_prediction">Antes de que aparezca cualquier señal, la ventana fértil se predice a partir de tus ciclos anteriores o de tu día de ovulación habitual: los 5 días previos a la ovulación, el día de la ovulación y el día siguiente. Los espermatozoides pueden sobrevivir hasta 5 días, y el óvulo alrededor de 1 día.</string>
+    <string name="how_it_works_prediction">Antes de que aparezca cualquier señal, la ventana fértil se predice a partir de tus ovulaciones confirmadas anteriores, tu día de ovulación habitual o la duración de tu ciclo. Cubre los 5 días previos a la ovulación, el día de la ovulación y el día siguiente. Empieza 5 días antes de tu ovulación reciente más temprana, porque la ventana fértil cambia de un ciclo a otro. Los espermatozoides pueden sobrevivir hasta 5 días, y el óvulo alrededor de 1 día.</string>
     <string name="legend_period">Regla</string>
     <string name="legend_period_predicted">Regla prevista</string>
     <string name="legend_mucus">Moco</string>
@@ -201,6 +201,18 @@
     <string name="ovulation_day_onboarding">Día de ovulación habitual</string>
     <string name="ovulation_day_onboarding_hint">Opcional. Si no lo sabes, Ondea lo aprende de tus señales.</string>
     <string name="know_ovulation_day">Conozco mi día de ovulación habitual</string>
+    <string name="sources_title">Ciencia y fuentes</string>
+    <string name="sources_hint">Los estudios detrás de cada previsión</string>
+    <string name="sources_intro">Ondea sigue estos estudios y métodos. Toca un estudio para abrirlo.</string>
+    <string name="src_wilcox1995">Probabilidad de concepción para cada día antes de la ovulación.</string>
+    <string name="src_wilcox2000">La ventana fértil cambia de un ciclo a otro, incluso en ciclos regulares.</string>
+    <string name="src_ecochard2001">Momento de la subida de temperatura y del pico del moco, comparado con la ovulación vista por ecografía.</string>
+    <string name="src_direito2013">La ovulación sigue al pico de LH (test de ovulación positivo) en 1 o 2 días aproximadamente.</string>
+    <string name="src_frank2007">El método sintotérmico: el doble control de temperatura y moco.</string>
+    <string name="src_fehring2006">Duración y variabilidad de las fases antes y después de la ovulación.</string>
+    <string name="src_bull2019">El día de la ovulación varía mucho entre personas y entre ciclos.</string>
+    <string name="src_sensiplan">Las reglas del método Sensiplan (regla de 3 sobre 6, pico del moco).</string>
+    <string name="why_timing">La temperatura sube después de la ovulación. Confirma la ovulación y enseña a Ondea tu patrón para los próximos ciclos. El moco cervical y los tests de ovulación llegan antes de la ovulación: úsalos para elegir el momento de las relaciones en este ciclo.</string>
     <plurals name="period_late">
         <item quantity="one">La regla se retrasa %d día</item>
         <item quantity="many">La regla se retrasa %d días</item>
@@ -210,5 +222,10 @@
         <item quantity="one">Ventana fértil dentro de %d día</item>
         <item quantity="many">Ventana fértil dentro de %d días</item>
         <item quantity="other">Ventana fértil dentro de %d días</item>
+    </plurals>
+    <plurals name="prediction_learned_detail">
+        <item quantity="one">Día %1$d del ciclo: tu última ovulación confirmada</item>
+        <item quantity="many">Día %1$d del ciclo: media de tus últimas %2$d ovulaciones confirmadas</item>
+        <item quantity="other">Día %1$d del ciclo: media de tus últimas %2$d ovulaciones confirmadas</item>
     </plurals>
 </resources>
