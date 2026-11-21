@@ -136,6 +136,10 @@ The build is reproducible. F-Droid builds the app from source, checks that the r
 
 For a new version: increase `versionCode` and `versionName`, add `fastlane/metadata/android/<lang>/changelogs/<versionCode>.txt`, push a `vX.Y.Z` tag and attach `ondea-X.Y.Z.apk` to the release. F-Droid finds the new tag automatically.
 
+## How Ondea is made
+
+Ondea is AI-assisted. The code was written with an AI coding assistant. The maintainer sets the requirements, reviews and tests every change, and is responsible for each release. The fertility logic follows published methods (see [References](#references)) and has unit tests.
+
 ## Contributing
 
 Bug reports, translations and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md). Please report security issues privately ([SECURITY.md](SECURITY.md)).

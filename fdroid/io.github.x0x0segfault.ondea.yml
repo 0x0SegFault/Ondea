@@ -1,10 +1,5 @@
-# F-Droid metadata. Copy to metadata/ in a merge request to https://gitlab.com/fdroid/fdroiddata.
-# Before you submit, replace the two placeholders:
-#   COMMIT_HASH  full 40-character hash of the v1.0.0 commit: git rev-list -n 1 v1.0.0
-#   SIGNING_KEY  SHA-256 of the release certificate, lowercase, no colons:
-#                keytool -list -v -keystore ondea-release.jks -alias ondea | grep SHA256
 Categories:
-  - Sports & Health
+  - Health Manager
 License: GPL-3.0-or-later
 AuthorName: 0x0SegFault
 SourceCode: https://github.com/0x0SegFault/ondea
@@ -15,7 +10,6 @@ AutoName: Ondea
 
 RepoType: git
 Repo: https://github.com/0x0SegFault/ondea.git
-# Reproducible build: F-Droid builds from source, compares with this APK and ships the developer-signed one.
 Binaries: https://github.com/0x0SegFault/ondea/releases/download/v%v/ondea-%v.apk
 
 Builds:
