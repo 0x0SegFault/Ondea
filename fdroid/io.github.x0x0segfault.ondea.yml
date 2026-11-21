@@ -1,0 +1,27 @@
+# F-Droid build metadata — copy this file to metadata/ in a merge request to
+# https://gitlab.com/fdroid/fdroiddata (see "Publishing on F-Droid" in the README).
+Categories:
+  - Sports & Health
+License: GPL-3.0-or-later
+AuthorName: 0x0SegFault
+SourceCode: https://github.com/0x0SegFault/ondea
+IssueTracker: https://github.com/0x0SegFault/ondea/issues
+Changelog: https://github.com/0x0SegFault/ondea/blob/HEAD/CHANGELOG.md
+
+AutoName: Ondea
+
+RepoType: git
+Repo: https://github.com/0x0SegFault/ondea.git
+
+Builds:
+  - versionName: 1.0.0
+    versionCode: 1
+    commit: v1.0.0
+    subdir: app
+    gradle:
+      - yes
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 1.0.0
+CurrentVersionCode: 1

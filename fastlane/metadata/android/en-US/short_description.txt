@@ -1,1 +1,1 @@
-Private, offline fertility & ovulation tracking from your temperature
+Private, offline ovulation tracker using basal body temperature & cervical mucus

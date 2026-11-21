@@ -1,0 +1,43 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Ondea! **Please never paste your personal health data** (temperatures, dates, backups) here — describe the situation instead.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to …
+        2. Tap …
+        3. See …
+  - type: input
+    id: version
+    attributes:
+      label: Ondea version
+      description: Settings → About, or your app store.
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: Pixel 7, GrapheneOS (Android 15)
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: Where did you install Ondea from?
+      options: [F-Droid, IzzyOnDroid, GitHub release, Obtainium, Built from source]

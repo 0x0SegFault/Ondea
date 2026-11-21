@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Ondea</string>
 
     <!-- General -->
@@ -11,7 +11,7 @@
     <string name="now">now</string>
     <string name="increase">Increase</string>
     <string name="decrease">Decrease</string>
-    <string name="n_days">%d days</string>
+    <string name="n_days" tools:ignore="PluralsCandidate">%d days</string>
     <string name="day_n">Day %d</string>
 
     <!-- Tabs -->
@@ -42,7 +42,7 @@
     <!-- Today -->
     <string name="cycle_day">Cycle day %d</string>
     <string name="cycle_day_label">Cycle day</string>
-    <string name="of_days">of about %d days</string>
+    <string name="of_days" tools:ignore="PluralsCandidate">of about %d days</string>
     <string name="not_tracking_title">Tracking paused</string>
     <string name="not_tracking_text">Start a new cycle on the first day of your next period.</string>
     <plurals name="period_late">
@@ -50,7 +50,7 @@
         <item quantity="other">Period %d days late</item>
     </plurals>
     <string name="late_hint">If your period has started, start a new cycle.</string>
-    <string name="maybe_pregnant">Your temperature has stayed high for %d days. This can be a sign of pregnancy: consider taking a test.</string>
+    <string name="maybe_pregnant" tools:ignore="PluralsCandidate">Your temperature has stayed high for %d days. This can be a sign of pregnancy: consider taking a test.</string>
     <string name="ovulation_confirmed">Ovulation confirmed</string>
     <string name="ovulated_on">Ovulation around %1$s. Next period expected around %2$s.</string>
     <string name="peak_fertility">Peak fertility</string>
@@ -148,7 +148,7 @@
 
     <!-- Settings -->
     <string name="section_cycle">Cycle</string>
-    <string name="cycle_length_hint">Used until enough cycles are recorded. Currently predicting with %d days.</string>
+    <string name="cycle_length_hint" tools:ignore="PluralsCandidate">Used until enough cycles are recorded. Currently predicting with %d days.</string>
     <string name="ovulation_day_auto">Find my ovulation day automatically</string>
     <string name="ovulation_day_auto_hint">Currently expected on cycle day %d, learnt from your cycles.</string>
     <string name="ovulation_day_manual_hint">Set the cycle day on which you usually ovulate, e.g. from ovulation tests. Temperature and mucus still take priority once observed.</string>

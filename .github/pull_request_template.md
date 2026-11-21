@@ -1,0 +1,10 @@
+## What does this change?
+
+<!-- A short description and the reason for the change. Link the issue it fixes, e.g. "Fixes #12". -->
+
+## Checklist
+
+- [ ] `./gradlew testDebugUnitTest lintDebug` passes locally
+- [ ] No new permission, network access, tracker or proprietary dependency
+- [ ] User-facing text is in `strings.xml` (and translated if you can)
+- [ ] Algorithm changes include tests and a scientific source

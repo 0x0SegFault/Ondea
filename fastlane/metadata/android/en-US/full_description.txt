@@ -1,16 +1,15 @@
-<p>Ondea finds your fertile days from your basal body temperature. It is designed for people who are trying to conceive.</p>
+<p>Ondea helps you find your fertile days and confirm ovulation from your basal body temperature (BBT) and cervical mucus. It is designed for people who are trying to conceive.</p>
 
-<p><b>Easy daily tracking:</b> enter your waking temperature in a few seconds. You can also log period flow, cervical mucus, intercourse and notes.</p>
+<p><b>Easy daily tracking:</b> log your morning temperature in a few seconds, plus your period, cervical mucus, intercourse and notes.</p>
 
-<p><b>Science-based:</b> Ondea confirms ovulation with the "3 over 6" temperature-shift rule of the symptothermal method. Until the shift is confirmed, it predicts your fertile window and peak days from your own past cycles.</p>
+<p><b>Science-based:</b> Ondea confirms ovulation with the "3 over 6" temperature rule and the cervical mucus double check of the symptothermal method (Sensiplan). Before that, it predicts your fertile window from your own cycles and shows your chance of conceiving by day (Wilcox et al., NEJM 1995).</p>
 
 <ul>
-<li>Temperature chart with coverline, fertile window and ovulation</li>
-<li>Calendar of recorded and predicted periods and fertile days</li>
+<li>Cycle ring, temperature chart and calendar</li>
 <li>Next period forecast and late-period notice</li>
-<li>Start a new cycle or pause tracking at any time</li>
-<li>Optional discreet daily reminder</li>
-<li>°C and °F</li>
+<li>Optional usual ovulation day</li>
+<li>Discreet daily reminder</li>
+<li>°C and °F; English, French, German, Spanish and Italian</li>
 </ul>
 
 <p><b>Private by design:</b></p>
@@ -18,8 +17,8 @@
 <li>No internet permission, no account, no ads, no trackers</li>
 <li>Works without Google Play Services</li>
 <li>Data encrypted on the device with a key held by the Android Keystore</li>
-<li>Optional app lock with fingerprint or screen lock; screenshots blocked</li>
-<li>Password-encrypted backups that you can save anywhere, including Proton Drive</li>
+<li>App lock with fingerprint or PIN; screenshots blocked</li>
+<li>Password-encrypted backups you can save anywhere (Proton Drive, Nextcloud…)</li>
 </ul>
 
 <p>Ondea is not a contraceptive and not a medical device.</p>

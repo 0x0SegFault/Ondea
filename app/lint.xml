@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- "seit dem Höhepunkt" (since the peak) is correct German, not a misspelling of "seitdem". -->
+    <issue id="Typos">
+        <ignore path="src/main/res/values-de/strings.xml" />
+    </issue>
+    <!-- Dependency updates are proposed by Dependabot and reviewed manually. -->
+    <issue id="GradleDependency" severity="informational" />
+    <issue id="NewerVersionAvailable" severity="informational" />
+    <!-- Adaptive icons still need the -v26 qualifier for aapt to pick them up. -->
+    <issue id="ObsoleteSdkInt">
+        <ignore path="src/main/res/mipmap-anydpi-v26" />
+    </issue>
+</lint>

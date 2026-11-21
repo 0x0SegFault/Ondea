@@ -221,6 +221,8 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
         }
 
         SectionCard(title = stringResource(R.string.section_about), icon = Icons.Outlined.Info) {
+            val version = remember { context.packageManager.getPackageInfo(context.packageName, 0).versionName }
+            Text("${stringResource(R.string.app_name)} $version", style = MaterialTheme.typography.titleSmall)
             Text(stringResource(R.string.about_text), style = MaterialTheme.typography.bodyMedium)
             Text(stringResource(R.string.about_science), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)

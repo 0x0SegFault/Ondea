@@ -94,6 +94,15 @@ class ReminderReceiver : BroadcastReceiver() {
 
 class RescheduleReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        Reminder.schedule(context)
+        if (intent.action in RESCHEDULE_ACTIONS) Reminder.schedule(context)
+    }
+
+    private companion object {
+        val RESCHEDULE_ACTIONS = setOf(
+            Intent.ACTION_BOOT_COMPLETED,
+            Intent.ACTION_TIME_CHANGED,
+            Intent.ACTION_TIMEZONE_CHANGED,
+            Intent.ACTION_MY_PACKAGE_REPLACED,
+        )
     }
 }

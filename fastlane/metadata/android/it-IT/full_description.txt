@@ -1,0 +1,24 @@
+<p>Ondea ti aiuta a individuare i giorni fertili e a confermare l'ovulazione grazie alla temperatura basale e al muco cervicale. Pensata per chi desidera una gravidanza.</p>
+
+<p><b>Registrazione quotidiana semplice:</b> annota la temperatura del mattino in pochi secondi, insieme a mestruazioni, muco cervicale, rapporti e note.</p>
+
+<p><b>Basata sulla scienza:</b> Ondea conferma l'ovulazione con la regola del «3 su 6» e il doppio controllo del muco cervicale del metodo sintotermico (Sensiplan). Prima di allora, prevede la tua finestra fertile in base ai tuoi cicli e mostra la probabilità di concepimento per giorno (Wilcox et al., NEJM 1995).</p>
+
+<ul>
+<li>Anello del ciclo, grafico della temperatura e calendario</li>
+<li>Previsione delle prossime mestruazioni e avviso di ritardo</li>
+<li>Giorno di ovulazione abituale impostabile</li>
+<li>Promemoria giornaliero discreto</li>
+<li>°C e °F; italiano, inglese, francese, tedesco e spagnolo</li>
+</ul>
+
+<p><b>Privata per progettazione:</b></p>
+<ul>
+<li>Nessuna autorizzazione internet, nessun account, nessuna pubblicità, nessun tracker</li>
+<li>Funziona senza i servizi Google Play</li>
+<li>Dati crittografati sul dispositivo con una chiave protetta dal Keystore di Android</li>
+<li>Blocco con impronta o PIN e screenshot bloccati</li>
+<li>Backup crittografati con password, salvali dove vuoi (Proton Drive, Nextcloud…)</li>
+</ul>
+
+<p>Ondea non è un contraccettivo né un dispositivo medico.</p>
