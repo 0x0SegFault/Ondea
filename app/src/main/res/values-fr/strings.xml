@@ -180,11 +180,11 @@
     <string name="lh_none">Non fait</string>
     <string name="lh_negative">Négatif</string>
     <string name="lh_positive">Positif</string>
-    <string name="lh_hint">L\'ovulation a généralement lieu 1 à 2 jours après le premier test positif.</string>
+    <string name="lh_hint" formatted="false">L\'ovulation a lieu 22 à 56 heures après le début du pic, donc 1 à 2 jours après le premier test positif. Ce délai varie d\'une personne à l\'autre. Environ 7 % des tests positifs (jusqu\'à 18 % avec un test par jour) ne sont pas suivis d\'une ovulation, et un pic court peut passer inaperçu. Faites deux tests par jour près de vos jours fertiles. Votre température confirme.</string>
     <string name="source_lh">Estimé d\'après votre test d\'ovulation</string>
     <string name="waiting_temperature_after_lh">Test d\'ovulation positif. Ovulation probable vers le %s.</string>
     <string name="summary_lh">Ovulation estimée d\'après le test d\'ovulation positif. Pas encore confirmée par la température.</string>
-    <string name="how_it_works_lh">Tests d\'ovulation (LH) : l\'ovulation a généralement lieu 1 à 2 jours après le premier test positif. Tant que la température ne l\'a pas confirmée, Ondea retient le lendemain de ce test.</string>
+    <string name="how_it_works_lh" formatted="false">Tests d\'ovulation (LH) : l\'ovulation a lieu 22 à 56 heures après le début du pic de LH, donc 1 à 2 jours après le premier test positif, et ce délai varie d\'une personne à l\'autre. Environ 7 % des tests positifs (jusqu\'à 18 % avec un test par jour) ne sont pas suivis d\'une ovulation, et un pic court peut passer inaperçu avec un seul test par jour. Tant que la température n\'a pas confirmé l\'ovulation, Ondea retient le lendemain du premier test positif.</string>
     <string name="why_title">Comment cette date est fixée</string>
     <string name="why_intro">Ondea utilise le signe le plus fiable dont il dispose pour ce cycle. Chaque signe que vous notez peut changer la date.</string>
     <string name="sign_temperature">Hausse de température</string>
@@ -213,6 +213,8 @@
     <string name="src_bull2019">Le jour d\'ovulation varie beaucoup d\'une personne à l\'autre et d\'un cycle à l\'autre.</string>
     <string name="src_sensiplan">Les règles de la méthode Sensiplan (règle des 3 sur 6, pic de glaire).</string>
     <string name="why_timing">La température monte après l\'ovulation. Elle confirme l\'ovulation et apprend à Ondea votre rythme pour les cycles suivants. La glaire cervicale et les tests d\'ovulation arrivent avant l\'ovulation : utilisez-les pour choisir le moment des rapports dans ce cycle.</string>
+    <string name="src_erden2022">L\'ovulation a lieu 22 à 56 heures après le début du pic de LH. Certains pics sont courts ou ne sont pas suivis d\'une ovulation.</string>
+    <string name="src_mcgovern2004" formatted="false">Environ 7 % des tests d\'ovulation positifs faits à domicile ne sont pas suivis d\'une ovulation.</string>
     <plurals name="period_late">
         <item quantity="one">Règles en retard de %d jour</item>
         <item quantity="many">Règles en retard de %d jours</item>

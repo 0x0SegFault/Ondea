@@ -180,11 +180,11 @@
     <string name="lh_none">Nicht gemacht</string>
     <string name="lh_negative">Negativ</string>
     <string name="lh_positive">Positiv</string>
-    <string name="lh_hint">Der Eisprung findet meist 1 bis 2 Tage nach dem ersten positiven Test statt.</string>
+    <string name="lh_hint" formatted="false">Der Eisprung folgt 22 bis 56 Stunden nach Beginn des Anstiegs, also 1 bis 2 Tage nach dem ersten positiven Test. Das ist von Person zu Person verschieden. Auf etwa 7 % der positiven Tests (bis zu 18 % bei einem Test pro Tag) folgt kein Eisprung, und ein kurzer Anstieg kann übersehen werden. Teste an den fruchtbaren Tagen zweimal täglich. Deine Temperatur bestätigt.</string>
     <string name="source_lh">Anhand deines Ovulationstests geschätzt</string>
     <string name="waiting_temperature_after_lh">Ovulationstest positiv. Eisprung wahrscheinlich um den %s.</string>
     <string name="summary_lh">Eisprung anhand des positiven Ovulationstests geschätzt. Noch nicht durch die Temperatur bestätigt.</string>
-    <string name="how_it_works_lh">Ovulationstests (LH): Der Eisprung findet meist 1 bis 2 Tage nach dem ersten positiven Test statt. Bis die Temperatur ihn bestätigt, verwendet Ondea den Tag nach diesem Test.</string>
+    <string name="how_it_works_lh" formatted="false">Ovulationstests (LH): Der Eisprung folgt 22 bis 56 Stunden nach Beginn des LH-Anstiegs, also 1 bis 2 Tage nach dem ersten positiven Test, und das ist von Person zu Person verschieden. Auf etwa 7 % der positiven Tests (bis zu 18 % bei einem Test pro Tag) folgt kein Eisprung, und ein kurzer Anstieg kann bei einem Test pro Tag übersehen werden. Bis die Temperatur den Eisprung bestätigt, verwendet Ondea den Tag nach dem ersten positiven Test.</string>
     <string name="why_title">So wird dieses Datum bestimmt</string>
     <string name="why_intro">Ondea verwendet das stärkste Zeichen, das es für diesen Zyklus hat. Jedes Zeichen, das du einträgst, kann das Datum ändern.</string>
     <string name="sign_temperature">Temperaturanstieg</string>
@@ -213,6 +213,8 @@
     <string name="src_bull2019">Der Eisprungtag schwankt stark zwischen Personen und zwischen Zyklen.</string>
     <string name="src_sensiplan">Die Regeln der Sensiplan-Methode (3-über-6-Regel, Schleimhöhepunkt).</string>
     <string name="why_timing">Die Temperatur steigt nach dem Eisprung. Sie bestätigt den Eisprung und zeigt Ondea dein Muster für die nächsten Zyklen. Zervixschleim und Ovulationstests kommen vor dem Eisprung: Nutze sie, um in diesem Zyklus den Zeitpunkt für Geschlechtsverkehr zu wählen.</string>
+    <string name="src_erden2022">Der Eisprung folgt 22 bis 56 Stunden nach Beginn des LH-Anstiegs. Manche Anstiege sind kurz oder werden von keinem Eisprung gefolgt.</string>
+    <string name="src_mcgovern2004" formatted="false">Auf etwa 7 % der positiven Ovulationstests für zu Hause folgt kein Eisprung.</string>
     <plurals name="period_late">
         <item quantity="one">Periode %d Tag überfällig</item>
         <item quantity="other">Periode %d Tage überfällig</item>

@@ -211,11 +211,11 @@
     <string name="lh_none">Not done</string>
     <string name="lh_negative">Negative</string>
     <string name="lh_positive">Positive</string>
-    <string name="lh_hint">Ovulation usually happens 1 to 2 days after the first positive test.</string>
+    <string name="lh_hint" formatted="false">Ovulation follows 22 to 56 hours after the surge starts, so 1 to 2 days after the first positive test. This varies from person to person. About 7% of positive tests (up to 18% with one test a day) are not followed by ovulation, and a short surge can be missed. Test twice a day near your fertile days. Your temperature confirms.</string>
     <string name="source_lh">Estimated from your ovulation test</string>
     <string name="waiting_temperature_after_lh">Positive ovulation test. Ovulation likely around %s.</string>
     <string name="summary_lh">Ovulation estimated from the positive ovulation test. Not yet confirmed by temperature.</string>
-    <string name="how_it_works_lh">Ovulation tests (LH): ovulation usually happens 1 to 2 days after the first positive test. Until the temperature confirms it, Ondea uses the day after that test.</string>
+    <string name="how_it_works_lh" formatted="false">Ovulation tests (LH): ovulation follows 22 to 56 hours after the LH surge starts, so 1 to 2 days after the first positive test, and this varies from person to person. About 7% of positive tests (up to 18% with one test a day) are not followed by ovulation, and a short surge can be missed with one test a day. Until the temperature confirms ovulation, Ondea uses the day after the first positive test.</string>
     <string name="why_title">How this date is set</string>
     <string name="why_intro">Ondea uses the strongest sign it has for this cycle. Each sign you log can change the date.</string>
     <string name="sign_temperature">Temperature rise</string>
@@ -244,6 +244,8 @@
     <string name="src_bull2019">The ovulation day varies a lot between people and between cycles.</string>
     <string name="src_sensiplan">The rules of the Sensiplan method (3-over-6 rule, mucus peak).</string>
     <string name="why_timing">The temperature rises after ovulation. It confirms ovulation and teaches Ondea your pattern for the next cycles. Cervical mucus and ovulation tests come before ovulation: use them to time intercourse in this cycle.</string>
+    <string name="src_erden2022">Ovulation follows 22 to 56 hours after the LH surge starts. Some surges are short or are not followed by ovulation.</string>
+    <string name="src_mcgovern2004" formatted="false">About 7% of positive home ovulation tests are not followed by ovulation.</string>
     <plurals name="prediction_learned_detail">
         <item quantity="one">Cycle day %1$d: your last confirmed ovulation</item>
         <item quantity="other">Cycle day %1$d: average of your last %2$d confirmed ovulations</item>

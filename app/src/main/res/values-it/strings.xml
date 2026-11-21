@@ -180,11 +180,11 @@
     <string name="lh_none">Non fatto</string>
     <string name="lh_negative">Negativo</string>
     <string name="lh_positive">Positivo</string>
-    <string name="lh_hint">L\'ovulazione avviene di solito 1–2 giorni dopo il primo test positivo.</string>
+    <string name="lh_hint" formatted="false">L\'ovulazione avviene 22–56 ore dopo l\'inizio del picco, quindi 1–2 giorni dopo il primo test positivo. Questo varia da persona a persona. Circa il 7% dei test positivi (fino al 18% con un test al giorno) non è seguito dall\'ovulazione, e un picco breve può sfuggire. Fai due test al giorno vicino ai giorni fertili. La temperatura conferma.</string>
     <string name="source_lh">Stimato in base al tuo test di ovulazione</string>
     <string name="waiting_temperature_after_lh">Test di ovulazione positivo. Ovulazione probabile intorno al %s.</string>
     <string name="summary_lh">Ovulazione stimata in base al test di ovulazione positivo. Non ancora confermata dalla temperatura.</string>
-    <string name="how_it_works_lh">Test di ovulazione (LH): l\'ovulazione avviene di solito 1–2 giorni dopo il primo test positivo. Finché la temperatura non la conferma, Ondea usa il giorno dopo quel test.</string>
+    <string name="how_it_works_lh" formatted="false">Test di ovulazione (LH): l\'ovulazione avviene 22–56 ore dopo l\'inizio del picco di LH, quindi 1–2 giorni dopo il primo test positivo, e questo varia da persona a persona. Circa il 7% dei test positivi (fino al 18% con un test al giorno) non è seguito dall\'ovulazione, e un picco breve può sfuggire con un solo test al giorno. Finché la temperatura non conferma l\'ovulazione, Ondea usa il giorno dopo il primo test positivo.</string>
     <string name="why_title">Come viene stabilita questa data</string>
     <string name="why_intro">Ondea usa il segno più affidabile che ha per questo ciclo. Ogni segno che registri può cambiare la data.</string>
     <string name="sign_temperature">Rialzo della temperatura</string>
@@ -213,6 +213,8 @@
     <string name="src_bull2019">Il giorno dell\'ovulazione varia molto tra persone e tra cicli.</string>
     <string name="src_sensiplan">Le regole del metodo Sensiplan (regola del 3 su 6, picco del muco).</string>
     <string name="why_timing">La temperatura sale dopo l\'ovulazione. Conferma l\'ovulazione e insegna a Ondea il tuo andamento per i cicli successivi. Il muco cervicale e i test di ovulazione arrivano prima dell\'ovulazione: usali per scegliere il momento dei rapporti in questo ciclo.</string>
+    <string name="src_erden2022">L\'ovulazione avviene 22–56 ore dopo l\'inizio del picco di LH. Alcuni picchi sono brevi o non sono seguiti dall\'ovulazione.</string>
+    <string name="src_mcgovern2004" formatted="false">Circa il 7% dei test di ovulazione positivi fatti a casa non è seguito dall\'ovulazione.</string>
     <plurals name="period_late">
         <item quantity="one">Mestruazioni in ritardo di %d giorno</item>
         <item quantity="many">Mestruazioni in ritardo di %d giorni</item>
