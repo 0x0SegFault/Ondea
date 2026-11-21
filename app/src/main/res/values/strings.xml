@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Ondea</string>
+
+    <!-- General -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="start">Start</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="now">now</string>
+    <string name="increase">Increase</string>
+    <string name="decrease">Decrease</string>
+    <string name="n_days">%d days</string>
+    <string name="day_n">Day %d</string>
+
+    <!-- Tabs -->
+    <string name="tab_today">Today</string>
+    <string name="tab_chart">Chart</string>
+    <string name="tab_calendar">Calendar</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- Lock and errors -->
+    <string name="unlock">Unlock</string>
+    <string name="unlock_title">Unlock Ondea</string>
+    <string name="error_title">Your data could not be opened</string>
+    <string name="error_text">The encryption key on this phone is no longer available. This can happen after a system reset or a device migration. You can restore one of your backups, or erase and start over.</string>
+    <string name="erase_start_over">Erase and start over</string>
+
+    <!-- Onboarding -->
+    <string name="welcome_title">Welcome to Ondea</string>
+    <string name="welcome_text">Find your fertile days from your morning temperature. Everything stays on this phone: no account, no internet, no ads.</string>
+    <string name="last_period_start">First day of your last period</string>
+    <string name="cycle_length">Usual cycle length</string>
+    <string name="cycle_length_onboarding_hint">From the first day of one period to the day before the next</string>
+    <string name="period_length">Usual period length</string>
+    <string name="unit">Temperature unit</string>
+    <string name="how_to_measure_title">How to measure</string>
+    <string name="how_to_measure">Take your temperature every morning right after waking up, before getting up, eating or drinking. Try to measure at the same time each day, always with the same thermometer, ideally one with 2 decimals.</string>
+    <string name="disclaimer_accept">I understand that Ondea is not a contraceptive and does not replace medical advice.</string>
+
+    <!-- Today -->
+    <string name="cycle_day">Cycle day %d</string>
+    <string name="cycle_day_label">Cycle day</string>
+    <string name="of_days">of about %d days</string>
+    <string name="not_tracking_title">Tracking paused</string>
+    <string name="not_tracking_text">Start a new cycle on the first day of your next period.</string>
+    <plurals name="period_late">
+        <item quantity="one">Period %d day late</item>
+        <item quantity="other">Period %d days late</item>
+    </plurals>
+    <string name="late_hint">If your period has started, start a new cycle.</string>
+    <string name="maybe_pregnant">Your temperature has stayed high for %d days. This can be a sign of pregnancy: consider taking a test.</string>
+    <string name="ovulation_confirmed">Ovulation confirmed</string>
+    <string name="ovulated_on">Ovulation around %1$s. Next period expected around %2$s.</string>
+    <string name="peak_fertility">Peak fertility</string>
+    <string name="fertile_window">Fertile window</string>
+    <string name="ovulation_expected">Ovulation expected around %s.</string>
+    <string name="fertile_until_confirmed">Temperature rise detected. Still fertile until %s.</string>
+    <string name="eggwhite_today">Egg-white mucus today: the most fertile sign.</string>
+    <string name="waiting_mucus">Temperature rise confirmed. Waiting for the mucus to dry up, around %s.</string>
+    <string name="waiting_temperature_after_peak">Mucus peak around %s. Waiting for the temperature rise to confirm ovulation.</string>
+    <plurals name="fertile_in">
+        <item quantity="one">Fertile window in %d day</item>
+        <item quantity="other">Fertile window in %d days</item>
+    </plurals>
+    <string name="waiting_for_shift">Waiting for the temperature rise</string>
+    <string name="waiting_for_shift_text">Ovulation may be later than predicted this cycle. You may still be fertile until the rise is confirmed.</string>
+    <string name="source_temperature">Confirmed by your temperature</string>
+    <string name="source_mucus">Estimated from your cervical mucus</string>
+    <string name="source_prediction">Predicted from your cycles</string>
+    <string name="source_setting">Predicted from your usual ovulation day</string>
+    <string name="stat_fertile">Fertile</string>
+    <string name="stat_ovulation">Ovulation</string>
+    <string name="stat_next_period">Next period</string>
+    <string name="chance_title">Chance of conceiving today</string>
+    <string name="chance_high">High</string>
+    <string name="chance_medium">Medium</string>
+    <string name="chance_low">Low</string>
+    <string name="chance_percent">About %1$d%% chance of pregnancy from intercourse on this day.</string>
+    <string name="chance_outside">Close to zero outside the fertile window.</string>
+    <string name="ovulation_short">Ov</string>
+    <string name="chance_source">Chance by day before ovulation, from Wilcox et al., NEJM 1995.</string>
+    <string name="chance_source_predicted">Chance by day before ovulation, from Wilcox et al., NEJM 1995. Based on the predicted ovulation day, so it is only an estimate.</string>
+    <string name="morning_temperature">Morning temperature</string>
+    <string name="todays_observations">Today\'s observations</string>
+    <string name="new_cycle">Start new cycle</string>
+    <string name="new_cycle_suggest">You logged a period. Did a new cycle start today?</string>
+    <string name="pause_tracking">Pause tracking</string>
+    <string name="pause">Pause</string>
+    <string name="pause_confirm">This ends the current cycle today without starting a new one. Your data is kept. Start a new cycle whenever your next period begins.</string>
+    <string name="disclaimer_short">Predictions are estimates. Ondea is not a contraceptive.</string>
+
+    <!-- Day entry -->
+    <string name="temperature_hint">Measured right after waking up</string>
+    <string name="temperature_invalid">This doesn\'t look like a body temperature.</string>
+    <string name="save_temperature">Save temperature</string>
+    <string name="temperature_saved">Saved</string>
+    <string name="period">Period</string>
+    <string name="flow_none">None</string>
+    <string name="flow_spotting">Spotting</string>
+    <string name="flow_light">Light</string>
+    <string name="flow_medium">Medium</string>
+    <string name="flow_heavy">Heavy</string>
+    <string name="mucus">Cervical mucus</string>
+    <string name="mucus_none">Not checked</string>
+    <string name="mucus_dry">Dry</string>
+    <string name="mucus_sticky">Sticky</string>
+    <string name="mucus_creamy">Creamy</string>
+    <string name="mucus_eggwhite">Egg white</string>
+    <string name="mucus_hint">Check during the day. The wetter and more stretchy the mucus, the more fertile you are.</string>
+    <string name="mucus_dry_hint">Dry: nothing seen or felt. Low fertility.</string>
+    <string name="mucus_sticky_hint">Sticky: thick, crumbly or tacky. Fertility is starting.</string>
+    <string name="mucus_creamy_hint">Creamy: white, lotion-like, moist. Fertile.</string>
+    <string name="mucus_eggwhite_hint">Egg white: clear, stretchy and slippery. The most fertile sign.</string>
+    <string name="other">Other</string>
+    <string name="intercourse">Intercourse</string>
+    <string name="disturbed_short">Disturbed reading</string>
+    <string name="disturbed_hint">The temperature will be ignored in the analysis (illness, alcohol, short night, late measurement…).</string>
+    <string name="note">Note</string>
+
+    <!-- Chart -->
+    <string name="no_cycles">No cycle recorded yet.</string>
+    <string name="cycle_n">Cycle %d</string>
+    <string name="stat_length">Length</string>
+    <string name="stat_coverline">Coverline</string>
+    <string name="stat_luteal">Luteal phase</string>
+    <string name="summary_confirmed">Ovulation confirmed by the temperature rise, and by the mucus when it was recorded.</string>
+    <string name="summary_waiting_mucus">Temperature rise confirmed. The fertile phase ends 3 days after the mucus peak.</string>
+    <string name="summary_mucus_only">Ovulation estimated from the mucus peak (P). Not yet confirmed by temperature.</string>
+    <string name="summary_predicted">No sign of ovulation yet: the shaded days are a prediction.</string>
+    <string name="summary_no_signs">No temperature rise or mucus peak was found in this cycle.</string>
+    <string name="how_it_works_title">How it works</string>
+    <string name="how_it_works_temperature">Temperature: after ovulation, progesterone raises your resting temperature by about 0.2–0.5 °C until your next period. When 3 readings in a row are higher than the 6 before them, and the third is at least 0.2 °C above that level (the coverline), ovulation is confirmed. It most likely happened the day before the first high reading.</string>
+    <string name="how_it_works_mucus">Cervical mucus: the first sign of mucus opens the fertile window. The peak day (P) is the last day of the best-quality mucus, and ovulation usually happens within a day of it. Following the symptothermal double check, the fertile phase only ends when both signs agree: the temperature rise is confirmed and 3 days have passed since the peak.</string>
+    <string name="how_it_works_prediction">Before any sign appears, the fertile window is predicted from your past cycles or from your usual ovulation day: the 5 days before ovulation, ovulation day and the day after. Sperm can survive up to 5 days, and the egg about 1 day.</string>
+    <string name="legend_period">Period</string>
+    <string name="legend_period_predicted">Expected period</string>
+    <string name="legend_mucus">Mucus</string>
+    <string name="legend_fertile">Fertile</string>
+    <string name="legend_fertile_predicted">Predicted fertile</string>
+    <string name="legend_ovulation">Ovulation</string>
+    <string name="legend_disturbed">Disturbed</string>
+
+    <!-- Calendar -->
+    <string name="calendar_hint">Tap a past day to add or edit it. A dot shows a recorded temperature, a heart shows intercourse.</string>
+    <string name="cycle_started_here">A new cycle started this day</string>
+
+    <!-- Settings -->
+    <string name="section_cycle">Cycle</string>
+    <string name="cycle_length_hint">Used until enough cycles are recorded. Currently predicting with %d days.</string>
+    <string name="ovulation_day_auto">Find my ovulation day automatically</string>
+    <string name="ovulation_day_auto_hint">Currently expected on cycle day %d, learnt from your cycles.</string>
+    <string name="ovulation_day_manual_hint">Set the cycle day on which you usually ovulate, e.g. from ovulation tests. Temperature and mucus still take priority once observed.</string>
+    <string name="section_reminder">Reminder</string>
+    <string name="reminder_daily">Daily reminder</string>
+    <string name="reminder_daily_hint">A discreet notification to take your temperature</string>
+    <string name="reminder_time">Time</string>
+    <string name="reminder_channel">Daily reminder</string>
+    <string name="reminder_title">Good morning</string>
+    <string name="reminder_text">Time for your morning reading.</string>
+    <string name="section_privacy">Privacy</string>
+    <string name="app_lock">App lock</string>
+    <string name="app_lock_hint">Require your fingerprint, face or screen lock to open Ondea</string>
+    <string name="app_lock_unavailable">Set up a screen lock on your phone first.</string>
+    <string name="secure_screen">Hide content</string>
+    <string name="secure_screen_hint">Block screenshots and hide Ondea in the recent apps view</string>
+    <string name="privacy_summary">Ondea has no internet permission. Your data is encrypted on this phone with a key protected by the Android Keystore, and it is excluded from Android cloud backups.</string>
+    <string name="section_backup">Backup</string>
+    <string name="backup_explain">Backups are encrypted with a password you choose. Save them wherever you like from the file picker: your phone, an SD card, or a cloud app that appears there (such as Proton Drive or Nextcloud).</string>
+    <string name="backup_create">Create encrypted backup</string>
+    <string name="backup_create_hint">Protected with a password</string>
+    <string name="backup_password_explain">Choose a strong password. Without it, nobody can restore the backup, not even you.</string>
+    <string name="password">Password</string>
+    <string name="password_repeat">Repeat password</string>
+    <string name="password_too_short">At least 8 characters</string>
+    <string name="restore_backup">Restore backup</string>
+    <string name="restore_backup_hint">Replaces all current data</string>
+    <string name="restore">Restore</string>
+    <string name="restore_confirm">Replace all data on this phone with the content of this backup?</string>
+    <string name="export_csv">Export as spreadsheet (CSV)</string>
+    <string name="export_csv_hint">Not encrypted. Useful to share with a doctor.</string>
+    <string name="section_general">General</string>
+    <string name="language">Language</string>
+    <string name="language_hint">Choose the language of Ondea</string>
+    <string name="erase_all">Erase all data</string>
+    <string name="erase_all_hint">Permanently delete everything on this phone</string>
+    <string name="erase">Erase</string>
+    <string name="erase_confirm">All your entries and settings will be permanently deleted from this phone. Backups you saved elsewhere are not affected.</string>
+    <string name="section_about">About</string>
+    <string name="about_text">Ondea is free and open-source software (GPL-3.0). No account, no ads, no tracking, no internet.</string>
+    <string name="about_science">Methods: temperature shift (3-over-6 rule) and cervical mucus double check as used by the symptothermal method (Sensiplan; Frank-Herrmann et al., Human Reproduction 2007). Conception chance by day: Wilcox et al., NEJM 1995.</string>
+    <string name="disclaimer_full">Ondea is meant to help you understand your cycle and find your most fertile days. It is not a medical device and must not be used as contraception. Consult a health professional for medical advice.</string>
+
+    <!-- Messages -->
+    <string name="msg_saved">Saved</string>
+    <string name="msg_save_failed">Could not save</string>
+    <string name="msg_cycle_started">New cycle started</string>
+    <string name="msg_tracking_paused">Tracking paused</string>
+    <string name="msg_backup_done">Backup saved</string>
+    <string name="msg_backup_failed">Could not write the file</string>
+    <string name="msg_csv_done">Spreadsheet exported</string>
+    <string name="msg_wrong_password">Wrong password</string>
+    <string name="msg_not_a_backup">This file is not a Ondea backup</string>
+    <string name="msg_restore_done">Backup restored</string>
+    <string name="msg_restore_failed">Could not restore this backup</string>
+    <string name="msg_wiped">All data erased</string>
+</resources>
