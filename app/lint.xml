@@ -11,4 +11,6 @@
     <issue id="ObsoleteSdkInt">
         <ignore path="src/main/res/mipmap-anydpi-v26" />
     </issue>
+    <!-- Android Gradle plugin 8.13 supports up to API 36; API 37 comes with the AGP 9 migration. -->
+    <issue id="OldTargetApi" severity="informational" />
 </lint>

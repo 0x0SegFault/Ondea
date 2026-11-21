@@ -12,6 +12,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import app.ondea.MainActivity
 import app.ondea.R
 import java.time.LocalDate
@@ -33,7 +34,10 @@ object Reminder {
     fun minuteOfDay(ctx: Context) = prefs(ctx).getInt(KEY_MINUTES, 7 * 60)
 
     fun configure(ctx: Context, enabled: Boolean, minuteOfDay: Int) {
-        prefs(ctx).edit().putBoolean(KEY_ENABLED, enabled).putInt(KEY_MINUTES, minuteOfDay).apply()
+        prefs(ctx).edit {
+            putBoolean(KEY_ENABLED, enabled)
+            putInt(KEY_MINUTES, minuteOfDay)
+        }
         schedule(ctx)
     }
 

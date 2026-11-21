@@ -156,7 +156,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private suspend fun write(uri: Uri, bytes: ByteArray) = withContext(Dispatchers.IO) {
-        getApplication<Application>().contentResolver.openOutputStream(uri, "wt")!!.use { it.write(bytes) }
+        getApplication<Application>().contentResolver.openOutputStream(uri, "wt")?.use { it.write(bytes) }
+            ?: throw java.io.IOException("Cannot open $uri")
     }
 
     private fun withBusy(block: suspend () -> Unit) {

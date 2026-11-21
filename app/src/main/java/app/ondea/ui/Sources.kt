@@ -2,7 +2,6 @@ package app.ondea.ui
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import app.ondea.LockGate
 import app.ondea.R
 
@@ -77,7 +77,7 @@ fun SourcesSheet(onDismiss: () -> Unit) {
                     Modifier.clickable(role = Role.Button) {
                         LockGate.skipNextLock()
                         try {
-                            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://doi.org/$doi")))
+                            context.startActivity(Intent(Intent.ACTION_VIEW, "https://doi.org/$doi".toUri()))
                         } catch (_: ActivityNotFoundException) {
                             // No browser installed: the citation stays readable on screen.
                         }
