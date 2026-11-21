@@ -51,6 +51,7 @@ import app.ondea.domain.CycleEngine
 import app.ondea.domain.FertilityChance
 import app.ondea.domain.Forecast
 import app.ondea.domain.OvulationSource
+import app.ondea.domain.PredictionBasis
 import app.ondea.domain.Waiting
 import app.ondea.ui.theme.CycleColors
 
@@ -164,7 +165,7 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
     if (explain && forecast != null) {
         OvulationSheet(
             engine = engine,
-            onSetDay = { day -> vm.updateSettings { it.copy(ovulationDay = day) } },
+            onChange = vm::updateSettings,
             onDismiss = { explain = false },
         )
     }
@@ -239,8 +240,11 @@ private fun Status(engine: CycleEngine, f: Forecast, onExplain: () -> Unit) {
             OvulationSource.TEMPERATURE -> R.string.source_temperature
             OvulationSource.LH_TEST -> R.string.source_lh
             OvulationSource.MUCUS -> R.string.source_mucus
-            OvulationSource.PREDICTED ->
-                if (engine.data.settings.ovulationDay != null) R.string.source_setting else R.string.source_prediction
+            OvulationSource.PREDICTED -> when (engine.predictionBasis) {
+                PredictionBasis.OWN_DAY -> R.string.source_setting
+                PredictionBasis.LEARNED -> R.string.source_prediction
+                PredictionBasis.TYPICAL -> R.string.source_typical
+            }
         }
         // Tapping the source explains the date and lets the user change it.
         Surface(onClick = onExplain, shape = CircleShape, color = accent.copy(alpha = 0.12f)) {

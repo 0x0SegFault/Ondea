@@ -110,6 +110,26 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /** Encrypted backup file ready to hand to another app (Proton Drive, Nextcloud, email…). */
+    val shareBackupUri = MutableStateFlow<Uri?>(null)
+
+    fun shareBackup(password: CharArray) = withBusy {
+        try {
+            val app = getApplication<Application>()
+            val blob = repo.exportBackup(password)
+            val file = withContext(Dispatchers.IO) {
+                val dir = java.io.File(app.cacheDir, "backups").apply { mkdirs() }
+                dir.listFiles()?.forEach { it.delete() }
+                java.io.File(dir, "ondea-backup-${LocalDate.now()}.ondea").apply { writeBytes(blob) }
+            }
+            shareBackupUri.value = androidx.core.content.FileProvider.getUriForFile(app, "${app.packageName}.backups", file)
+        } catch (_: Exception) {
+            say(R.string.msg_backup_failed)
+        } finally {
+            password.fill('\u0000')
+        }
+    }
+
     fun readBackup(uri: Uri, password: CharArray) = withBusy {
         try {
             val blob = withContext(Dispatchers.IO) {

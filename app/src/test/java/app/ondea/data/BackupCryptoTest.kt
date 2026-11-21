@@ -40,4 +40,17 @@ class BackupCryptoTest {
         val json = """{"version":2,"cycles":[{"start":5,"future":true}],"newThing":1}"""
         assertArrayEquals(arrayOf(Cycle(5)), Repository.decode(json.toByteArray()).cycles.toTypedArray())
     }
+
+    @Test
+    fun `data saved by version 1_0_0 still loads`() {
+        // Exact shape written by 1.0.0: no LH test, no ovulation-day choice.
+        val v100 = """{"version":1,"settings":{"onboarded":true,"cycleLength":29,"periodLength":5,"ovulationDay":15,
+            "fahrenheit":false,"appLock":false,"secureScreen":true},"cycles":[{"start":20400,"end":null}],
+            "entries":[{"date":20401,"tempC":36.4,"flow":2,"mucus":0,"disturbed":false,"intercourse":false,"note":""}]}"""
+        val d = Repository.decode(v100.toByteArray())
+        assertEquals(15, d.settings.ovulationDay)
+        assertEquals(null, d.settings.useOwnOvulationDay) // older data: own day keeps priority
+        assertEquals(true, d.settings.usesOwnOvulationDay)
+        assertEquals(0, d.entries.single().lh)
+    }
 }

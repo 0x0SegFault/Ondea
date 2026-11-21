@@ -24,7 +24,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Backup
 import androidx.compose.material.icons.outlined.DeleteForever
-import androidx.compose.material.icons.outlined.Egg
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Lock
@@ -45,6 +44,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -81,6 +81,10 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
     var reminderMinute by remember { mutableIntStateOf(Reminder.minuteOfDay(context)) }
     var exportPassword by remember { mutableStateOf<CharArray?>(null) }
     var askExportPassword by rememberSaveable { mutableStateOf(false) }
+    var chooseBackup by rememberSaveable { mutableStateOf(false) }
+    var shareBackup by rememberSaveable { mutableStateOf(false) }
+    val shareUri by vm.shareBackupUri.collectAsState()
+    val shareTitle = stringResource(R.string.backup_share_title)
     var restoreUri by remember { mutableStateOf<Uri?>(null) }
     var confirmWipe by rememberSaveable { mutableStateOf(false) }
     var lockUnavailable by rememberSaveable { mutableStateOf(false) }
@@ -121,23 +125,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
                 }
             }
             Divider()
-            val auto = settings.ovulationDay == null
-            SwitchRow(
-                Icons.Outlined.Egg, palette.ovulation,
-                stringResource(R.string.ovulation_day_auto),
-                if (auto) stringResource(R.string.ovulation_day_auto_hint, s.engine.predictedOvulationIndex + 1)
-                else stringResource(R.string.ovulation_day_manual_hint),
-                auto,
-            ) { on ->
-                vm.updateSettings { it.copy(ovulationDay = if (on) null else s.engine.predictedOvulationIndex + 1) }
-            }
-            if (!auto) {
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    NumberStepper(settings.ovulationDay!!, 8..35, stringResource(R.string.day_n, settings.ovulationDay)) { v ->
-                        vm.updateSettings { it.copy(ovulationDay = v) }
-                    }
-                }
-            }
+            OvulationDayControls(s.engine, vm::updateSettings)
             Divider()
             SettingBlock(Icons.Outlined.Thermostat, MaterialTheme.colorScheme.primary, stringResource(R.string.unit), null) {
                 SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
@@ -193,7 +181,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             Text(stringResource(R.string.backup_explain), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             ClickRow(Icons.Outlined.Backup, palette.fertile, stringResource(R.string.backup_create),
-                stringResource(R.string.backup_create_hint)) { askExportPassword = true }
+                stringResource(R.string.backup_create_hint)) { chooseBackup = true }
             Divider()
             ClickRow(Icons.Outlined.Restore, palette.fertile, stringResource(R.string.restore_backup),
                 stringResource(R.string.restore_backup_hint)) {
@@ -237,9 +225,13 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
 
     if (askExportPassword) {
         PasswordDialog(stringResource(R.string.backup_create), confirmTwice = true, onDone = { pw ->
-            exportPassword = pw
-            LockGate.skipNextLock()
-            createBackup.launch("ondea-backup-${LocalDate.now()}.ondea")
+            if (shareBackup) {
+                vm.shareBackup(pw)
+            } else {
+                exportPassword = pw
+                LockGate.skipNextLock()
+                createBackup.launch("ondea-backup-${LocalDate.now()}.ondea")
+            }
         }, onDismiss = { askExportPassword = false })
     }
     restoreUri?.let { uri ->
@@ -255,6 +247,24 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             stringResource(R.string.erase), onConfirm = vm::wipe, onDismiss = { confirmWipe = false })
     }
     if (showSources) SourcesSheet(onDismiss = { showSources = false })
+    if (chooseBackup) {
+        BackupChoiceSheet(
+            onFile = { shareBackup = false; chooseBackup = false; askExportPassword = true },
+            onApp = { shareBackup = true; chooseBackup = false; askExportPassword = true },
+            onDismiss = { chooseBackup = false },
+        )
+    }
+    // Hand the encrypted file to the app the user picks (Proton Drive, Nextcloud, email…).
+    LaunchedEffect(shareUri) {
+        val uri = shareUri ?: return@LaunchedEffect
+        vm.shareBackupUri.value = null
+        val send = Intent(Intent.ACTION_SEND)
+            .setType("application/octet-stream")
+            .putExtra(Intent.EXTRA_STREAM, uri)
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        LockGate.skipNextLock()
+        context.startActivity(Intent.createChooser(send, shareTitle))
+    }
     if (lockUnavailable) {
         ConfirmDialog(stringResource(R.string.app_lock), stringResource(R.string.app_lock_unavailable),
             stringResource(R.string.ok), onConfirm = {}, onDismiss = { lockUnavailable = false })

@@ -122,9 +122,6 @@
     <string name="cycle_started_here">Este día empezó un nuevo ciclo</string>
     <string name="section_cycle">Ciclo</string>
     <string name="cycle_length_hint">Se usa hasta que haya suficientes ciclos registrados. Previsión actual con %d días.</string>
-    <string name="ovulation_day_auto">Detectar mi día de ovulación automáticamente</string>
-    <string name="ovulation_day_auto_hint">Ahora mismo prevista el día %d del ciclo, según tus ciclos.</string>
-    <string name="ovulation_day_manual_hint">Indica el día del ciclo en el que sueles ovular. La temperatura, los tests de ovulación y el moco tienen prioridad en cuanto se observan.</string>
     <string name="section_reminder">Recordatorio</string>
     <string name="reminder_daily">Recordatorio diario</string>
     <string name="reminder_daily_hint">Una notificación discreta para tomarte la temperatura</string>
@@ -140,7 +137,7 @@
     <string name="secure_screen_hint">Bloquear las capturas de pantalla y ocultar Ondea en las apps recientes</string>
     <string name="privacy_summary">Ondea no tiene permiso de acceso a internet. Tus datos se cifran en este teléfono con una clave protegida por el Keystore de Android y se excluyen de las copias de seguridad en la nube de Android.</string>
     <string name="section_backup">Copia de seguridad</string>
-    <string name="backup_explain">Las copias de seguridad se cifran con una contraseña que tú eliges. Guárdalas donde quieras desde el selector de archivos: en el teléfono, en una tarjeta SD o en una app de almacenamiento en la nube que aparezca allí (como Proton Drive o Nextcloud).</string>
+    <string name="backup_explain">Las copias de seguridad se cifran con una contraseña que tú eliges. Envíalas a una app de drive (Proton Drive, Nextcloud…) o guárdalas como archivo.</string>
     <string name="backup_create">Crear copia de seguridad cifrada</string>
     <string name="backup_create_hint">Protegida con contraseña</string>
     <string name="backup_password_explain">Elige una contraseña segura. Sin ella, nadie podrá restaurar la copia, ni siquiera tú.</string>
@@ -215,6 +212,21 @@
     <string name="why_timing">La temperatura sube después de la ovulación. Confirma la ovulación y enseña a Ondea tu patrón para los próximos ciclos. El moco cervical y los tests de ovulación llegan antes de la ovulación: úsalos para elegir el momento de las relaciones en este ciclo.</string>
     <string name="src_erden2022">La ovulación llega entre 22 y 56 horas después de que empiece el pico de LH. Algunos picos son cortos o no van seguidos de ovulación.</string>
     <string name="src_mcgovern2004" formatted="false">Alrededor del 7 % de los tests de ovulación positivos hechos en casa no van seguidos de ovulación.</string>
+    <string name="prediction_to_use">Previsión que se usa</string>
+    <string name="use_ondea">Ondea (aprende)</string>
+    <string name="use_mine">Mi día</string>
+    <string name="ondea_estimate">Estimación de Ondea</string>
+    <string name="ondea_estimate_own">Día %d del ciclo: tu día habitual, hasta tu primer ciclo confirmado</string>
+    <string name="my_usual_day">Mi día de ovulación habitual</string>
+    <string name="my_usual_day_hint">Siempre se guarda. Con Ondea, se usa hasta que Ondea aprende de un ciclo confirmado.</string>
+    <string name="source_typical">Previsto a partir de un ciclo típico</string>
+    <string name="backup_where_title">¿Dónde guardar la copia?</string>
+    <string name="backup_where_intro">Ondea cifra la copia con tu contraseña antes de que salga de la app. Nadie puede leerla sin la contraseña.</string>
+    <string name="backup_to_app">Enviar a un drive o una app</string>
+    <string name="backup_to_app_hint">Proton Drive, Nextcloud, correo… Eliges la app en el siguiente paso.</string>
+    <string name="backup_to_file">Guardar como archivo</string>
+    <string name="backup_to_file_hint">En este teléfono o una tarjeta SD, o en un drive que aparezca en el selector de archivos.</string>
+    <string name="backup_share_title">Enviar la copia cifrada</string>
     <plurals name="period_late">
         <item quantity="one">La regla se retrasa %d día</item>
         <item quantity="many">La regla se retrasa %d días</item>

@@ -138,6 +138,8 @@ fun OnboardingScreen(onDone: (Settings, LocalDate) -> Unit) {
                         cycleLength = cycleLength,
                         periodLength = periodLength,
                         ovulationDay = if (knowsOvulation) ovulationDay else null,
+                        // Ondea predicts: it uses this day until it has learnt from a confirmed cycle.
+                        useOwnOvulationDay = false,
                         fahrenheit = fahrenheit,
                     ),
                     lastPeriod,

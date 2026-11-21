@@ -149,9 +149,6 @@
     <!-- Settings -->
     <string name="section_cycle">Cycle</string>
     <string name="cycle_length_hint" tools:ignore="PluralsCandidate">Used until enough cycles are recorded. Currently predicting with %d days.</string>
-    <string name="ovulation_day_auto">Find my ovulation day automatically</string>
-    <string name="ovulation_day_auto_hint">Currently expected on cycle day %d, learnt from your cycles.</string>
-    <string name="ovulation_day_manual_hint">Set the cycle day on which you usually ovulate. Temperature, ovulation tests and mucus take priority once observed.</string>
     <string name="section_reminder">Reminder</string>
     <string name="reminder_daily">Daily reminder</string>
     <string name="reminder_daily_hint">A discreet notification to take your temperature</string>
@@ -167,7 +164,7 @@
     <string name="secure_screen_hint">Block screenshots and hide Ondea in the recent apps view</string>
     <string name="privacy_summary">Ondea has no internet permission. Your data is encrypted on this phone with a key protected by the Android Keystore, and it is excluded from Android cloud backups.</string>
     <string name="section_backup">Backup</string>
-    <string name="backup_explain">Backups are encrypted with a password you choose. Save them wherever you like from the file picker: your phone, an SD card, or a cloud app that appears there (such as Proton Drive or Nextcloud).</string>
+    <string name="backup_explain">Backups are encrypted with a password you choose. Send them to a drive app (Proton Drive, Nextcloud…) or save them as a file.</string>
     <string name="backup_create">Create encrypted backup</string>
     <string name="backup_create_hint">Protected with a password</string>
     <string name="backup_password_explain">Choose a strong password. Without it, nobody can restore the backup, not even you.</string>
@@ -246,6 +243,21 @@
     <string name="why_timing">The temperature rises after ovulation. It confirms ovulation and teaches Ondea your pattern for the next cycles. Cervical mucus and ovulation tests come before ovulation: use them to time intercourse in this cycle.</string>
     <string name="src_erden2022">Ovulation follows 22 to 56 hours after the LH surge starts. Some surges are short or are not followed by ovulation.</string>
     <string name="src_mcgovern2004" formatted="false">About 7% of positive home ovulation tests are not followed by ovulation.</string>
+    <string name="prediction_to_use">Prediction to use</string>
+    <string name="use_ondea">Ondea (learns)</string>
+    <string name="use_mine">My day</string>
+    <string name="ondea_estimate">Ondea\'s estimate</string>
+    <string name="ondea_estimate_own">Cycle day %d: your usual day, until your first confirmed cycle</string>
+    <string name="my_usual_day">My usual ovulation day</string>
+    <string name="my_usual_day_hint">Always kept. With Ondea, it is used until Ondea has learnt from a confirmed cycle.</string>
+    <string name="source_typical">Predicted from a typical cycle</string>
+    <string name="backup_where_title">Where should the backup go?</string>
+    <string name="backup_where_intro">Ondea encrypts the backup with your password before it leaves the app. Nobody can read it without the password.</string>
+    <string name="backup_to_app">Send to a drive or app</string>
+    <string name="backup_to_app_hint">Proton Drive, Nextcloud, email… You choose the app in the next step.</string>
+    <string name="backup_to_file">Save as a file</string>
+    <string name="backup_to_file_hint">On this phone or an SD card, or in a drive shown in the file picker.</string>
+    <string name="backup_share_title">Send the encrypted backup</string>
     <plurals name="prediction_learned_detail">
         <item quantity="one">Cycle day %1$d: your last confirmed ovulation</item>
         <item quantity="other">Cycle day %1$d: average of your last %2$d confirmed ovulations</item>

@@ -122,9 +122,6 @@
     <string name="cycle_started_here">An diesem Tag hat ein neuer Zyklus begonnen</string>
     <string name="section_cycle">Zyklus</string>
     <string name="cycle_length_hint">Wird verwendet, bis genug Zyklen erfasst sind. Aktuelle Vorhersage mit %d Tagen.</string>
-    <string name="ovulation_day_auto">Eisprungtag automatisch ermitteln</string>
-    <string name="ovulation_day_auto_hint">Derzeit an Zyklustag %d erwartet, aus deinen Zyklen gelernt.</string>
-    <string name="ovulation_day_manual_hint">Gib den Zyklustag an, an dem du üblicherweise einen Eisprung hast. Temperatur, Ovulationstests und Schleim haben Vorrang, sobald sie beobachtet werden.</string>
     <string name="section_reminder">Erinnerung</string>
     <string name="reminder_daily">Tägliche Erinnerung</string>
     <string name="reminder_daily_hint">Eine diskrete Benachrichtigung zum Temperaturmessen</string>
@@ -140,7 +137,7 @@
     <string name="secure_screen_hint">Screenshots blockieren und Ondea in der Übersicht der letzten Apps verbergen</string>
     <string name="privacy_summary">Ondea hat keine Internetberechtigung. Deine Daten werden auf diesem Telefon mit einem durch den Android-Keystore geschützten Schlüssel verschlüsselt und sind von Android-Cloud-Sicherungen ausgeschlossen.</string>
     <string name="section_backup">Sicherung</string>
-    <string name="backup_explain">Sicherungen werden mit einem Passwort deiner Wahl verschlüsselt. Speichere sie über die Dateiauswahl, wo du möchtest: auf dem Telefon, einer SD-Karte oder in einer Cloud-App, die dort erscheint (z. B. Proton Drive oder Nextcloud).</string>
+    <string name="backup_explain">Sicherungen werden mit einem Passwort deiner Wahl verschlüsselt. Sende sie an eine Laufwerk-App (Proton Drive, Nextcloud …) oder speichere sie als Datei.</string>
     <string name="backup_create">Verschlüsselte Sicherung erstellen</string>
     <string name="backup_create_hint">Mit einem Passwort geschützt</string>
     <string name="backup_password_explain">Wähle ein sicheres Passwort. Ohne dieses Passwort kann niemand die Sicherung wiederherstellen, auch du nicht.</string>
@@ -215,6 +212,21 @@
     <string name="why_timing">Die Temperatur steigt nach dem Eisprung. Sie bestätigt den Eisprung und zeigt Ondea dein Muster für die nächsten Zyklen. Zervixschleim und Ovulationstests kommen vor dem Eisprung: Nutze sie, um in diesem Zyklus den Zeitpunkt für Geschlechtsverkehr zu wählen.</string>
     <string name="src_erden2022">Der Eisprung folgt 22 bis 56 Stunden nach Beginn des LH-Anstiegs. Manche Anstiege sind kurz oder werden von keinem Eisprung gefolgt.</string>
     <string name="src_mcgovern2004" formatted="false">Auf etwa 7 % der positiven Ovulationstests für zu Hause folgt kein Eisprung.</string>
+    <string name="prediction_to_use">Verwendete Vorhersage</string>
+    <string name="use_ondea">Ondea (lernt)</string>
+    <string name="use_mine">Mein Tag</string>
+    <string name="ondea_estimate">Schätzung von Ondea</string>
+    <string name="ondea_estimate_own">Zyklustag %d: dein üblicher Tag, bis zu deinem ersten bestätigten Zyklus</string>
+    <string name="my_usual_day">Mein üblicher Eisprungtag</string>
+    <string name="my_usual_day_hint">Bleibt immer gespeichert. Mit Ondea wird er verwendet, bis Ondea aus einem bestätigten Zyklus gelernt hat.</string>
+    <string name="source_typical">Aus einem typischen Zyklus vorhergesagt</string>
+    <string name="backup_where_title">Wohin soll die Sicherung?</string>
+    <string name="backup_where_intro">Ondea verschlüsselt die Sicherung mit deinem Passwort, bevor sie die App verlässt. Ohne das Passwort kann niemand sie lesen.</string>
+    <string name="backup_to_app">An ein Laufwerk oder eine App senden</string>
+    <string name="backup_to_app_hint">Proton Drive, Nextcloud, E-Mail … Die App wählst du im nächsten Schritt.</string>
+    <string name="backup_to_file">Als Datei speichern</string>
+    <string name="backup_to_file_hint">Auf diesem Telefon, einer SD-Karte oder einem Laufwerk aus der Dateiauswahl.</string>
+    <string name="backup_share_title">Verschlüsselte Sicherung senden</string>
     <plurals name="period_late">
         <item quantity="one">Periode %d Tag überfällig</item>
         <item quantity="other">Periode %d Tage überfällig</item>

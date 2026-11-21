@@ -122,9 +122,6 @@
     <string name="cycle_started_here">In questo giorno è iniziato un nuovo ciclo</string>
     <string name="section_cycle">Ciclo</string>
     <string name="cycle_length_hint">Usata finché non sono stati registrati abbastanza cicli. Previsione attuale su %d giorni.</string>
-    <string name="ovulation_day_auto">Trova automaticamente il mio giorno di ovulazione</string>
-    <string name="ovulation_day_auto_hint">Attualmente prevista il giorno %d del ciclo, in base ai tuoi cicli.</string>
-    <string name="ovulation_day_manual_hint">Indica il giorno del ciclo in cui ovuli di solito. Temperatura, test di ovulazione e muco hanno la precedenza appena vengono osservati.</string>
     <string name="section_reminder">Promemoria</string>
     <string name="reminder_daily">Promemoria giornaliero</string>
     <string name="reminder_daily_hint">Una notifica discreta per misurare la temperatura</string>
@@ -140,7 +137,7 @@
     <string name="secure_screen_hint">Blocca gli screenshot e nascondi Ondea nelle app recenti</string>
     <string name="privacy_summary">Ondea non ha l\'autorizzazione ad accedere a internet. I tuoi dati sono crittografati su questo telefono con una chiave protetta dal Keystore di Android e sono esclusi dai backup cloud di Android.</string>
     <string name="section_backup">Backup</string>
-    <string name="backup_explain">I backup sono crittografati con una password scelta da te. Salvali dove vuoi tramite il selettore di file: sul telefono, su una scheda SD o in un\'app cloud che vi compare (come Proton Drive o Nextcloud).</string>
+    <string name="backup_explain">I backup sono crittografati con una password scelta da te. Inviali a un\'app di drive (Proton Drive, Nextcloud…) o salvali come file.</string>
     <string name="backup_create">Crea backup crittografato</string>
     <string name="backup_create_hint">Protetto da password</string>
     <string name="backup_password_explain">Scegli una password sicura. Senza di essa nessuno potrà ripristinare il backup, nemmeno tu.</string>
@@ -215,6 +212,21 @@
     <string name="why_timing">La temperatura sale dopo l\'ovulazione. Conferma l\'ovulazione e insegna a Ondea il tuo andamento per i cicli successivi. Il muco cervicale e i test di ovulazione arrivano prima dell\'ovulazione: usali per scegliere il momento dei rapporti in questo ciclo.</string>
     <string name="src_erden2022">L\'ovulazione avviene 22–56 ore dopo l\'inizio del picco di LH. Alcuni picchi sono brevi o non sono seguiti dall\'ovulazione.</string>
     <string name="src_mcgovern2004" formatted="false">Circa il 7% dei test di ovulazione positivi fatti a casa non è seguito dall\'ovulazione.</string>
+    <string name="prediction_to_use">Previsione da usare</string>
+    <string name="use_ondea">Ondea (impara)</string>
+    <string name="use_mine">Il mio giorno</string>
+    <string name="ondea_estimate">Stima di Ondea</string>
+    <string name="ondea_estimate_own">Giorno %d del ciclo: il tuo giorno abituale, fino al primo ciclo confermato</string>
+    <string name="my_usual_day">Il mio giorno di ovulazione abituale</string>
+    <string name="my_usual_day_hint">Sempre conservato. Con Ondea viene usato finché Ondea non ha imparato da un ciclo confermato.</string>
+    <string name="source_typical">Previsto in base a un ciclo tipico</string>
+    <string name="backup_where_title">Dove salvare il backup?</string>
+    <string name="backup_where_intro">Ondea crittografa il backup con la tua password prima che esca dall\'app. Nessuno può leggerlo senza la password.</string>
+    <string name="backup_to_app">Invia a un drive o a un\'app</string>
+    <string name="backup_to_app_hint">Proton Drive, Nextcloud, e-mail… Scegli l\'app nel passaggio successivo.</string>
+    <string name="backup_to_file">Salva come file</string>
+    <string name="backup_to_file_hint">Su questo telefono o una scheda SD, oppure in un drive mostrato nel selettore di file.</string>
+    <string name="backup_share_title">Invia il backup crittografato</string>
     <plurals name="period_late">
         <item quantity="one">Mestruazioni in ritardo di %d giorno</item>
         <item quantity="many">Mestruazioni in ritardo di %d giorni</item>

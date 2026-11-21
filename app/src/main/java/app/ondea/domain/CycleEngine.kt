@@ -2,6 +2,7 @@ package app.ondea.domain
 
 import app.ondea.data.AppData
 import app.ondea.data.DayEntry
+import app.ondea.data.usesOwnOvulationDay
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt
@@ -19,6 +20,9 @@ data class CycleAnalysis(
 )
 
 enum class OvulationSource { TEMPERATURE, LH_TEST, MUCUS, PREDICTED }
+
+/** Basis of a prediction made before any sign of the current cycle. */
+enum class PredictionBasis { OWN_DAY, LEARNED, TYPICAL }
 
 /** What the fertile phase is still waiting for before it can be considered over. */
 enum class Waiting { TEMPERATURE, MUCUS }
@@ -90,9 +94,9 @@ data class Forecast(
  *  2. Ovulation (LH) test: ovulation is estimated the day after the first positive test.
  *  3. Cervical mucus ([MucusDetector]): the first sign opens the fertile window, the peak day
  *     estimates ovulation, and the fertile phase only ends 3 days after the peak.
- *  4. Calendar prediction: ovulation on the user's usual ovulation day if set, otherwise the
- *     average confirmed ovulation day of the last finished cycles, otherwise
- *     (average cycle length - luteal phase). The luteal phase is learnt from cycles with a
+ *  4. Calendar prediction: the user's own ovulation day when they choose it. Otherwise Ondea's
+ *     estimate: the average confirmed ovulation day of the last finished cycles, else the
+ *     user's own day, else a typical cycle (average cycle length - luteal phase). The luteal phase is learnt from cycles with a
  *     confirmed temperature rise, 14 days by default.
  *
  * The fertile window spans the 5 days before ovulation through the day after
@@ -112,6 +116,14 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
     private val earliestOvulationIndex: Int
     /** Confirmed ovulation days (0-based) of the last finished cycles, used for prediction. */
     val pastOvulations: List<Int>
+    /** Average of [pastOvulations], or null before the first confirmed cycle. */
+    val learnedOvulationIndex: Int?
+    /** Cycle length minus luteal phase: used when nothing else is known. */
+    val typicalOvulationIndex: Int
+    /** What Ondea would predict on its own (learnt, else the user's day, else typical). */
+    val ondeaOvulationIndex: Int
+    /** Where [predictedOvulationIndex] comes from. */
+    val predictionBasis: PredictionBasis
     val current: CycleAnalysis?
     val forecast: Forecast?
     private val windows: List<Window?>
@@ -152,12 +164,21 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         // The fertile window varies even in regular cycles (Wilcox et al., BMJ 2000), so the
         // predicted window opens 5 days before the earliest recent ovulation.
         pastOvulations = cycles.filter { it.end != null && it.shift != null }.map { it.shift!!.ovulationIndex }.takeLast(6)
-        val fallback = (avgCycleLength - avgLutealLength - 1).coerceAtLeast(settings.periodLength)
-        predictedOvulationIndex = settings.ovulationDay?.let { it - 1 }
-            ?: pastOvulations.takeIf { it.isNotEmpty() }?.average()?.roundToInt()
-            ?: fallback
-        earliestOvulationIndex = if (settings.ovulationDay != null) predictedOvulationIndex
-        else minOf(predictedOvulationIndex, pastOvulations.minOrNull() ?: predictedOvulationIndex)
+        typicalOvulationIndex = (avgCycleLength - avgLutealLength - 1).coerceAtLeast(settings.periodLength)
+        learnedOvulationIndex = pastOvulations.takeIf { it.isNotEmpty() }?.average()?.roundToInt()
+        val own = settings.ovulationDay?.let { it - 1 }
+        // Ondea's estimate: learnt from confirmed cycles, else the user's own day, else a typical cycle.
+        ondeaOvulationIndex = learnedOvulationIndex ?: own ?: typicalOvulationIndex
+        predictionBasis = when {
+            settings.usesOwnOvulationDay -> PredictionBasis.OWN_DAY
+            learnedOvulationIndex != null -> PredictionBasis.LEARNED
+            own != null -> PredictionBasis.OWN_DAY
+            else -> PredictionBasis.TYPICAL
+        }
+        predictedOvulationIndex = if (settings.usesOwnOvulationDay) own!! else ondeaOvulationIndex
+        earliestOvulationIndex = if (predictionBasis == PredictionBasis.LEARNED)
+            minOf(predictedOvulationIndex, pastOvulations.min())
+        else predictedOvulationIndex
 
         current = cycles.lastOrNull()?.takeIf { it.end == null && !it.start.isAfter(today) }
         windows = cycles.map { windowFor(it, isCurrent = it == current) }

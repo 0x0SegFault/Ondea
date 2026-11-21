@@ -195,4 +195,36 @@ class CycleEngineTest {
         assertEquals(c3.plusDays(13), f.ovulation)
         assertEquals(c3.plusDays(6), f.fertileStart)
     }
+
+    @Test
+    fun `Ondea mode uses the own day until it has learnt, then its own estimate`() {
+        val own = settings.copy(ovulationDay = 12, useOwnOvulationDay = false)
+        // No history: the user's day is the best estimate.
+        val before = CycleEngine(data(start).copy(settings = own), start.plusDays(2))
+        assertEquals(PredictionBasis.OWN_DAY, before.predictionBasis)
+        assertEquals(start.plusDays(11), before.forecast!!.ovulation)
+        // One confirmed cycle (ovulation index 17): Ondea now uses what it learnt; the own day is kept.
+        val c2 = start.plusDays(30)
+        val after = CycleEngine(data(start, c2, entries = temps(start, 30, riseDay = 19)).copy(settings = own), c2.plusDays(2))
+        assertEquals(PredictionBasis.LEARNED, after.predictionBasis)
+        assertEquals(c2.plusDays(17), after.forecast!!.ovulation)
+        assertEquals(12, after.data.settings.ovulationDay)
+    }
+
+    @Test
+    fun `My day mode keeps the own day even with history`() {
+        val own = settings.copy(ovulationDay = 12, useOwnOvulationDay = true)
+        val c2 = start.plusDays(30)
+        val e = CycleEngine(data(start, c2, entries = temps(start, 30, riseDay = 19)).copy(settings = own), c2.plusDays(2))
+        assertEquals(PredictionBasis.OWN_DAY, e.predictionBasis)
+        assertEquals(c2.plusDays(11), e.forecast!!.ovulation)
+        assertEquals(17, e.ondeaOvulationIndex) // Ondea's estimate is still shown
+    }
+
+    @Test
+    fun `without own day or history the prediction is a typical cycle`() {
+        val e = CycleEngine(data(start), start.plusDays(2))
+        assertEquals(PredictionBasis.TYPICAL, e.predictionBasis)
+        assertEquals(13, e.predictedOvulationIndex)
+    }
 }

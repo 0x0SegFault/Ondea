@@ -122,9 +122,6 @@
     <string name="cycle_started_here">Un nouveau cycle a commencé ce jour-là</string>
     <string name="section_cycle">Cycle</string>
     <string name="cycle_length_hint">Utilisée tant que trop peu de cycles sont enregistrés. Prévisions actuelles sur %d jours.</string>
-    <string name="ovulation_day_auto">Trouver mon jour d\'ovulation automatiquement</string>
-    <string name="ovulation_day_auto_hint">Actuellement prévue au jour %d du cycle, d\'après vos cycles.</string>
-    <string name="ovulation_day_manual_hint">Indiquez le jour du cycle où vous ovulez habituellement. La température, les tests d\'ovulation et la glaire restent prioritaires dès qu\'ils sont observés.</string>
     <string name="section_reminder">Rappel</string>
     <string name="reminder_daily">Rappel quotidien</string>
     <string name="reminder_daily_hint">Une notification discrète pour prendre votre température</string>
@@ -140,7 +137,7 @@
     <string name="secure_screen_hint">Bloquer les captures d\'écran et masquer Ondea dans les applications récentes</string>
     <string name="privacy_summary">Ondea n\'a pas l\'autorisation d\'accéder à internet. Vos données sont chiffrées sur ce téléphone avec une clé protégée par le Keystore Android, et sont exclues des sauvegardes cloud d\'Android.</string>
     <string name="section_backup">Sauvegarde</string>
-    <string name="backup_explain">Les sauvegardes sont chiffrées avec un mot de passe de votre choix. Enregistrez-les où vous voulez depuis le sélecteur de fichiers : sur le téléphone, une carte SD, ou une application cloud qui y apparaît (comme Proton Drive ou Nextcloud).</string>
+    <string name="backup_explain">Les sauvegardes sont chiffrées avec un mot de passe de votre choix. Envoyez-les vers une application de drive (Proton Drive, Nextcloud…) ou enregistrez-les comme fichier.</string>
     <string name="backup_create">Créer une sauvegarde chiffrée</string>
     <string name="backup_create_hint">Protégée par un mot de passe</string>
     <string name="backup_password_explain">Choisissez un mot de passe robuste. Sans lui, personne ne pourra restaurer la sauvegarde, pas même vous.</string>
@@ -215,6 +212,21 @@
     <string name="why_timing">La température monte après l\'ovulation. Elle confirme l\'ovulation et apprend à Ondea votre rythme pour les cycles suivants. La glaire cervicale et les tests d\'ovulation arrivent avant l\'ovulation : utilisez-les pour choisir le moment des rapports dans ce cycle.</string>
     <string name="src_erden2022">L\'ovulation a lieu 22 à 56 heures après le début du pic de LH. Certains pics sont courts ou ne sont pas suivis d\'une ovulation.</string>
     <string name="src_mcgovern2004" formatted="false">Environ 7 % des tests d\'ovulation positifs faits à domicile ne sont pas suivis d\'une ovulation.</string>
+    <string name="prediction_to_use">Prévision à utiliser</string>
+    <string name="use_ondea">Ondea (apprend)</string>
+    <string name="use_mine">Mon jour</string>
+    <string name="ondea_estimate">Estimation d\'Ondea</string>
+    <string name="ondea_estimate_own">Jour %d du cycle : votre jour habituel, jusqu\'à votre premier cycle confirmé</string>
+    <string name="my_usual_day">Mon jour d\'ovulation habituel</string>
+    <string name="my_usual_day_hint">Toujours conservé. Avec Ondea, il est utilisé jusqu\'à ce qu\'Ondea ait appris d\'un cycle confirmé.</string>
+    <string name="source_typical">Prévu d\'après un cycle type</string>
+    <string name="backup_where_title">Où envoyer la sauvegarde ?</string>
+    <string name="backup_where_intro">Ondea chiffre la sauvegarde avec votre mot de passe avant qu\'elle ne quitte l\'application. Personne ne peut la lire sans le mot de passe.</string>
+    <string name="backup_to_app">Envoyer vers un drive ou une application</string>
+    <string name="backup_to_app_hint">Proton Drive, Nextcloud, e-mail… Vous choisissez l\'application à l\'étape suivante.</string>
+    <string name="backup_to_file">Enregistrer comme fichier</string>
+    <string name="backup_to_file_hint">Sur ce téléphone ou une carte SD, ou dans un drive affiché dans le sélecteur de fichiers.</string>
+    <string name="backup_share_title">Envoyer la sauvegarde chiffrée</string>
     <plurals name="period_late">
         <item quantity="one">Règles en retard de %d jour</item>
         <item quantity="many">Règles en retard de %d jours</item>

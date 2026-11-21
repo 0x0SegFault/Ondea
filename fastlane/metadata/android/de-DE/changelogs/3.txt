@@ -1,0 +1,3 @@
+Dein üblicher Eisprungtag und die Schätzung von Ondea bleiben beide erhalten. Wähle, welcher vorhersagt.
+Sicherung: an eine Laufwerk-App senden (Proton Drive, Nextcloud …) oder als Datei speichern.
+Build-Werkzeuge aktualisiert; Ziel Android 16.

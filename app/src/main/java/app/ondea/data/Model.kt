@@ -17,8 +17,10 @@ data class Settings(
     /** Cycle length the user declared; used until enough cycles have been recorded. */
     val cycleLength: Int = 28,
     val periodLength: Int = 5,
-    /** Cycle day on which the user usually ovulates; null = learn it automatically. */
+    /** Cycle day on which the user usually ovulates, if known. Kept when the user lets Ondea predict. */
     val ovulationDay: Int? = null,
+    /** True: always predict with [ovulationDay]. False: Ondea learns. Null (older data): own day if set. */
+    val useOwnOvulationDay: Boolean? = null,
     val fahrenheit: Boolean = false,
     val appLock: Boolean = false,
     val secureScreen: Boolean = true,
@@ -77,3 +79,7 @@ fun AppData.withTrackingStopped(day: Long): AppData {
     if (last.end != null || last.start > day) return this
     return copy(cycles = cycles.map { if (it == last) it.copy(end = day) else it })
 }
+
+/** Whether predictions use the user's own ovulation day rather than Ondea's learnt estimate. */
+val Settings.usesOwnOvulationDay: Boolean
+    get() = ovulationDay != null && (useOwnOvulationDay ?: true)
