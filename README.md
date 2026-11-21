@@ -46,7 +46,7 @@ It has **no internet permission, no account, no ads and no analytics**, and it w
 |---|---|
 | [GitHub Releases](https://github.com/0x0SegFault/ondea/releases) | Signed APK attached to each release |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | Add `https://github.com/0x0SegFault/ondea` to get automatic updates from GitHub |
-| F-Droid | Submission in progress |
+| F-Droid | Planned. F-Droid accepts apps after 3 months of active development. |
 
 ## Privacy and security
 
