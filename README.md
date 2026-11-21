@@ -127,13 +127,14 @@ Every push and pull request runs the unit tests, lint, a release build and a che
 
 ### Publishing on F-Droid
 
-F-Droid builds the app from source itself and signs it with its own key.
+The build is reproducible. F-Droid builds the app from source, checks that the result is identical to the APK on GitHub, and ships the APK signed by the developer. Users can then move between GitHub and F-Droid versions without data loss.
 
 1. Tag the release: `git tag -a v1.0.0 -m "Ondea 1.0.0" && git push origin v1.0.0`.
-2. Fork [fdroiddata](https://gitlab.com/fdroid/fdroiddata) on GitLab and add [`fdroid/io.github.x0x0segfault.ondea.yml`](fdroid/io.github.x0x0segfault.ondea.yml) as `metadata/io.github.x0x0segfault.ondea.yml`.
-3. Open a merge request using the "App inclusion" template. The store texts and screenshots are read from [`fastlane/metadata/android/`](fastlane/metadata/android).
+2. Build the signed APK and attach it to the GitHub release as `ondea-1.0.0.apk`.
+3. In [`fdroid/io.github.x0x0segfault.ondea.yml`](fdroid/io.github.x0x0segfault.ondea.yml), replace `COMMIT_HASH` and `SIGNING_KEY` (the file shows the commands).
+4. Fork [fdroiddata](https://gitlab.com/fdroid/fdroiddata), add the file as `metadata/io.github.x0x0segfault.ondea.yml` and open a merge request with the "App inclusion" template.
 
-For later releases, bump `versionCode` and `versionName` in `app/build.gradle.kts`, add `fastlane/metadata/android/<lang>/changelogs/<versionCode>.txt`, and push a new `vX.Y.Z` tag. F-Droid picks it up automatically.
+For a new version: increase `versionCode` and `versionName`, add `fastlane/metadata/android/<lang>/changelogs/<versionCode>.txt`, push a `vX.Y.Z` tag and attach `ondea-X.Y.Z.apk` to the release. F-Droid finds the new tag automatically.
 
 ## Contributing
 

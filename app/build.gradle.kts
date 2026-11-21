@@ -39,6 +39,8 @@ android {
 
     buildTypes {
         release {
+            // Reproducible builds (F-Droid): no git metadata in the APK.
+            vcsInfo.include = false
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -92,4 +94,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
 
     testImplementation("junit:junit:4.13.2")
+}
+
+// Reproducible builds (F-Droid): the ART baseline profile is not byte-stable between builds.
+tasks.configureEach {
+    if (name.contains("ArtProfile")) enabled = false
 }
