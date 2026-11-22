@@ -22,11 +22,11 @@ struct CycleRing: View {
         let gap: Double = count > 40 ? 0.8 : 1.6
 
         for (index, kind) in days.enumerated() {
-            let from: Double = -90 + Double(index) * sweep + gap / 2
-            let to: Double = -90 + Double(index + 1) * sweep - gap / 2
+            let startDegrees: Double = -90 + Double(index) * sweep + gap / 2
+            let endDegrees: Double = -90 + Double(index + 1) * sweep - gap / 2
             var path = Path()
             path.addArc(center: centre, radius: radius,
-                        startAngle: .degrees(from), endAngle: .degrees(to), clockwise: false)
+                        startAngle: .degrees(startDegrees), endAngle: .degrees(endDegrees), clockwise: false)
             context.stroke(path, with: .color(Palette.day(kind)), lineWidth: stroke)
         }
 
