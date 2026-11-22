@@ -8,6 +8,7 @@
 
 [![Build & test](https://github.com/0x0SegFault/ondea/actions/workflows/build.yml/badge.svg)](https://github.com/0x0SegFault/ondea/actions/workflows/build.yml)
 [![Latest release](https://img.shields.io/github/v/release/0x0SegFault/ondea?label=release)](https://github.com/0x0SegFault/ondea/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/0x0SegFault/ondea/total.svg?label=downloads)](https://github.com/0x0SegFault/ondea/releases)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
 [![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84.svg?logo=android&logoColor=white)](#get-the-app)
 [![No internet permission](https://img.shields.io/badge/internet%20permission-none-success.svg)](#privacy)
