@@ -27,12 +27,13 @@ jobs:
         run: ./gradlew lintDebug
       - name: Build
         run: ./gradlew assembleDebug assembleRelease
-      - name: Verify no internet permission
+      - name: Check permissions (must match PRIVACY.md)
         run: |
           AAPT=$(ls $ANDROID_HOME/build-tools/*/aapt2 | tail -1)
-          if $AAPT dump permissions app/build/outputs/apk/release/*.apk | grep -q "android.permission.INTERNET"; then
-            echo "INTERNET permission found in the release APK" && exit 1
-          fi
+          $AAPT dump permissions app/build/outputs/apk/release/*.apk | sed -n "s/^uses-permission: name='\(.*\)'/\1/p" | sed 's/^io.github.x0x0segfault.ondea\.//' | sort > found.txt
+          printf '%s\n' DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION android.permission.POST_NOTIFICATIONS \
+            android.permission.RECEIVE_BOOT_COMPLETED android.permission.USE_BIOMETRIC android.permission.USE_FINGERPRINT | sort > allowed.txt
+          diff allowed.txt found.txt || { echo "Permissions changed: update PRIVACY.md, the in-app list and this check"; exit 1; }
       - uses: actions/upload-artifact@v7
         if: always()
         with:

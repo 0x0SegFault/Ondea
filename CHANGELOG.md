@@ -6,6 +6,7 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 
 ### Changed
 - Your usual ovulation day and Ondea's estimate are both kept. Choose which one predicts. Ondea uses your day until it has learnt from a confirmed cycle.
+- New page Settings → Privacy → Permissions and data: each permission, why it is needed, and a data summary.
 - Creating a backup first asks where it goes: a drive or app (Proton Drive, Nextcloud, email…) through the share menu, or a file.
 - Android Gradle plugin 8.13.2, Gradle 9.5.1, Kotlin 2.4.21, target SDK 36, updated AndroidX libraries.
 

@@ -75,7 +75,13 @@ Each rule and its scientific source: [docs/SCIENCE.md](docs/SCIENCE.md). The app
 - **Optional app lock** (fingerprint, face or screen lock) and screenshot blocking.
 - **Backups only when you ask**, encrypted with your password. Send them to Proton Drive, Nextcloud or another app, or save them as a file.
 
-Details: [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md).
+| Permission | Why |
+|---|---|
+| Notifications | Daily reminder. Asked only when you turn it on. |
+| Run at startup | Sets the reminder again after a restart. |
+| Fingerprint and face | App lock. Ondea never sees your fingerprint or face. |
+
+No internet, location, contacts, camera, microphone, storage or accounts. Full list and data label: [PRIVACY.md](PRIVACY.md). Security: [SECURITY.md](SECURITY.md).
 
 ## Build from source
 

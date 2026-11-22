@@ -30,6 +30,7 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Loop
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Policy
 import androidx.compose.material.icons.outlined.Restore
 import androidx.compose.material.icons.outlined.TableChart
 import androidx.compose.material.icons.outlined.Thermostat
@@ -89,6 +90,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
     var confirmWipe by rememberSaveable { mutableStateOf(false) }
     var lockUnavailable by rememberSaveable { mutableStateOf(false) }
     var showSources by rememberSaveable { mutableStateOf(false) }
+    var showPermissions by rememberSaveable { mutableStateOf(false) }
 
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         reminderOn = granted
@@ -175,6 +177,8 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             }
             Text(stringResource(R.string.privacy_summary), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
+            ClickRow(Icons.Outlined.Policy, MaterialTheme.colorScheme.primary, stringResource(R.string.perms_title),
+                stringResource(R.string.perms_hint)) { showPermissions = true }
         }
 
         SectionCard(title = stringResource(R.string.section_backup)) {
@@ -247,6 +251,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             stringResource(R.string.erase), onConfirm = vm::wipe, onDismiss = { confirmWipe = false })
     }
     if (showSources) SourcesSheet(onDismiss = { showSources = false })
+    if (showPermissions) PermissionsSheet(onDismiss = { showPermissions = false })
     if (chooseBackup) {
         BackupChoiceSheet(
             onFile = { shareBackup = false; chooseBackup = false; askExportPassword = true },

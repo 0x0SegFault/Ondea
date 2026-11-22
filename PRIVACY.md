@@ -1,13 +1,34 @@
-# Privacy policy
+# Privacy
 
-Ondea does not collect, transmit or share any data.
+Ondea does not collect, send or share any data.
 
-- The app has no internet permission and cannot communicate over the network.
-- It has no accounts, advertising, analytics or crash reporting.
-- Everything you enter (temperatures, periods, notes, settings) is stored only on your device, in a file encrypted with a key held by the Android Keystore.
-- This data is excluded from Android cloud backup and from device-to-device transfer.
-- Backups are created only when you ask for one. They are encrypted with a password you choose and saved where you choose, using the Android file picker.
-- The optional daily reminder stores only whether it is on and at what time. This setting is not encrypted because it contains no health information. It is used to reschedule the reminder after a reboot.
-- A CSV export, if you create one, is **not** encrypted. Treat that file carefully.
+## Your data
 
-Uninstalling the app, or choosing **Settings → Erase all data**, permanently deletes all data on the device, including the encryption key.
+| | |
+|---|---|
+| Collected by the developer | Nothing |
+| Shared with others | Nothing |
+| Tracking, ads, analytics | None |
+| Account | None |
+| Where data is stored | Only on your phone, encrypted with a key held by the Android Keystore |
+| Android cloud backup | Excluded |
+| Delete your data | Settings → Erase all data, or uninstall the app |
+
+Backups exist only when you create one. They are encrypted with your password, and you choose where they go. A CSV export is **not** encrypted: handle that file with care.
+
+The daily reminder stores only "on/off" and the time, without encryption, so it can restart after a reboot. It contains no health data.
+
+## Permissions
+
+The release APK requests these permissions and no others. CI fails if this list changes.
+
+| Permission | What it is for | When it is used |
+|---|---|---|
+| `POST_NOTIFICATIONS` | Shows the daily reminder | Android asks you when you turn the reminder on |
+| `RECEIVE_BOOT_COMPLETED` | Sets the reminder again after a restart | Only if the reminder is on |
+| `USE_BIOMETRIC`, `USE_FINGERPRINT` | Unlocks Ondea with fingerprint or face | Only if the app lock is on. Ondea never sees your fingerprint or face: Android only answers yes or no. `USE_FINGERPRINT` is for Android 8. |
+| `DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` | Added by the AndroidX library. Keeps Ondea's internal messages private from other apps | Internal. It gives access to nothing. |
+
+Ondea never requests internet, location, contacts, camera, microphone, phone, storage or account access. Files open only through the Android file picker, and only the file you choose.
+
+The app shows this information in **Settings → Privacy → Permissions and data**.
