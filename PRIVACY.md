@@ -22,7 +22,11 @@ The daily reminder stores only "on/off" and the time, without encryption, so it 
 
 Ondea has no crash reporter and sends nothing by itself.
 
-- **Settings → About → Report a problem / Suggest a feature** opens a form on GitHub in your browser. The app version and phone model are filled in; you see everything before you send it.
+- **Settings → About → Report a problem / Suggest a feature** lets you choose how to send it. You see everything before you send it:
+  - **Anonymous form**: opens a page in your browser. No account and no email. The service (Scaleway, Paris) does not read or store your IP address or any identifier, and reports go to a private repository, read by the maintainer before anything is made public. See [reports/README.md](reports/README.md).
+  - **GitHub**: with your GitHub account; the report is public.
+  - **Share as text**: with any app you choose.
+  - The app version and phone model are filled in; you can delete them.
 - **After a crash**, Ondea saves the technical error (no health data) on the phone. On the next launch it offers to report it; you read the text in the form before sending. "Dismiss" deletes it.
 
 ## Permissions

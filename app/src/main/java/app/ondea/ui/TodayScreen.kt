@@ -322,15 +322,16 @@ private fun FertilityCard(f: Forecast) {
 private fun CrashBanner() {
     val context = LocalContext.current
     var report by remember { mutableStateOf(CrashLog.pending(context)) }
+    var choose by remember { mutableStateOf(false) }
     val text = report ?: return
+    if (choose) {
+        ReportSheet(Feedback.Kind.BUG, what = "Crash report:\n```\n$text\n```",
+            onSent = { CrashLog.clear(context); report = null }, onDismiss = { choose = false })
+    }
     SectionCard(title = stringResource(R.string.crash_title), icon = Icons.Outlined.BugReport) {
         Text(stringResource(R.string.crash_text), style = MaterialTheme.typography.bodyMedium)
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Button(onClick = {
-                Feedback.open(context, Feedback.bugReportUri(context, "Crash report:\n```\n$text\n```"))
-                CrashLog.clear(context)
-                report = null
-            }) { Text(stringResource(R.string.crash_report)) }
+            Button(onClick = { choose = true }) { Text(stringResource(R.string.crash_report)) }
             TextButton(onClick = {
                 CrashLog.clear(context)
                 report = null

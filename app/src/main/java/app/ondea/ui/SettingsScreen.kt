@@ -94,6 +94,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
     var lockUnavailable by rememberSaveable { mutableStateOf(false) }
     var showSources by rememberSaveable { mutableStateOf(false) }
     var showPermissions by rememberSaveable { mutableStateOf(false) }
+    var reportKind by rememberSaveable { mutableStateOf<Feedback.Kind?>(null) }
 
     val notifPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         reminderOn = granted
@@ -224,9 +225,9 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             ClickRow(Icons.Outlined.MenuBook, palette.ovulation, stringResource(R.string.sources_title),
                 stringResource(R.string.sources_hint)) { showSources = true }
             ClickRow(Icons.Outlined.BugReport, MaterialTheme.colorScheme.primary, stringResource(R.string.feedback_bug),
-                stringResource(R.string.feedback_bug_hint)) { Feedback.open(context, Feedback.bugReportUri(context)) }
+                stringResource(R.string.feedback_bug_hint)) { reportKind = Feedback.Kind.BUG }
             ClickRow(Icons.Outlined.TipsAndUpdates, MaterialTheme.colorScheme.primary, stringResource(R.string.feedback_feature),
-                stringResource(R.string.feedback_feature_hint)) { Feedback.open(context, Feedback.featureRequestUri()) }
+                stringResource(R.string.feedback_feature_hint)) { reportKind = Feedback.Kind.FEATURE }
             Text(stringResource(R.string.about_science), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(stringResource(R.string.disclaimer_full), style = MaterialTheme.typography.bodySmall,
@@ -259,6 +260,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
     }
     if (showSources) SourcesSheet(onDismiss = { showSources = false })
     if (showPermissions) PermissionsSheet(onDismiss = { showPermissions = false })
+    reportKind?.let { kind -> ReportSheet(kind, what = null, onSent = {}, onDismiss = { reportKind = null }) }
     if (chooseBackup) {
         BackupChoiceSheet(
             onFile = { shareBackup = false; chooseBackup = false; askExportPassword = true },

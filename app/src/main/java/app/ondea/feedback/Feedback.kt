@@ -18,6 +18,41 @@ object Feedback {
     private const val REPO = "https://github.com/0x0SegFault/ondea"
     private const val MAX_REPORT = 3000
 
+    /**
+     * Anonymous form (reports/ folder, Scaleway function in Paris). Null until it is deployed:
+     * then the app offers only GitHub and "share as text".
+     */
+    val ANONYMOUS_FORM_URL: String? = null
+
+    enum class Kind(val formValue: String) { BUG("bug"), FEATURE("feature") }
+
+    val anonymousFormAvailable: Boolean get() = ANONYMOUS_FORM_URL != null
+
+    fun anonymousFormUri(context: Context, kind: Kind, what: String? = null): Uri? =
+        ANONYMOUS_FORM_URL?.toUri()?.buildUpon()
+            ?.appendQueryParameter("kind", kind.formValue)
+            ?.appendQueryParameter("version", version(context))
+            ?.appendQueryParameter("device", device())
+            ?.apply { if (what != null) appendQueryParameter("what", what.take(MAX_REPORT)) }
+            ?.build()
+
+    fun githubUri(context: Context, kind: Kind, what: String? = null): Uri =
+        if (kind == Kind.BUG) bugReportUri(context, what) else featureRequestUri()
+
+    /** Plain text for "share as text": the user picks the app and sees everything. */
+    fun shareText(context: Context, kind: Kind, what: String?): String = buildString {
+        append(if (kind == Kind.BUG) "Ondea problem report" else "Ondea feature idea").append("\n\n")
+        if (!what.isNullOrBlank()) append(what.take(MAX_REPORT)).append("\n\n")
+        append("App version: ").append(version(context)).append('\n')
+        append("Device: ").append(device())
+    }
+
+    fun share(context: Context, kind: Kind, what: String?, title: String) {
+        val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, shareText(context, kind, what))
+        LockGate.skipNextLock()
+        context.startActivity(Intent.createChooser(send, title))
+    }
+
     fun version(context: Context): String =
         context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "?"
 
