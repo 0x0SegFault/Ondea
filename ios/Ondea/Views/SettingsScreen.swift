@@ -9,8 +9,8 @@ struct SettingsScreen: View {
         NavigationStack {
             Form {
                 Section(L10n.t("section_cycle")) {
-                    Picker(L10n.t("unit"), selection: Binding(get: { model.fahrenheit }, set: { on in
-                        model.change { $0.setFahrenheit(on: on) }
+                    Picker(L10n.t("unit"), selection: Binding(get: { model.fahrenheit }, set: { isOn in
+                        model.change { $0.setFahrenheit(on: isOn) }
                     })) {
                         Text("°C").tag(false)
                         Text("°F").tag(true)
@@ -18,9 +18,9 @@ struct SettingsScreen: View {
                     .pickerStyle(.segmented)
                 }
                 Section(footer: Text(L10n.t("data_stored"))) {
-                    Toggle(L10n.t("app_lock"), isOn: Binding(get: { model.appLock }, set: { on in
-                        if on && !AppLock.isAvailable { lockUnavailable = true; return }
-                        model.change { $0.setAppLock(on: on) }
+                    Toggle(L10n.t("app_lock"), isOn: Binding(get: { model.appLock }, set: { isOn in
+                        if isOn && !AppLock.isAvailable { lockUnavailable = true; return }
+                        model.change { $0.setAppLock(on: isOn) }
                         model.unlocked = true
                     }))
                 }

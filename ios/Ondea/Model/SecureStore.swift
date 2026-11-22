@@ -22,7 +22,8 @@ final class SecureStore {
         let sealed = try Data(contentsOf: fileURL)
         guard let box = try? AES.GCM.SealedBox(combined: sealed) else { throw StoreError.corrupted }
         let plain = try AES.GCM.open(box, using: try key())
-        return String(decoding: plain, as: UTF8.self)
+        guard let json = String(bytes: plain, encoding: .utf8) else { throw StoreError.corrupted }
+        return json
     }
 
     func write(_ json: String) throws {

@@ -91,4 +91,4 @@ jobs:
           gh release view ios-preview >/dev/null 2>&1 || gh release create ios-preview --prerelease \
             --title "iOS preview (CI)" --notes "Build log and simulator screenshots of the latest iOS CI run on main. Not an installable app."
           FILES=$(ls ios-build.log gradle-ios.log screenshots/*.png 2>/dev/null || true)
-          [ -n "$FILES" ] && gh release upload ios-preview $FILES --clobber
+          if [ -n "$FILES" ]; then gh release upload ios-preview $FILES --clobber; else echo "Nothing to publish"; fi

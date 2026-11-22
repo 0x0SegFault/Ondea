@@ -27,8 +27,11 @@ struct TemperatureInput: View {
             Text(invalid ? L10n.t("temperature_invalid") : L10n.t("temperature_hint"))
                 .font(.footnote).foregroundStyle(invalid ? .red : .secondary)
             Button {
-                if let parsed { model.change { $0.setTemperature(day: day, tempC: parsed) } }
-                else if text.isEmpty { model.change { $0.clearTemperature(day: day) } }
+                if let parsed {
+                    model.change { $0.setTemperature(day: day, tempC: parsed) }
+                } else if text.isEmpty {
+                    model.change { $0.clearTemperature(day: day) }
+                }
             } label: {
                 Label(saved != nil && parsed == saved ? L10n.t("temperature_saved") : L10n.t("save_temperature"),
                       systemImage: saved != nil && parsed == saved ? "checkmark" : "square.and.arrow.down")
@@ -71,26 +74,29 @@ struct DayDetails: View {
     @EnvironmentObject private var model: AppModel
     let day: Int64
 
+    private static let mucusKeys = ["mucus_none", "mucus_dry", "mucus_sticky", "mucus_creamy", "mucus_eggwhite"]
+    private static let mucusHints = ["mucus_hint", "mucus_dry_hint", "mucus_sticky_hint", "mucus_creamy_hint", "mucus_eggwhite_hint"]
+
     var body: some View {
         let entry = model.entry(day)
         VStack(alignment: .leading, spacing: 12) {
             choice(L10n.t("period"), ["flow_none", "flow_spotting", "flow_light", "flow_medium", "flow_heavy"], Int(entry.flow)) { value in
                 model.change { $0.setFlow(day: day, flow: Int32(value)) }
             }
-            choice(L10n.t("mucus"), ["mucus_none", "mucus_dry", "mucus_sticky", "mucus_creamy", "mucus_eggwhite"], Int(entry.mucus)) { value in
+            choice(L10n.t("mucus"), Self.mucusKeys, Int(entry.mucus)) { value in
                 model.change { $0.setMucus(day: day, mucus: Int32(value)) }
             }
-            Text(L10n.t(["mucus_hint", "mucus_dry_hint", "mucus_sticky_hint", "mucus_creamy_hint", "mucus_eggwhite_hint"][Int(entry.mucus)]))
+            Text(L10n.t(Self.mucusHints[Int(entry.mucus)]))
                 .font(.footnote).foregroundStyle(.secondary)
             choice(L10n.t("lh_test"), ["lh_none", "lh_negative", "lh_positive"], Int(entry.lh)) { value in
                 model.change { $0.setLh(day: day, lh: Int32(value)) }
             }
             Text(L10n.t("lh_hint")).font(.footnote).foregroundStyle(.secondary)
-            Toggle(L10n.t("intercourse"), isOn: Binding(get: { entry.intercourse }, set: { on in
-                model.change { $0.setIntercourse(day: day, on: on) }
+            Toggle(L10n.t("intercourse"), isOn: Binding(get: { entry.intercourse }, set: { isOn in
+                model.change { $0.setIntercourse(day: day, on: isOn) }
             }))
-            Toggle(L10n.t("disturbed_short"), isOn: Binding(get: { entry.disturbed }, set: { on in
-                model.change { $0.setDisturbed(day: day, on: on) }
+            Toggle(L10n.t("disturbed_short"), isOn: Binding(get: { entry.disturbed }, set: { isOn in
+                model.change { $0.setDisturbed(day: day, on: isOn) }
             }))
         }
     }
