@@ -4,13 +4,15 @@
 
 # Ondea
 
-**Private, offline fertility and ovulation tracker for Android, based on basal body temperature and cervical mucus.**
+**Private, offline fertility and ovulation tracker for Android and iPhone, based on basal body temperature and cervical mucus.**
 
-[![Build & test](https://github.com/0x0SegFault/ondea/actions/workflows/build.yml/badge.svg)](https://github.com/0x0SegFault/ondea/actions/workflows/build.yml)
+[![Android build & test](https://github.com/0x0SegFault/ondea/actions/workflows/build.yml/badge.svg)](https://github.com/0x0SegFault/ondea/actions/workflows/build.yml)
+[![iOS build & test](https://github.com/0x0SegFault/ondea/actions/workflows/ios.yml/badge.svg)](https://github.com/0x0SegFault/ondea/actions/workflows/ios.yml)
 [![Latest release](https://img.shields.io/github/v/release/0x0SegFault/ondea?label=release)](https://github.com/0x0SegFault/ondea/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/0x0SegFault/ondea/total.svg?label=downloads)](https://github.com/0x0SegFault/ondea/releases)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
 [![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84.svg?logo=android&logoColor=white)](#get-the-app)
+[![iOS 17+ (in progress)](https://img.shields.io/badge/iOS-17%2B%20in%20progress-lightgrey.svg?logo=apple&logoColor=white)](ios)
 [![No internet permission](https://img.shields.io/badge/internet%20permission-none-success.svg)](#privacy)
 
 English · Français · Deutsch · Español · Italiano
@@ -20,6 +22,13 @@ English · Français · Deutsch · Español · Italiano
 Ondea helps you find your fertile days and confirm ovulation when you try to conceive. Each morning, you log your temperature. You can also log your period, cervical mucus and ovulation tests. Ondea uses the symptothermal method and published studies to show your fertile window, your most fertile days and your chance of conception per day.
 
 Ondea has no internet access, no account, no ads and no tracking. It works without Google Play Services.
+
+| Platform | Status |
+|---|---|
+| Android 8.0+ | Available: [releases](https://github.com/0x0SegFault/ondea/releases/latest), Obtainium. F-Droid and Google Play planned. |
+| iPhone (iOS 17+) | In progress: first version, built and tested in CI. App Store later. See [ios/](ios). |
+
+Both apps share the same fertility logic ([`shared/`](shared), Kotlin Multiplatform), the same data format and the same translations.
 
 > **Ondea is not a contraceptive and not a medical device.**
 
@@ -72,9 +81,9 @@ Each rule and its scientific source: [docs/SCIENCE.md](docs/SCIENCE.md). The app
 ## Privacy
 
 - **No internet permission.** The app cannot send data. CI fails if the permission ever appears.
-- **Encrypted on the phone** with AES-256-GCM. The key stays in the Android Keystore.
-- **Not in Android cloud backups.** No account, no ads, no analytics, no Google services.
-- **Optional app lock** (fingerprint, face or screen lock) and screenshot blocking.
+- **Encrypted on the phone** with AES-256-GCM. The key stays in the Android Keystore (on iPhone: in the Keychain, this device only).
+- **Not in cloud backups** (Android backup, iCloud). No account, no ads, no analytics, no Google services.
+- **Optional app lock** (fingerprint, face, Face ID or screen lock) and screenshot blocking on Android.
 - **Backups only when you ask**, encrypted with your password. Send them to Proton Drive, Nextcloud or another app, or save them as a file.
 
 | Permission | Why |
