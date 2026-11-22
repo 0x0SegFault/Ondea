@@ -245,6 +245,14 @@
     <string name="data_shared">Condivisi con altri: nessuno</string>
     <string name="data_tracking">Tracciamento: nessuno</string>
     <string name="data_stored">Salvati solo su questo telefono, crittografati. Cancellali quando vuoi in Impostazioni → Cancella tutti i dati.</string>
+    <string name="feedback_bug">Segnala un problema</string>
+    <string name="feedback_bug_hint">Apre un modulo GitHub nel browser, con la versione dell\'app e il modello del telefono. Non aggiungere mai dati sanitari.</string>
+    <string name="feedback_feature">Proponi una funzione</string>
+    <string name="feedback_feature_hint">Apre un modulo GitHub nel browser.</string>
+    <string name="crash_title">Ondea si è chiusa in modo imprevisto</string>
+    <string name="crash_text">Aiuta a risolverlo: invia il rapporto tecnico. Non contiene dati sanitari e puoi leggerlo prima di inviarlo.</string>
+    <string name="crash_report">Segnala</string>
+    <string name="crash_dismiss">Ignora</string>
     <plurals name="period_late">
         <item quantity="one">Mestruazioni in ritardo di %d giorno</item>
         <item quantity="many">Mestruazioni in ritardo di %d giorni</item>

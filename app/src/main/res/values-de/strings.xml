@@ -245,6 +245,14 @@
     <string name="data_shared">Mit anderen geteilt: nichts</string>
     <string name="data_tracking">Tracking: keines</string>
     <string name="data_stored">Nur auf diesem Telefon gespeichert, verschlüsselt. Jederzeit löschbar unter Einstellungen → Alle Daten löschen.</string>
+    <string name="feedback_bug">Problem melden</string>
+    <string name="feedback_bug_hint">Öffnet ein GitHub-Formular in deinem Browser, mit App-Version und Telefonmodell. Füge nie Gesundheitsdaten hinzu.</string>
+    <string name="feedback_feature">Funktion vorschlagen</string>
+    <string name="feedback_feature_hint">Öffnet ein GitHub-Formular in deinem Browser.</string>
+    <string name="crash_title">Ondea wurde unerwartet beendet</string>
+    <string name="crash_text">Hilf bei der Behebung: Sende den technischen Bericht. Er enthält keine Gesundheitsdaten, und du kannst ihn vor dem Senden lesen.</string>
+    <string name="crash_report">Melden</string>
+    <string name="crash_dismiss">Schließen</string>
     <plurals name="period_late">
         <item quantity="one">Periode %d Tag überfällig</item>
         <item quantity="other">Periode %d Tage überfällig</item>

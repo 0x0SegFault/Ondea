@@ -27,6 +27,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material.icons.outlined.EditNote
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Tune
@@ -45,7 +46,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import app.ondea.feedback.CrashLog
+import app.ondea.feedback.Feedback
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -81,6 +86,8 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        CrashBanner()
+
         Text(
             today.long(),
             style = MaterialTheme.typography.labelLarge,
@@ -307,5 +314,27 @@ private fun FertilityCard(f: Forecast) {
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/** Shown after a crash: offers to report it. The report holds only the technical error. */
+@Composable
+private fun CrashBanner() {
+    val context = LocalContext.current
+    var report by remember { mutableStateOf(CrashLog.pending(context)) }
+    val text = report ?: return
+    SectionCard(title = stringResource(R.string.crash_title), icon = Icons.Outlined.BugReport) {
+        Text(stringResource(R.string.crash_text), style = MaterialTheme.typography.bodyMedium)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = {
+                Feedback.open(context, Feedback.bugReportUri(context, "Crash report:\n```\n$text\n```"))
+                CrashLog.clear(context)
+                report = null
+            }) { Text(stringResource(R.string.crash_report)) }
+            TextButton(onClick = {
+                CrashLog.clear(context)
+                report = null
+            }) { Text(stringResource(R.string.crash_dismiss)) }
+        }
     }
 }

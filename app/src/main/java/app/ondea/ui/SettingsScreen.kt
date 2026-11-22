@@ -23,6 +23,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Backup
+import androidx.compose.material.icons.outlined.BugReport
+import androidx.compose.material.icons.outlined.TipsAndUpdates
+import app.ondea.feedback.Feedback
 import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Language
@@ -220,6 +223,10 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             Text(stringResource(R.string.about_text), style = MaterialTheme.typography.bodyMedium)
             ClickRow(Icons.Outlined.MenuBook, palette.ovulation, stringResource(R.string.sources_title),
                 stringResource(R.string.sources_hint)) { showSources = true }
+            ClickRow(Icons.Outlined.BugReport, MaterialTheme.colorScheme.primary, stringResource(R.string.feedback_bug),
+                stringResource(R.string.feedback_bug_hint)) { Feedback.open(context, Feedback.bugReportUri(context)) }
+            ClickRow(Icons.Outlined.TipsAndUpdates, MaterialTheme.colorScheme.primary, stringResource(R.string.feedback_feature),
+                stringResource(R.string.feedback_feature_hint)) { Feedback.open(context, Feedback.featureRequestUri()) }
             Text(stringResource(R.string.about_science), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(stringResource(R.string.disclaimer_full), style = MaterialTheme.typography.bodySmall,

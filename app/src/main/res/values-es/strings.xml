@@ -245,6 +245,14 @@
     <string name="data_shared">Compartidos con otros: ninguno</string>
     <string name="data_tracking">Rastreo: ninguno</string>
     <string name="data_stored">Guardados solo en este teléfono, cifrados. Bórralos cuando quieras en Ajustes → Borrar todos los datos.</string>
+    <string name="feedback_bug">Informar de un problema</string>
+    <string name="feedback_bug_hint">Abre un formulario de GitHub en tu navegador, con la versión de la app y el modelo del teléfono. Nunca añadas datos de salud.</string>
+    <string name="feedback_feature">Proponer una función</string>
+    <string name="feedback_feature_hint">Abre un formulario de GitHub en tu navegador.</string>
+    <string name="crash_title">Ondea se cerró de forma inesperada</string>
+    <string name="crash_text">Ayuda a solucionarlo: envía el informe técnico. No contiene datos de salud y puedes leerlo antes de enviarlo.</string>
+    <string name="crash_report">Informar</string>
+    <string name="crash_dismiss">Descartar</string>
     <plurals name="period_late">
         <item quantity="one">La regla se retrasa %d día</item>
         <item quantity="many">La regla se retrasa %d días</item>
