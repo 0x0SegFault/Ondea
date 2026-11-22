@@ -100,7 +100,7 @@ The fertility logic is plain Kotlin in [`app/src/main/java/app/ondea/domain/`](a
 
 ## Contribute
 
-Bug reports, translations and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first. Report security issues privately: [SECURITY.md](SECURITY.md).
+Bug reports, translations and pull requests are welcome. To translate, see [docs/TRANSLATING.md](docs/TRANSLATING.md). Read [CONTRIBUTING.md](CONTRIBUTING.md) first. Report security issues privately: [SECURITY.md](SECURITY.md).
 
 Maintainers: [docs/RELEASING.md](docs/RELEASING.md) explains releases, signing and F-Droid.
 

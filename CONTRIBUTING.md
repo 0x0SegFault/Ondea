@@ -5,7 +5,7 @@ Thanks for your interest! Ondea is a small, privacy-first project. Every contrib
 ## Ways to help
 
 - **Report a bug** or **suggest a feature**: [open an issue](https://github.com/0x0SegFault/ondea/issues/new/choose). Never include your personal health data.
-- **Translate**: copy `app/src/main/res/values/strings.xml` to `values-XX/strings.xml` (XX = language code), translate it and open a pull request.
+- **Translate**: see [docs/TRANSLATING.md](docs/TRANSLATING.md). One command creates a new language, and another checks it.
 - **Code**: fork the repository, create a branch, and open a pull request against `main`.
 
 ## Ground rules

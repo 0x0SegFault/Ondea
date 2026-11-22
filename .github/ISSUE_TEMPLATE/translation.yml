@@ -13,6 +13,6 @@ body:
     id: details
     attributes:
       label: What should change?
-      description: For a new language, you can directly open a pull request adding app/src/main/res/values-XX/strings.xml.
+      description: You can also open a pull request directly. See docs/TRANSLATING.md.
     validations:
       required: true

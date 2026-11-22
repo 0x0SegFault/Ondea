@@ -21,6 +21,8 @@ jobs:
       # Refuses to run a tampered Gradle wrapper (supply-chain protection).
       - uses: gradle/actions/wrapper-validation@v6
       - uses: gradle/actions/setup-gradle@v6
+      - name: Translations
+        run: python3 scripts/check_translations.py
       - name: Unit tests
         run: ./gradlew testDebugUnitTest
       - name: Lint
