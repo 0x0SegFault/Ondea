@@ -45,11 +45,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.ondea.R
 import app.ondea.data.Settings
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 @Composable
 fun OnboardingScreen(onDone: (Settings, LocalDate) -> Unit) {
-    val today = LocalDate.now()
+    val today = today()
     var lastPeriod by rememberSaveable { mutableStateOf(today) }
     var cycleLength by rememberSaveable { mutableIntStateOf(28) }
     var periodLength by rememberSaveable { mutableIntStateOf(5) }

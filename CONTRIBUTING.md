@@ -15,7 +15,7 @@ These keep Ondea trustworthy and suitable for F-Droid:
 1. **No network access.** The app must never request the `INTERNET` permission. CI checks this.
 2. **No trackers, analytics, ads or proprietary libraries** (no Google Play Services, Firebase, etc.).
 3. **Health data stays encrypted on the device.**
-4. **Algorithm changes need evidence.** Predictions are based on the symptothermal method (Sensiplan) and peer-reviewed studies. Please cite your source and add unit tests in `app/src/test/`.
+4. **Algorithm changes need evidence.** Predictions are based on the symptothermal method (Sensiplan) and peer-reviewed studies. Cite your source in `docs/SCIENCE.md` and add tests in `shared/src/commonTest/`.
 5. **All user-facing text goes in `strings.xml`.**
 
 ## Development
@@ -23,12 +23,12 @@ These keep Ondea trustworthy and suitable for F-Droid:
 Requirements: JDK 17+ and the Android SDK (platform 36).
 
 ```sh
-./gradlew testDebugUnitTest   # unit tests (algorithm, encryption, backups)
+./gradlew :shared:jvmTest testDebugUnitTest   # unit tests (algorithm, encryption, backups)
 ./gradlew lintDebug           # Android lint
 ./gradlew assembleDebug       # debug APK
 ```
 
-The fertility logic lives in `app/src/main/java/app/ondea/domain/` and is plain Kotlin with no Android dependencies, so it is easy to test.
+The fertility logic lives in `shared/` (Kotlin Multiplatform, no Android code), so it is easy to test: `./gradlew :shared:jvmTest`. It must stay platform-neutral: no `java.*` imports there.
 
 ## Pull request review
 

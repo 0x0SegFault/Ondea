@@ -62,6 +62,12 @@ android {
         generateLocaleConfig = true
     }
 
+    // CI runs full lint on every push. Skipping the release-time check keeps release builds
+    // (and F-Droid build logs) free of lint's Kotlin 2.4 metadata notices until AGP 9.
+    lint {
+        checkReleaseBuilds = false
+    }
+
     // F-Droid: don't embed the Google-signed dependency metadata blob.
     dependenciesInfo {
         includeInApk = false
@@ -76,6 +82,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(project(":shared"))
     val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")

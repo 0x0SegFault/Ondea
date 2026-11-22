@@ -53,7 +53,7 @@ import app.ondea.data.DayEntry
 import app.ondea.domain.Temperature
 import app.ondea.ui.theme.CycleColors
 import app.ondea.ui.theme.Nunito
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 /**
  * Large temperature input with +/- steps. [onSave] receives °C, or null to clear the reading.

@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 import java.io.File
 
 sealed interface LoadState {
@@ -96,16 +95,9 @@ class Repository(private val store: EncryptedStore, private val scope: Coroutine
     }
 
     companion object {
-        private val json = Json {
-            ignoreUnknownKeys = true
-            encodeDefaults = true
-        }
+        fun encode(data: AppData): ByteArray = AppDataJson.encode(data)
 
-        fun encode(data: AppData): ByteArray =
-            json.encodeToString(AppData.serializer(), data).toByteArray(Charsets.UTF_8)
-
-        fun decode(bytes: ByteArray): AppData =
-            json.decodeFromString(AppData.serializer(), bytes.toString(Charsets.UTF_8))
+        fun decode(bytes: ByteArray): AppData = AppDataJson.decode(bytes)
 
         /** @throws WrongPasswordException, NotABackupException */
         fun decodeBackup(blob: ByteArray, password: CharArray): AppData =

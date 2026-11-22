@@ -1,6 +1,5 @@
 package app.ondea.domain
 
-import java.util.Locale
 import kotlin.math.roundToLong
 
 object Temperature {
@@ -12,8 +11,6 @@ object Temperature {
     fun toDisplay(c: Double, fahrenheit: Boolean) = if (fahrenheit) cToF(c) else c
     fun fromDisplay(v: Double, fahrenheit: Boolean) = round3(if (fahrenheit) fToC(v) else v)
 
-    fun format(c: Double, fahrenheit: Boolean, locale: Locale = Locale.getDefault()): String =
-        String.format(locale, "%.2f", toDisplay(c, fahrenheit))
 
     fun unit(fahrenheit: Boolean) = if (fahrenheit) "°F" else "°C"
 

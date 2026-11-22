@@ -41,7 +41,7 @@ jobs:
             "$KEYSTORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" > keystore.properties
 
       - name: Test and build
-        run: ./gradlew testDebugUnitTest assembleRelease
+        run: ./gradlew :shared:jvmTest testDebugUnitTest assembleRelease
 
       - name: Verify the APK
         run: |

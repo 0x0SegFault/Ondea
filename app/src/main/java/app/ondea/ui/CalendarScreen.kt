@@ -1,5 +1,10 @@
 package app.ondea.ui
 
+import app.ondea.domain.isAfter
+import app.ondea.domain.isBefore
+import app.ondea.domain.minusDays
+import app.ondea.domain.plusDays
+import app.ondea.domain.toEpochDay
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -51,7 +56,9 @@ import app.ondea.R
 import app.ondea.domain.CycleEngine
 import app.ondea.domain.DayInfo
 import app.ondea.ui.theme.CycleColors
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.toJavaLocalDate
+import kotlinx.datetime.toKotlinLocalDate
 import java.time.YearMonth
 import java.time.format.TextStyle
 import java.time.temporal.WeekFields
@@ -63,7 +70,7 @@ fun CalendarScreen(vm: MainViewModel, s: UiState.Ready) {
     val engine = s.engine
     val today = engine.today
     val palette = CycleColors.current
-    var month by rememberSaveable { mutableStateOf(YearMonth.from(today)) }
+    var month by rememberSaveable { mutableStateOf(YearMonth.from(today.toJavaLocalDate())) }
     var selected by rememberSaveable { mutableStateOf<LocalDate?>(null) }
     val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
 
@@ -103,7 +110,7 @@ fun CalendarScreen(vm: MainViewModel, s: UiState.Ready) {
                             val dayNum = week * 7 + d - offset + 1
                             Box(Modifier.weight(1f).aspectRatio(1f).padding(2.dp), contentAlignment = Alignment.Center) {
                                 if (dayNum in 1..month.lengthOfMonth()) {
-                                    val date = month.atDay(dayNum)
+                                    val date = month.atDay(dayNum).toKotlinLocalDate()
                                     DayCell(date, engine.dayInfo(date), date == today, enabled = !date.isAfter(today)) {
                                         selected = date
                                     }

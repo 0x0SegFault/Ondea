@@ -96,7 +96,12 @@ cd ondea
 ./gradlew assembleDebug       # app/build/outputs/apk/debug/app-debug.apk
 ```
 
-The fertility logic is plain Kotlin in [`app/src/main/java/app/ondea/domain/`](app/src/main/java/app/ondea/domain), with unit tests in [`app/src/test/`](app/src/test). Release builds are reproducible.
+| Folder | Contents |
+|---|---|
+| [`shared/`](shared) | Fertility logic and data format in Kotlin Multiplatform: shared by Android and the planned iOS app. Tests: `./gradlew :shared:jvmTest` |
+| [`app/`](app) | Android app: screens, encrypted storage, reminder, backups |
+
+Release builds are reproducible.
 
 ## Contribute
 

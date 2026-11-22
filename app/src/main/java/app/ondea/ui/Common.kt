@@ -24,9 +24,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import app.ondea.R
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneOffset
+import app.ondea.domain.Temperature
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.toJavaLocalDate
+import kotlinx.datetime.toKotlinLocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
@@ -38,10 +39,20 @@ private fun best(skeleton: String): DateTimeFormatter {
     return DateTimeFormatter.ofPattern(DateFormat.getBestDateTimePattern(locale, skeleton), locale)
 }
 
-fun LocalDate.long(): String = format(best("EEEEdMMMM")).replaceFirstChar { it.titlecase() }
-fun LocalDate.short(): String = format(best("EEEdMMM"))
-fun LocalDate.dayMonth(): String = format(best("dMMM"))
-fun LocalDate.medium(): String = format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+fun LocalDate.long(): String = toJavaLocalDate().format(best("EEEEdMMMM")).replaceFirstChar { it.titlecase() }
+fun LocalDate.short(): String = toJavaLocalDate().format(best("EEEdMMM"))
+fun LocalDate.dayMonth(): String = toJavaLocalDate().format(best("dMMM"))
+fun LocalDate.medium(): String = toJavaLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+/** Today in the phone's time zone. */
+fun today(): LocalDate = java.time.LocalDate.now().toKotlinLocalDate()
+
+/** The date picker works in UTC milliseconds. */
+private const val DAY_MILLIS = 86_400_000L
+
+/** Temperature with 2 decimals in the user's locale ("36.45" or "36,45"). */
+fun Temperature.format(c: Double, fahrenheit: Boolean, locale: Locale = Locale.getDefault()): String =
+    String.format(locale, "%.2f", toDisplay(c, fahrenheit))
+
 fun java.time.YearMonth.title(): String = format(best("MMMMyyyy")).replaceFirstChar { it.titlecase() }
 
 /** Material date picker restricted to dates up to [maxDate]. */
@@ -53,9 +64,9 @@ fun PastDatePickerDialog(
     onPicked: (LocalDate) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val maxMillis = maxDate.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+    val maxMillis = maxDate.toEpochDays() * DAY_MILLIS
     val state = rememberDatePickerState(
-        initialSelectedDateMillis = initial.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli(),
+        initialSelectedDateMillis = initial.toEpochDays() * DAY_MILLIS,
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long) = utcTimeMillis <= maxMillis
         },
@@ -65,7 +76,7 @@ fun PastDatePickerDialog(
         confirmButton = {
             TextButton(onClick = {
                 state.selectedDateMillis?.let {
-                    onPicked(Instant.ofEpochMilli(it).atZone(ZoneOffset.UTC).toLocalDate())
+                    onPicked(LocalDate.fromEpochDays(it / DAY_MILLIS))
                 }
                 onDismiss()
             }) { Text(stringResource(R.string.ok)) }

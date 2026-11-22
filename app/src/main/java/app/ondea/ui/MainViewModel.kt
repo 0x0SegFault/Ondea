@@ -1,5 +1,10 @@
 package app.ondea.ui
 
+import app.ondea.domain.isAfter
+import app.ondea.domain.isBefore
+import app.ondea.domain.minusDays
+import app.ondea.domain.plusDays
+import app.ondea.domain.toEpochDay
 import android.app.Application
 import android.net.Uri
 import androidx.annotation.StringRes
@@ -31,7 +36,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 sealed interface UiState {
     data object Loading : UiState
@@ -41,7 +46,7 @@ sealed interface UiState {
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val repo: Repository = (app as OndeaApp).repository
-    private val today = MutableStateFlow(LocalDate.now())
+    private val today = MutableStateFlow(today())
 
     val state: StateFlow<UiState> = combine(repo.state, today) { s, t ->
         when (s) {
@@ -59,7 +64,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     val busy = MutableStateFlow(false)
 
     fun refreshDate() {
-        today.value = LocalDate.now()
+        today.value = today()
     }
 
     private fun say(@StringRes msg: Int) {
@@ -87,7 +92,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     fun removeCycleStart(date: LocalDate) = edit { it.withoutCycleStart(date.toEpochDay()) }
 
-    fun stopTracking() = edit(R.string.msg_tracking_paused) { it.withTrackingStopped(LocalDate.now().toEpochDay()) }
+    fun stopTracking() = edit(R.string.msg_tracking_paused) { it.withTrackingStopped(today().toEpochDay()) }
 
     fun updateSettings(transform: (Settings) -> Settings) = edit { it.copy(settings = transform(it.settings)) }
 
@@ -120,7 +125,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             val file = withContext(Dispatchers.IO) {
                 val dir = java.io.File(app.cacheDir, "backups").apply { mkdirs() }
                 dir.listFiles()?.forEach { it.delete() }
-                java.io.File(dir, "ondea-backup-${LocalDate.now()}.ondea").apply { writeBytes(blob) }
+                java.io.File(dir, "ondea-backup-${today()}.ondea").apply { writeBytes(blob) }
             }
             shareBackupUri.value = androidx.core.content.FileProvider.getUriForFile(app, "${app.packageName}.backups", file)
         } catch (_: Exception) {
@@ -163,7 +168,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun exportCsv(uri: Uri) = withBusy {
         val data = (state.value as? UiState.Ready)?.data ?: return@withBusy
         try {
-            write(uri, CsvExport.build(data).toByteArray(Charsets.UTF_8))
+            write(uri, CsvExport.build(data, today()).toByteArray(Charsets.UTF_8))
             say(R.string.msg_csv_done)
         } catch (_: Exception) {
             say(R.string.msg_backup_failed)

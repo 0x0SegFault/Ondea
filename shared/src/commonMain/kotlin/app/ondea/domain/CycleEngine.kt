@@ -3,8 +3,7 @@ package app.ondea.domain
 import app.ondea.data.AppData
 import app.ondea.data.DayEntry
 import app.ondea.data.usesOwnOvulationDay
-import java.time.LocalDate
-import java.time.temporal.ChronoUnit
+import kotlinx.datetime.LocalDate
 import kotlin.math.roundToInt
 
 data class CycleAnalysis(
@@ -141,8 +140,8 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
             val lastDay = end ?: maxOf(todayDay, c.start)
             val days = (c.start..lastDay).map { entries[it] }
             CycleAnalysis(
-                start = LocalDate.ofEpochDay(c.start),
-                end = end?.let(LocalDate::ofEpochDay),
+                start = epochDayToDate(c.start),
+                end = end?.let(::epochDayToDate),
                 naturalLength = natural,
                 shift = ShiftDetector.detect(days.map { e -> e?.takeIf { !it.disturbed }?.tempC }),
                 mucus = MucusDetector.analyze(days.map { it?.mucus ?: 0 }),
@@ -323,7 +322,7 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
     fun lastTemperature(): Double? = data.entries.lastOrNull { it.tempC != null }?.tempC
 
     companion object {
-        fun days(from: LocalDate, to: LocalDate): Int = ChronoUnit.DAYS.between(from, to).toInt()
+        fun days(from: LocalDate, to: LocalDate): Int = daysBetween(from, to)
     }
 }
 

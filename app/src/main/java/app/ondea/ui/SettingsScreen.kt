@@ -65,7 +65,7 @@ import app.ondea.LockGate
 import app.ondea.R
 import app.ondea.reminder.Reminder
 import app.ondea.ui.theme.CycleColors
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -196,7 +196,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             ClickRow(Icons.Outlined.TableChart, palette.fertile, stringResource(R.string.export_csv),
                 stringResource(R.string.export_csv_hint)) {
                 LockGate.skipNextLock()
-                createCsv.launch("ondea-${LocalDate.now()}.csv")
+                createCsv.launch("ondea-${today()}.csv")
             }
         }
 
@@ -234,7 +234,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             } else {
                 exportPassword = pw
                 LockGate.skipNextLock()
-                createBackup.launch("ondea-backup-${LocalDate.now()}.ondea")
+                createBackup.launch("ondea-backup-${today()}.ondea")
             }
         }, onDismiss = { askExportPassword = false })
     }

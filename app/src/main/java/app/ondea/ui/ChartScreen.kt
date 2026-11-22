@@ -135,8 +135,9 @@ fun ChartScreen(s: UiState.Ready) {
             )
             StatTile(
                 stringResource(R.string.stat_luteal),
-                if (shift != null && chart.cycle.naturalLength != null)
-                    stringResource(R.string.n_days, chart.cycle.naturalLength - shift.ovulationIndex - 1) else "–",
+                chart.cycle.naturalLength.let { length ->
+                    if (shift != null && length != null) stringResource(R.string.n_days, length - shift.ovulationIndex - 1) else "–"
+                },
                 palette.fertile,
             )
         }

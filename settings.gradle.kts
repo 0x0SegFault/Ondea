@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Ondea"
 include(":app")
+include(":shared")

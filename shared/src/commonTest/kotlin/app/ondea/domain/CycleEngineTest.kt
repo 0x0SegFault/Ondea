@@ -6,16 +6,16 @@ import app.ondea.data.DayEntry
 import app.ondea.data.Settings
 import app.ondea.data.withCycleStart
 import app.ondea.data.withTrackingStopped
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
-import org.junit.Test
-import java.time.LocalDate
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
+import kotlin.test.Test
+import kotlinx.datetime.LocalDate
 
 class CycleEngineTest {
-    private val start = LocalDate.of(2026, 10, 1)
+    private val start = LocalDate(2026, 10, 1)
     private val settings = Settings(onboarded = true, cycleLength = 28, periodLength = 5)
 
     private fun data(vararg starts: LocalDate, entries: List<DayEntry> = emptyList()) =
@@ -27,7 +27,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `without history, prediction uses declared length and 14 day luteal phase`() {
+    fun withoutHistoryPredictionUsesDeclaredLengthAnd14DayLutealPhase() {
         val e = CycleEngine(data(start), start.plusDays(4))
         val f = e.forecast!!
         assertEquals(5, f.cycleDay)
@@ -40,7 +40,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `confirmed shift moves ovulation and ends the fertile window`() {
+    fun confirmedShiftMovesOvulationAndEndsTheFertileWindow() {
         val e = CycleEngine(data(start, entries = temps(start, 20, riseDay = 17)), start.plusDays(19))
         val f = e.forecast!!
         assertTrue(f.closed)
@@ -52,7 +52,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `history drives average length and luteal phase`() {
+    fun historyDrivesAverageLengthAndLutealPhase() {
         val c1 = start
         val c2 = c1.plusDays(30)
         val c3 = c2.plusDays(32)
@@ -64,13 +64,13 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `late period is reported`() {
+    fun latePeriodIsReported() {
         val e = CycleEngine(data(start), start.plusDays(31))
         assertEquals(3, e.forecast!!.daysLate)
     }
 
     @Test
-    fun `paused tracking has no forecast and starting again resumes`() {
+    fun pausedTrackingHasNoForecastAndStartingAgainResumes() {
         val paused = data(start).withTrackingStopped(start.plusDays(10).toEpochDay())
         assertNull(CycleEngine(paused, start.plusDays(12)).forecast)
         val resumed = paused.withCycleStart(start.plusDays(40).toEpochDay())
@@ -81,7 +81,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `calendar marks fertile and predicted days`() {
+    fun calendarMarksFertileAndPredictedDays() {
         val e = CycleEngine(data(start), start.plusDays(4))
         assertTrue(e.dayInfo(start.plusDays(10)).fertilePredicted)
         assertTrue(e.dayInfo(start.plusDays(13)).ovulationPredicted)
@@ -90,12 +90,12 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `chart covers at least the average cycle`() {
+    fun chartCoversAtLeastTheAverageCycle() {
         val e = CycleEngine(data(start, entries = temps(start, 5, riseDay = 99)), start.plusDays(4))
         val chart = e.chart(0)
         assertEquals(28, chart.days)
         assertEquals(4, chart.todayIndex)
-        assertEquals(36.40, chart.temps[0]!!, 1e-9)
+        assertEquals(36.40, chart.temps[0]!!, absoluteTolerance = 1e-9)
     }
 
     private fun withMucus(entries: List<DayEntry>, vararg mucus: Pair<Int, Int>): List<DayEntry> {
@@ -107,7 +107,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `usual ovulation day setting drives the prediction`() {
+    fun usualOvulationDaySettingDrivesThePrediction() {
         val d = data(start).copy(settings = settings.copy(ovulationDay = 17))
         val f = CycleEngine(d, start.plusDays(4)).forecast!!
         assertEquals(start.plusDays(16), f.ovulation)
@@ -115,14 +115,14 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `first mucus opens the fertile window early`() {
+    fun firstMucusOpensTheFertileWindowEarly() {
         val entries = withMucus(temps(start, 8, riseDay = 99), 7 to 2)
         val f = CycleEngine(data(start, entries = entries), start.plusDays(7)).forecast!!
         assertEquals(start.plusDays(7), f.fertileStart) // predicted start would be day index 8
     }
 
     @Test
-    fun `mucus peak estimates ovulation before the temperature rises`() {
+    fun mucusPeakEstimatesOvulationBeforeTheTemperatureRises() {
         val entries = withMucus(temps(start, 15, riseDay = 99), 10 to 2, 11 to 3, 12 to 4, 13 to 4, 14 to 2)
         val f = CycleEngine(data(start, entries = entries), start.plusDays(14)).forecast!!
         assertEquals(OvulationSource.MUCUS, f.ovulationSource)
@@ -132,7 +132,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `double check - fertile phase ends at the later of temperature and mucus`() {
+    fun doubleCheckFertilePhaseEndsAtTheLaterOfTemperatureAndMucus() {
         // Temperature confirms on index 18; mucus peak on index 17 -> closes on index 20.
         val base = temps(start, 21, riseDay = 17)
         val waiting = withMucus(base.take(19), 12 to 3, 13 to 4, 14 to 4, 15 to 4, 16 to 4, 17 to 4)
@@ -148,7 +148,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `positive ovulation test moves ovulation to the next day`() {
+    fun positiveOvulationTestMovesOvulationToTheNextDay() {
         val entries = temps(start, 12, riseDay = 99).map {
             if (it.date == start.plusDays(10).toEpochDay()) it.copy(lh = 2) else it
         }
@@ -159,7 +159,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `temperature wins over the ovulation test`() {
+    fun temperatureWinsOverTheOvulationTest() {
         val entries = temps(start, 20, riseDay = 17).map {
             if (it.date == start.plusDays(10).toEpochDay()) it.copy(lh = 2) else it
         }
@@ -169,14 +169,14 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `negative ovulation tests change nothing`() {
+    fun negativeOvulationTestsChangeNothing() {
         val entries = temps(start, 8, riseDay = 99).map { it.copy(lh = 1) }
         val f = CycleEngine(data(start, entries = entries), start.plusDays(7)).forecast!!
         assertEquals(OvulationSource.PREDICTED, f.ovulationSource)
     }
 
     @Test
-    fun `one confirmed cycle moves the next prediction to the learnt ovulation day`() {
+    fun oneConfirmedCycleMovesTheNextPredictionToTheLearntOvulationDay() {
         val c2 = start.plusDays(30)
         // Cycle 1: rise on day 19, so ovulation on day 18 (index 17). Default would be index 13.
         val e = CycleEngine(data(start, c2, entries = temps(start, 30, riseDay = 19)), c2.plusDays(2))
@@ -186,7 +186,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `predicted window opens before the earliest recent ovulation`() {
+    fun predictedWindowOpensBeforeTheEarliestRecentOvulation() {
         val c2 = start.plusDays(28)
         val c3 = c2.plusDays(28)
         // Ovulation index 11 in cycle 1, 15 in cycle 2: predict 13, open the window at 11 - 5 = 6.
@@ -197,7 +197,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `Ondea mode uses the own day until it has learnt, then its own estimate`() {
+    fun ondeaModeUsesTheOwnDayUntilItHasLearntThenItsOwnEstimate() {
         val own = settings.copy(ovulationDay = 12, useOwnOvulationDay = false)
         // No history: the user's day is the best estimate.
         val before = CycleEngine(data(start).copy(settings = own), start.plusDays(2))
@@ -212,7 +212,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `My day mode keeps the own day even with history`() {
+    fun myDayModeKeepsTheOwnDayEvenWithHistory() {
         val own = settings.copy(ovulationDay = 12, useOwnOvulationDay = true)
         val c2 = start.plusDays(30)
         val e = CycleEngine(data(start, c2, entries = temps(start, 30, riseDay = 19)).copy(settings = own), c2.plusDays(2))
@@ -222,7 +222,7 @@ class CycleEngineTest {
     }
 
     @Test
-    fun `without own day or history the prediction is a typical cycle`() {
+    fun withoutOwnDayOrHistoryThePredictionIsATypicalCycle() {
         val e = CycleEngine(data(start), start.plusDays(2))
         assertEquals(PredictionBasis.TYPICAL, e.predictionBasis)
         assertEquals(13, e.predictedOvulationIndex)

@@ -59,6 +59,10 @@ F-Droid accepts apps after 3 months of active development (Inclusion Policy, qua
 
 After inclusion, F-Droid finds new `v*` tags automatically.
 
+## Known notices
+
+Lint (Android Gradle plugin 8.13) reads Kotlin metadata up to 2.2. With Kotlin 2.4 it prints "Module was compiled with an incompatible version of Kotlin". This is harmless: lint still runs. It goes away with the Android Gradle plugin 9 migration. Release builds skip lint (`checkReleaseBuilds = false`); CI runs it.
+
 ## Dependencies
 
 Dependabot proposes updates once a month. It skips versions that need Android Gradle plugin 9 or Gradle 9.6+, because these need a planned migration. Kotlin plugins and libraries must use the same version: update them together.
