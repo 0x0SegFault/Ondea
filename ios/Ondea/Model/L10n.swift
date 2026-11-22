@@ -19,20 +19,20 @@ enum L10n {
 /// Dates as epoch days (days since 1970-01-01), the format of the shared code.
 enum EpochDay {
     private static let utc: Calendar = {
-        var c = Calendar(identifier: .gregorian)
-        c.timeZone = TimeZone(identifier: "UTC")!
-        return c
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        return calendar
     }()
 
     /// Today in the phone's time zone.
     static func today() -> Int64 {
-        let c = Calendar.current.dateComponents([.year, .month, .day], from: Date())
-        return from(year: c.year!, month: c.month!, day: c.day!)
+        let parts = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+        return from(year: parts.year!, month: parts.month!, day: parts.day!)
     }
 
     static func from(date: Date) -> Int64 {
-        let c = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        return from(year: c.year!, month: c.month!, day: c.day!)
+        let parts = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        return from(year: parts.year!, month: parts.month!, day: parts.day!)
     }
 
     static func from(year: Int, month: Int, day: Int) -> Int64 {
@@ -47,16 +47,16 @@ enum EpochDay {
 
     /// Local calendar date (for DatePicker) of an epoch day.
     static func localDate(_ day: Int64) -> Date {
-        let c = utc.dateComponents([.year, .month, .day], from: date(day))
-        return Calendar.current.date(from: c)!
+        let parts = utc.dateComponents([.year, .month, .day], from: date(day))
+        return Calendar.current.date(from: parts)!
     }
 
     static func format(_ day: Int64, template: String) -> String {
-        let f = DateFormatter()
-        f.timeZone = TimeZone(identifier: "UTC")
-        f.locale = Locale.current
-        f.setLocalizedDateFormatFromTemplate(template)
-        return f.string(from: date(day))
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(identifier: "UTC")
+        formatter.locale = Locale.current
+        formatter.setLocalizedDateFormatFromTemplate(template)
+        return formatter.string(from: date(day))
     }
 
     static func dayMonth(_ day: Int64) -> String { format(day, template: "dMMM") }

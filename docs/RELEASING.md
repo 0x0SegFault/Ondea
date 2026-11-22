@@ -1,6 +1,6 @@
 # Releasing Ondea
 
-This page is for maintainers.
+This page is for maintainers. For Google Play and the App Store, see [STORES.md](STORES.md).
 
 ## How a release works
 
@@ -10,7 +10,7 @@ A tag `vX.Y.Z` starts the [release workflow](../.github/workflows/release.yml). 
 2. runs the tests and builds the release APK,
 3. signs it with the release key (GitHub environment `release`),
 4. fails if the APK asks for the `INTERNET` permission,
-5. publishes `ondea-X.Y.Z.apk`, its `.sha256` file and the changelog as a GitHub release.
+5. publishes `ondea-X.Y.Z.apk`, its `.sha256` file, `ondea-X.Y.Z.aab` (for Google Play) and the changelog as a GitHub release.
 
 ## Make a new release
 

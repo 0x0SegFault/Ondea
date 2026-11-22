@@ -1,0 +1,21 @@
+Ondea hilft dir, deine fruchtbaren Tage zu finden und den Eisprung anhand deiner Basaltemperatur und deines Zervixschleims zu bestätigen. Gedacht für alle mit Kinderwunsch.
+
+Einfache tägliche Eingabe: Trage deine Morgentemperatur in wenigen Sekunden ein, dazu Periode, Zervixschleim, Geschlechtsverkehr und Notizen.
+
+Wissenschaftlich fundiert: Ondea bestätigt den Eisprung mit der 3-über-6-Regel und der doppelten Kontrolle durch den Zervixschleim nach der symptothermalen Methode (Sensiplan). Vorher sagt die App dein fruchtbares Fenster aus deinen eigenen Zyklen voraus und zeigt deine Empfängniswahrscheinlichkeit je Tag (Wilcox et al., NEJM 1995).
+
+• Zyklusring, Temperaturkurve und Kalender
+• Vorhersage der nächsten Periode und Hinweis bei Verspätung
+• Einstellbarer üblicher Eisprungtag
+• Diskrete tägliche Erinnerung
+• °C und °F; Deutsch, Englisch, Französisch, Spanisch und Italienisch
+
+Privat von Grund auf:
+
+• Keine Internetberechtigung, kein Konto, keine Werbung, keine Tracker
+• Funktioniert ohne Google-Play-Dienste
+• Daten auf dem Gerät verschlüsselt, Schlüssel im Android-Keystore
+• App-Sperre per Fingerabdruck oder PIN, Screenshots blockiert
+• Passwortverschlüsselte Sicherungen, speicherbar wo du willst (Proton Drive, Nextcloud …)
+
+Ondea ist kein Verhütungsmittel und kein Medizinprodukt.

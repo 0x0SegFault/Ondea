@@ -46,8 +46,8 @@ struct TemperatureInput: View {
             let base = Temperature.shared.parse(text: text, fahrenheit: fahrenheit)?.doubleValue ?? model.lastTemperature() ?? 36.5
             let display = Temperature.shared.toDisplay(c: base, fahrenheit: fahrenheit)
                 + direction * Temperature.shared.step(fahrenheit: fahrenheit)
-            let c = Temperature.shared.fromDisplay(v: display, fahrenheit: fahrenheit)
-            text = format(c, fahrenheit)
+            let celsius = Temperature.shared.fromDisplay(v: display, fahrenheit: fahrenheit)
+            text = format(celsius, fahrenheit)
         } label: {
             Image(systemName: icon).font(.title2.bold()).frame(width: 48, height: 48)
         }
@@ -60,9 +60,9 @@ struct TemperatureInput: View {
         format(model.lastTemperature() ?? 36.5, fahrenheit)
     }
 
-    private func format(_ c: Double?, _ fahrenheit: Bool) -> String {
-        guard let c else { return "" }
-        return String(format: "%.2f", locale: Locale.current, Temperature.shared.toDisplay(c: c, fahrenheit: fahrenheit))
+    private func format(_ celsius: Double?, _ fahrenheit: Bool) -> String {
+        guard let celsius else { return "" }
+        return String(format: "%.2f", locale: Locale.current, Temperature.shared.toDisplay(c: celsius, fahrenheit: fahrenheit))
     }
 }
 
@@ -72,24 +72,24 @@ struct DayDetails: View {
     let day: Int64
 
     var body: some View {
-        let e = model.entry(day)
+        let entry = model.entry(day)
         VStack(alignment: .leading, spacing: 12) {
-            choice(L10n.t("period"), ["flow_none", "flow_spotting", "flow_light", "flow_medium", "flow_heavy"], Int(e.flow)) { v in
-                model.change { $0.setFlow(day: day, flow: Int32(v)) }
+            choice(L10n.t("period"), ["flow_none", "flow_spotting", "flow_light", "flow_medium", "flow_heavy"], Int(entry.flow)) { value in
+                model.change { $0.setFlow(day: day, flow: Int32(value)) }
             }
-            choice(L10n.t("mucus"), ["mucus_none", "mucus_dry", "mucus_sticky", "mucus_creamy", "mucus_eggwhite"], Int(e.mucus)) { v in
-                model.change { $0.setMucus(day: day, mucus: Int32(v)) }
+            choice(L10n.t("mucus"), ["mucus_none", "mucus_dry", "mucus_sticky", "mucus_creamy", "mucus_eggwhite"], Int(entry.mucus)) { value in
+                model.change { $0.setMucus(day: day, mucus: Int32(value)) }
             }
-            Text(L10n.t(["mucus_hint", "mucus_dry_hint", "mucus_sticky_hint", "mucus_creamy_hint", "mucus_eggwhite_hint"][Int(e.mucus)]))
+            Text(L10n.t(["mucus_hint", "mucus_dry_hint", "mucus_sticky_hint", "mucus_creamy_hint", "mucus_eggwhite_hint"][Int(entry.mucus)]))
                 .font(.footnote).foregroundStyle(.secondary)
-            choice(L10n.t("lh_test"), ["lh_none", "lh_negative", "lh_positive"], Int(e.lh)) { v in
-                model.change { $0.setLh(day: day, lh: Int32(v)) }
+            choice(L10n.t("lh_test"), ["lh_none", "lh_negative", "lh_positive"], Int(entry.lh)) { value in
+                model.change { $0.setLh(day: day, lh: Int32(value)) }
             }
             Text(L10n.t("lh_hint")).font(.footnote).foregroundStyle(.secondary)
-            Toggle(L10n.t("intercourse"), isOn: Binding(get: { e.intercourse }, set: { on in
+            Toggle(L10n.t("intercourse"), isOn: Binding(get: { entry.intercourse }, set: { on in
                 model.change { $0.setIntercourse(day: day, on: on) }
             }))
-            Toggle(L10n.t("disturbed_short"), isOn: Binding(get: { e.disturbed }, set: { on in
+            Toggle(L10n.t("disturbed_short"), isOn: Binding(get: { entry.disturbed }, set: { on in
                 model.change { $0.setDisturbed(day: day, on: on) }
             }))
         }

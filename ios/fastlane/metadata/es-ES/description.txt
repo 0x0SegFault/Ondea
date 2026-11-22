@@ -1,0 +1,21 @@
+Ondea te ayuda a identificar tus días fértiles y a confirmar la ovulación a partir de tu temperatura basal y tu moco cervical. Pensada para quienes buscan un embarazo.
+
+Registro diario sencillo: anota tu temperatura matinal en segundos, además de la regla, el moco cervical, las relaciones sexuales y notas.
+
+Basada en la ciencia: Ondea confirma la ovulación con la regla de «3 sobre 6» y el doble control del moco cervical del método sintotérmico (Sensiplan). Antes de eso, predice tu ventana fértil a partir de tus propios ciclos y muestra tu probabilidad de concebir según el día (Wilcox et al., NEJM 1995).
+
+• Anillo del ciclo, gráfica de temperatura y calendario
+• Previsión de la próxima regla y aviso de retraso
+• Día de ovulación habitual configurable
+• Recordatorio diario discreto
+• °C y °F; español, inglés, francés, alemán e italiano
+
+Privada desde el diseño:
+
+• Sin permiso de internet, sin cuenta, sin anuncios, sin rastreadores
+• Funciona sin los servicios de Google Play
+• Datos cifrados en el dispositivo con una clave protegida por el Keystore de Android
+• Bloqueo con huella o PIN y capturas de pantalla bloqueadas
+• Copias de seguridad cifradas con contraseña, guárdalas donde quieras (Proton Drive, Nextcloud…)
+
+Ondea no es un método anticonceptivo ni un producto sanitario.

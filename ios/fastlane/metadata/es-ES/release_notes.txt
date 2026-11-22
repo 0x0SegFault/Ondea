@@ -1,0 +1,4 @@
+Tu día de ovulación habitual y la estimación de Ondea se guardan ambos. Elige cuál predice.
+Copia de seguridad: envíala a una app de drive (Proton Drive, Nextcloud…) o guárdala como archivo.
+Herramientas actualizadas; objetivo Android 16.
+Nuevo: Ajustes → Privacidad → Permisos y datos.

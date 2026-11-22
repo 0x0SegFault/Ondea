@@ -1,0 +1,4 @@
+Your usual ovulation day and Ondea's estimate are both kept. Choose which one predicts.
+Backup: choose to send it to a drive app (Proton Drive, Nextcloud…) or save it as a file.
+Updated build tools; target Android 16.
+New: Settings → Privacy → Permissions and data.

@@ -109,7 +109,7 @@ Release builds are reproducible.
 
 Bug reports, translations and pull requests are welcome. To translate, see [docs/TRANSLATING.md](docs/TRANSLATING.md). Read [CONTRIBUTING.md](CONTRIBUTING.md) first. Report security issues privately: [SECURITY.md](SECURITY.md).
 
-Maintainers: [docs/RELEASING.md](docs/RELEASING.md) explains releases, signing and F-Droid.
+Maintainers: [docs/RELEASING.md](docs/RELEASING.md) explains releases, signing and F-Droid; [docs/STORES.md](docs/STORES.md) explains Google Play and the App Store.
 
 ## How Ondea is made
 

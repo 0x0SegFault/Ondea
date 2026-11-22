@@ -1,14 +1,35 @@
 name: iOS
 
+# Runs only when something the iOS app uses changes.
 on:
   push:
     branches: [main]
+    paths:
+      - "ios/**"
+      - "shared/**"
+      - "app/src/main/res/values*/strings.xml"
+      - "scripts/ios_strings.py"
+      - "gradle/**"
+      - "*.gradle.kts"
+      - ".github/workflows/ios.yml"
   pull_request:
+    paths:
+      - "ios/**"
+      - "shared/**"
+      - "app/src/main/res/values*/strings.xml"
+      - "scripts/ios_strings.py"
+      - "gradle/**"
+      - "*.gradle.kts"
+      - ".github/workflows/ios.yml"
   workflow_dispatch:
 
 # contents: write only to publish the "ios-preview" release (build log and screenshots).
 permissions:
   contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ios:
@@ -22,7 +43,9 @@ jobs:
           java-version: 17
       - uses: gradle/actions/setup-gradle@v6
       - name: Tools
-        run: brew install xcodegen
+        run: brew install xcodegen swiftlint
+      - name: SwiftLint
+        run: cd ios && swiftlint lint --strict --reporter github-actions-logging
       - name: Shared Kotlin framework
         run: ./gradlew :shared:assembleOndeaSharedReleaseXCFramework 2>&1 | tee gradle-ios.log
       - name: Translations from the Android strings
@@ -37,6 +60,8 @@ jobs:
           for runtime in sorted(devices, reverse=True):
               if 'iOS' in runtime:
                   phones = [d for d in devices[runtime] if d['name'].startswith('iPhone')]
+                  # The App Store requires 6.9-inch screenshots: prefer a Pro Max.
+                  phones.sort(key=lambda d: 'Pro Max' not in d['name'])
                   if phones:
                       print(phones[0]['udid']); break
           ")
@@ -56,7 +81,8 @@ jobs:
           shot() { sleep 8; xcrun simctl io "$SIM" screenshot "screenshots/$1.png"; xcrun simctl terminate "$SIM" io.github.x0x0segfault.ondea || true; }
           xcrun simctl launch "$SIM" io.github.x0x0segfault.ondea; shot 1-setup
           xcrun simctl launch "$SIM" io.github.x0x0segfault.ondea --demo-data; shot 2-today
-          xcrun simctl launch "$SIM" io.github.x0x0segfault.ondea --demo-data -AppleLanguages "(fr)" -AppleLocale fr_FR; shot 3-today-fr
+          xcrun simctl launch "$SIM" io.github.x0x0segfault.ondea --demo-data --tab settings; shot 3-settings
+          xcrun simctl launch "$SIM" io.github.x0x0segfault.ondea --demo-data -AppleLanguages "(fr)" -AppleLocale fr_FR; shot 4-today-fr
       - name: Publish the iOS preview (log and screenshots)
         if: always() && github.event_name == 'push'
         env:

@@ -1,0 +1,18 @@
+# SwiftLint: run from ios/ with `swiftlint lint --strict` (CI does this).
+included:
+  - Ondea
+  - OndeaTests
+identifier_name:
+  # Loop indexes and geometry only.
+  excluded: [i, x, y, r, id]
+line_length:
+  warning: 140
+  error: 200
+  ignores_urls: true
+  ignores_comments: true
+opt_in_rules:
+  - empty_count
+  - first_where
+  - sorted_first_last
+  - toggle_bool
+  - unused_optional_binding

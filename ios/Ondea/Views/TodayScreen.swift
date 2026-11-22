@@ -14,11 +14,11 @@ struct TodayScreen: View {
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                if let t = model.today, t.tracking {
-                    ring(t)
-                    status(t)
-                    facts(t)
-                    ChanceCard(view: t)
+                if let today = model.today, today.tracking {
+                    ring(today)
+                    status(today)
+                    facts(today)
+                    ChanceCard(view: today)
                 } else {
                     paused
                 }
@@ -51,33 +51,33 @@ struct TodayScreen: View {
         }
     }
 
-    private func ring(_ t: TodayView) -> some View {
-        CycleRing(days: t.ringDays, cycleDay: Int(t.cycleDay))
+    private func ring(_ today: TodayView) -> some View {
+        CycleRing(days: today.ringDays, cycleDay: Int(today.cycleDay))
             .frame(width: 250, height: 250)
             .overlay {
                 VStack(spacing: 0) {
                     Text(L10n.t("cycle_day_label")).font(.subheadline).foregroundStyle(.secondary)
-                    Text("\(t.cycleDay)").font(.system(size: 64, weight: .heavy, design: .rounded))
-                    Text(L10n.t("of_days", Int(t.cycleLength))).font(.subheadline).foregroundStyle(.secondary)
+                    Text("\(today.cycleDay)").font(.system(size: 64, weight: .heavy, design: .rounded))
+                    Text(L10n.t("of_days", Int(today.cycleLength))).font(.subheadline).foregroundStyle(.secondary)
                 }
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(L10n.t("cycle_day", Int(t.cycleDay)))
+            .accessibilityLabel(L10n.t("cycle_day", Int(today.cycleDay)))
     }
 
-    private func status(_ t: TodayView) -> some View {
-        let accent = Palette.tone(t.tone)
-        let headline = t.headlinePlural
-            ? L10n.plural(t.headlineKey, Int(t.headlineCount))
-            : L10n.t(t.headlineKey)
-        let dates: [CVarArg] = t.detailDates.map { EpochDay.dayMonth($0.int64Value) }
-        let detail = t.detailKey == "maybe_pregnant"
-            ? L10n.t(t.detailKey, Int(t.detailNumber))
-            : String(format: L10n.t(t.detailKey), locale: Locale.current, arguments: dates)
+    private func status(_ today: TodayView) -> some View {
+        let accent = Palette.tone(today.tone)
+        let headline = today.headlinePlural
+            ? L10n.plural(today.headlineKey, Int(today.headlineCount))
+            : L10n.t(today.headlineKey)
+        let dates: [CVarArg] = today.detailDates.map { EpochDay.dayMonth($0.int64Value) }
+        let detail = today.detailKey == "maybe_pregnant"
+            ? L10n.t(today.detailKey, Int(today.detailNumber))
+            : String(format: L10n.t(today.detailKey), locale: Locale.current, arguments: dates)
         return VStack(spacing: 6) {
             Text(headline).font(.title2.bold()).foregroundStyle(accent).multilineTextAlignment(.center)
             Text(detail).font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center)
-            Text(L10n.t(t.sourceKey))
+            Text(L10n.t(today.sourceKey))
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(accent)
                 .padding(.horizontal, 12).padding(.vertical, 4)
@@ -85,12 +85,12 @@ struct TodayScreen: View {
         }
     }
 
-    private func facts(_ t: TodayView) -> some View {
+    private func facts(_ today: TodayView) -> some View {
         HStack(spacing: 8) {
             Fact(label: L10n.t("stat_fertile"),
-                 value: EpochDay.dayMonth(t.fertileStart) + "–" + EpochDay.dayMonth(t.fertileEnd), color: Palette.fertile)
-            Fact(label: L10n.t("stat_ovulation"), value: EpochDay.dayMonth(t.ovulation), color: Palette.ovulation)
-            Fact(label: L10n.t("stat_next_period"), value: EpochDay.dayMonth(t.nextPeriod), color: Palette.period)
+                 value: EpochDay.dayMonth(today.fertileStart) + "–" + EpochDay.dayMonth(today.fertileEnd), color: Palette.fertile)
+            Fact(label: L10n.t("stat_ovulation"), value: EpochDay.dayMonth(today.ovulation), color: Palette.ovulation)
+            Fact(label: L10n.t("stat_next_period"), value: EpochDay.dayMonth(today.nextPeriod), color: Palette.period)
         }
     }
 

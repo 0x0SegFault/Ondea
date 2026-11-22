@@ -1,0 +1,4 @@
+Votre jour d'ovulation habituel et l'estimation d'Ondea sont tous deux conservés. Choisissez celui qui prévoit.
+Sauvegarde : envoyez-la vers une application de drive (Proton Drive, Nextcloud…) ou enregistrez-la comme fichier.
+Outils de compilation mis à jour ; cible Android 16.
+Nouveau : Réglages → Confidentialité → Autorisations et données.

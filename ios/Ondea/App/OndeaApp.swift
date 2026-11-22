@@ -47,12 +47,19 @@ struct RootView: View {
 }
 
 struct MainTabs: View {
+    enum Tab { case today, settings }
+
+    // Launch argument "--tab settings" opens Settings (used for store screenshots).
+    @State private var tab: Tab = ProcessInfo.processInfo.arguments.contains("settings") ? .settings : .today
+
     var body: some View {
-        TabView {
+        TabView(selection: $tab) {
             TodayScreen()
                 .tabItem { Label(L10n.t("tab_today"), systemImage: "thermometer.medium") }
+                .tag(Tab.today)
             SettingsScreen()
                 .tabItem { Label(L10n.t("tab_settings"), systemImage: "gearshape") }
+                .tag(Tab.settings)
         }
     }
 }

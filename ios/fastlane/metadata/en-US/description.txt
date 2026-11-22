@@ -1,0 +1,21 @@
+Ondea helps you find your fertile days and confirm ovulation from your basal body temperature (BBT) and cervical mucus. It is designed for people who are trying to conceive.
+
+Easy daily tracking: log your morning temperature in a few seconds, plus your period, cervical mucus, intercourse and notes.
+
+Science-based: Ondea confirms ovulation with the "3 over 6" temperature rule and the cervical mucus double check of the symptothermal method (Sensiplan). Before that, it predicts your fertile window from your own cycles and shows your chance of conceiving by day (Wilcox et al., NEJM 1995).
+
+• Cycle ring, temperature chart and calendar
+• Next period forecast and late-period notice
+• Optional usual ovulation day
+• Discreet daily reminder
+• °C and °F; English, French, German, Spanish and Italian
+
+Private by design:
+
+• No internet permission, no account, no ads, no trackers
+• Works without Google Play Services
+• Data encrypted on the device with a key held by the Android Keystore
+• App lock with fingerprint or PIN; screenshots blocked
+• Password-encrypted backups you can save anywhere (Proton Drive, Nextcloud…)
+
+Ondea is not a contraceptive and not a medical device.
