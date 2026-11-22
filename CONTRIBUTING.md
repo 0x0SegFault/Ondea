@@ -20,7 +20,7 @@ These keep Ondea trustworthy and suitable for F-Droid:
 
 ## Development
 
-Requirements: JDK 17+ and the Android SDK (platform 35).
+Requirements: JDK 17+ and the Android SDK (platform 36).
 
 ```sh
 ./gradlew testDebugUnitTest   # unit tests (algorithm, encryption, backups)
