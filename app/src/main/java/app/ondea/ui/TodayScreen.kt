@@ -54,7 +54,12 @@ import androidx.compose.ui.unit.dp
 import app.ondea.R
 import app.ondea.domain.CycleEngine
 import app.ondea.domain.FertilityChance
+import app.ondea.domain.Detail
 import app.ondea.domain.Forecast
+import app.ondea.domain.Headline
+import app.ondea.domain.Source
+import app.ondea.domain.StatusTone
+import app.ondea.domain.todayStatus
 import app.ondea.domain.OvulationSource
 import app.ondea.domain.PredictionBasis
 import app.ondea.domain.Waiting
@@ -191,66 +196,49 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
 @Composable
 private fun Status(engine: CycleEngine, f: Forecast, onExplain: () -> Unit) {
     val palette = CycleColors.current
-    val today = engine.today
-    val inFertile = !today.isBefore(f.fertileStart) && !today.isAfter(f.fertileEnd)
-    val inPeak = !today.isBefore(f.peakStart) && !today.isAfter(f.ovulation)
-    val pregnant = f.highDays >= 18
-
-    val accent: Color
-    val headline: String
-    val detail: String
-    when {
-        f.daysLate > 0 -> {
-            accent = palette.period
-            headline = pluralStringResource(R.plurals.period_late, f.daysLate, f.daysLate)
-            detail = if (pregnant) stringResource(R.string.maybe_pregnant, f.highDays) else stringResource(R.string.late_hint)
-        }
-        f.closed && today.isAfter(f.fertileEnd) -> {
-            accent = palette.ovulation
-            headline = stringResource(R.string.ovulation_confirmed)
-            detail = if (pregnant) stringResource(R.string.maybe_pregnant, f.highDays)
-            else stringResource(R.string.ovulated_on, f.ovulation.dayMonth(), f.nextPeriod.dayMonth())
-        }
-        inFertile -> {
-            val peakToday = inPeak || f.mucusToday == 4
-            accent = if (peakToday) palette.peak else palette.fertile
-            headline = stringResource(if (peakToday) R.string.peak_fertility else R.string.fertile_window)
-            detail = when {
-                f.mucusToday == 4 -> stringResource(R.string.eggwhite_today)
-                f.window.waitingFor == Waiting.MUCUS -> stringResource(R.string.waiting_mucus, f.fertileEnd.dayMonth())
-                f.ovulationSource == OvulationSource.LH_TEST -> stringResource(R.string.waiting_temperature_after_lh, f.ovulation.dayMonth())
-                f.ovulationSource == OvulationSource.MUCUS -> stringResource(R.string.waiting_temperature_after_peak, f.ovulation.dayMonth())
-                f.ovulationSource == OvulationSource.TEMPERATURE -> stringResource(R.string.fertile_until_confirmed, f.fertileEnd.dayMonth())
-                else -> stringResource(R.string.ovulation_expected, f.ovulation.dayMonth())
-            }
-        }
-        today.isBefore(f.fertileStart) -> {
-            accent = MaterialTheme.colorScheme.primary
-            val inDays = CycleEngine.days(today, f.fertileStart)
-            headline = pluralStringResource(R.plurals.fertile_in, inDays, inDays)
-            detail = stringResource(R.string.ovulation_expected, f.ovulation.dayMonth())
-        }
-        else -> {
-            accent = MaterialTheme.colorScheme.primary
-            headline = stringResource(R.string.waiting_for_shift)
-            detail = stringResource(R.string.waiting_for_shift_text)
-        }
+    // The message itself is decided in shared code, identical on Android and iOS.
+    val status = engine.todayStatus() ?: return
+    val accent: Color = when (status.tone) {
+        StatusTone.PERIOD -> palette.period
+        StatusTone.OVULATION -> palette.ovulation
+        StatusTone.PEAK -> palette.peak
+        StatusTone.FERTILE -> palette.fertile
+        StatusTone.NEUTRAL -> MaterialTheme.colorScheme.primary
+    }
+    val headline = when (status.headline) {
+        Headline.PERIOD_LATE -> pluralStringResource(R.plurals.period_late, status.headlineCount, status.headlineCount)
+        Headline.FERTILE_IN -> pluralStringResource(R.plurals.fertile_in, status.headlineCount, status.headlineCount)
+        Headline.OVULATION_CONFIRMED -> stringResource(R.string.ovulation_confirmed)
+        Headline.PEAK_FERTILITY -> stringResource(R.string.peak_fertility)
+        Headline.FERTILE_WINDOW -> stringResource(R.string.fertile_window)
+        Headline.WAITING_FOR_SHIFT -> stringResource(R.string.waiting_for_shift)
+    }
+    val dates = status.detailDates.map { it.dayMonth() }.toTypedArray()
+    val detail = when (status.detail) {
+        Detail.MAYBE_PREGNANT -> stringResource(R.string.maybe_pregnant, status.detailNumber ?: 0)
+        Detail.LATE_HINT -> stringResource(R.string.late_hint)
+        Detail.OVULATED_ON -> stringResource(R.string.ovulated_on, *dates)
+        Detail.EGGWHITE_TODAY -> stringResource(R.string.eggwhite_today)
+        Detail.WAITING_MUCUS -> stringResource(R.string.waiting_mucus, *dates)
+        Detail.AFTER_LH -> stringResource(R.string.waiting_temperature_after_lh, *dates)
+        Detail.AFTER_MUCUS_PEAK -> stringResource(R.string.waiting_temperature_after_peak, *dates)
+        Detail.FERTILE_UNTIL -> stringResource(R.string.fertile_until_confirmed, *dates)
+        Detail.OVULATION_EXPECTED -> stringResource(R.string.ovulation_expected, *dates)
+        Detail.WAITING_FOR_SHIFT -> stringResource(R.string.waiting_for_shift_text)
+    }
+    val source = when (status.source) {
+        Source.TEMPERATURE -> R.string.source_temperature
+        Source.LH_TEST -> R.string.source_lh
+        Source.MUCUS -> R.string.source_mucus
+        Source.OWN_DAY -> R.string.source_setting
+        Source.LEARNED -> R.string.source_prediction
+        Source.TYPICAL -> R.string.source_typical
     }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Text(headline, style = MaterialTheme.typography.headlineSmall, color = accent, textAlign = TextAlign.Center)
         Text(detail, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant)
-        val source = when (f.ovulationSource) {
-            OvulationSource.TEMPERATURE -> R.string.source_temperature
-            OvulationSource.LH_TEST -> R.string.source_lh
-            OvulationSource.MUCUS -> R.string.source_mucus
-            OvulationSource.PREDICTED -> when (engine.predictionBasis) {
-                PredictionBasis.OWN_DAY -> R.string.source_setting
-                PredictionBasis.LEARNED -> R.string.source_prediction
-                PredictionBasis.TYPICAL -> R.string.source_typical
-            }
-        }
         // Tapping the source explains the date and lets the user change it.
         Surface(onClick = onExplain, shape = CircleShape, color = accent.copy(alpha = 0.12f)) {
             Row(

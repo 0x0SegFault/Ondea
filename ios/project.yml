@@ -1,0 +1,58 @@
+# XcodeGen spec: `xcodegen generate` creates Ondea.xcodeproj (not committed).
+name: Ondea
+options:
+  bundleIdPrefix: io.github.x0x0segfault
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: en
+settings:
+  base:
+    MARKETING_VERSION: "1.2.0"
+    CURRENT_PROJECT_VERSION: "3"
+    SWIFT_VERSION: "5.9"
+    # Simulator builds are signed to run locally; App Store signing comes later.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+targets:
+  Ondea:
+    type: application
+    platform: iOS
+    sources:
+      - path: Ondea
+    dependencies:
+      # Built by: ./gradlew :shared:assembleOndeaSharedReleaseXCFramework
+      - framework: ../shared/build/XCFrameworks/release/OndeaShared.xcframework
+        embed: false
+    info:
+      path: Ondea/Info.plist
+      properties:
+        CFBundleDisplayName: Ondea
+        CFBundleLocalizations: [en, fr, de, es, it]
+        NSFaceIDUsageDescription: Unlock Ondea with Face ID.
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.x0x0segfault.ondea
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+  OndeaTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: OndeaTests
+    dependencies:
+      - target: Ondea
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  Ondea:
+    build:
+      targets:
+        Ondea: all
+        OndeaTests: [test]
+    test:
+      targets: [OndeaTests]

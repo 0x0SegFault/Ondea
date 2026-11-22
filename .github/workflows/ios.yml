@@ -1,0 +1,68 @@
+name: iOS
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# contents: write only to publish the "ios-preview" release (build log and screenshots).
+permissions:
+  contents: write
+
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Tools
+        run: brew install xcodegen
+      - name: Shared Kotlin framework
+        run: ./gradlew :shared:assembleOndeaSharedReleaseXCFramework 2>&1 | tee gradle-ios.log
+      - name: Translations from the Android strings
+        run: python3 scripts/ios_strings.py
+      - name: Xcode project
+        run: cd ios && xcodegen generate
+      - name: Pick an iPhone simulator
+        run: |
+          SIM=$(xcrun simctl list devices available -j | python3 -c "
+          import json, sys
+          devices = json.load(sys.stdin)['devices']
+          for runtime in sorted(devices, reverse=True):
+              if 'iOS' in runtime:
+                  phones = [d for d in devices[runtime] if d['name'].startswith('iPhone')]
+                  if phones:
+                      print(phones[0]['udid']); break
+          ")
+          echo "SIM=$SIM" >> "$GITHUB_ENV"
+          xcrun simctl list devices | grep "$SIM"
+      - name: Build and test
+        run: |
+          set -o pipefail
+          xcodebuild test -project ios/Ondea.xcodeproj -scheme Ondea -destination "id=$SIM" \
+            -derivedDataPath build/ios 2>&1 | tee ios-build.log | grep -E "error:|warning: |Test Case .* (passed|failed)|\*\* (BUILD|TEST)"
+      - name: Simulator screenshots
+        run: |
+          mkdir -p screenshots
+          xcrun simctl boot "$SIM" 2>/dev/null || true
+          APP=$(find build/ios/Build/Products -path "*iphonesimulator*" -name "Ondea.app" | head -1)
+          xcrun simctl install "$SIM" "$APP"
+          shot() { sleep 8; xcrun simctl io "$SIM" screenshot "screenshots/$1.png"; xcrun simctl terminate "$SIM" io.github.x0x0segfault.ondea || true; }
+          xcrun simctl launch "$SIM" io.github.x0x0segfault.ondea; shot 1-setup
+          xcrun simctl launch "$SIM" io.github.x0x0segfault.ondea --demo-data; shot 2-today
+          xcrun simctl launch "$SIM" io.github.x0x0segfault.ondea --demo-data -AppleLanguages "(fr)" -AppleLocale fr_FR; shot 3-today-fr
+      - name: Publish the iOS preview (log and screenshots)
+        if: always() && github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view ios-preview >/dev/null 2>&1 || gh release create ios-preview --prerelease \
+            --title "iOS preview (CI)" --notes "Build log and simulator screenshots of the latest iOS CI run on main. Not an installable app."
+          FILES=$(ls ios-build.log gradle-ios.log screenshots/*.png 2>/dev/null || true)
+          [ -n "$FILES" ] && gh release upload ios-preview $FILES --clobber

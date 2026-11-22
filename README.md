@@ -38,6 +38,7 @@ Ondea has no internet access, no account, no ads and no tracking. It works witho
 | [Obtainium](https://github.com/ImranR98/Obtainium) (recommended) | Add `https://github.com/0x0SegFault/ondea`. You get updates automatically. |
 | [GitHub Releases](https://github.com/0x0SegFault/ondea/releases/latest) | Download `ondea-X.Y.Z.apk` on your phone and open it. |
 | F-Droid | Planned for early 2027. F-Droid accepts apps after 3 months of development. |
+| iOS | In progress: see [ios/](ios). |
 
 Updates install over the previous version and keep your data. Each release includes a `.sha256` file to check the download.
 
@@ -100,6 +101,7 @@ cd ondea
 |---|---|
 | [`shared/`](shared) | Fertility logic and data format in Kotlin Multiplatform: shared by Android and the planned iOS app. Tests: `./gradlew :shared:jvmTest` |
 | [`app/`](app) | Android app: screens, encrypted storage, reminder, backups |
+| [`ios/`](ios) | iOS app (SwiftUI, in progress) |
 
 Release builds are reproducible.
 

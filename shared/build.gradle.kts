@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 // Fertility logic and data model shared by the Android app and the iOS app.
 plugins {
@@ -18,10 +19,13 @@ kotlin {
     // iOS targets need macOS and Xcode. Declaring them only there keeps Linux and F-Droid
     // builds free of the Kotlin/Native toolchain download.
     if (System.getProperty("os.name").startsWith("Mac")) {
-        listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach {
+        // ./gradlew :shared:assembleOndeaSharedReleaseXCFramework -> shared/build/XCFrameworks/release/
+        val xcframework = XCFramework("OndeaShared")
+        listOf(iosArm64(), iosSimulatorArm64()).forEach {
             it.binaries.framework {
                 baseName = "OndeaShared"
                 isStatic = true
+                xcframework.add(this)
             }
         }
     }
