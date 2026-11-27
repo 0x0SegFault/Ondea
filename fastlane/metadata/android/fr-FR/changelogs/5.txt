@@ -1,0 +1,6 @@
+Nouveau : « Vos signes concordent-ils ? » compare votre température et votre glaire à chaque cycle.
+Un seul jour d'ovulation pour la prévision. Il change seulement si vous le changez ; Ondea propose un nouveau jour d'après vos signes.
+Nouvelle page de visite sur la confidentialité et la sécurité.
+Sources de chaque règle dans Réglages → Science et sources.
+Licence : EUPL-1.2.
+Correction : le formulaire de rapport anonyme montre sa progression et son résultat.

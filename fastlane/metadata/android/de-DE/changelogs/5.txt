@@ -1,0 +1,6 @@
+Neu: „Passen deine Zeichen zusammen?“ vergleicht Temperatur und Schleim in jedem Zyklus.
+Ein Eisprungtag für die Vorhersage. Nur du änderst ihn; Ondea schlägt aus deinen Zeichen einen neuen Tag vor.
+Neue Tour-Seite zu Datenschutz und Sicherheit.
+Quellen für jede Regel unter Einstellungen → Wissenschaft und Quellen.
+Lizenz: EUPL-1.2.
+Fehlerbehebung: Das anonyme Berichtsformular zeigt Fortschritt und Ergebnis.

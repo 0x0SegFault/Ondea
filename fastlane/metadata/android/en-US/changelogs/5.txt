@@ -1,0 +1,6 @@
+New: "Do your signs agree?" compares your temperature and mucus in each cycle.
+One ovulation day for the forecast. Only you change it; Ondea suggests a new day from your signs.
+New tour page about privacy and security.
+Sources for every rule in Settings → Science and sources.
+Licence: EUPL-1.2.
+Fix: the anonymous report form now shows its progress and result.
