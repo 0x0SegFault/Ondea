@@ -204,6 +204,8 @@
     <string name="src_wilcox1995">Chances de conception pour chaque jour avant l\'ovulation.</string>
     <string name="src_wilcox2000">La période fertile change d\'un cycle à l\'autre, même avec des cycles réguliers.</string>
     <string name="src_ecochard2001">Moment de la hausse de température et du pic de glaire, comparé à l\'ovulation vue à l\'échographie.</string>
+    <string name="src_hilgers1978" formatted="false">L\'ovulation a lieu à 2 jours ou moins du pic de glaire dans 95 % des cycles.</string>
+    <string name="src_baker2020">Après l\'ovulation, la température est plus haute d\'environ 0,3 à 0,7 °C.</string>
     <string name="src_direito2013">L\'ovulation suit le pic de LH (test d\'ovulation positif) d\'environ 1 à 2 jours.</string>
     <string name="src_frank2007">La méthode symptothermique : le double contrôle température et glaire.</string>
     <string name="src_fehring2006">Durée et variabilité des phases avant et après l\'ovulation.</string>
@@ -359,7 +361,7 @@
     <string name="temperature_remove">Supprimer cette mesure</string>
     <string name="legend_typical">Courbe type</string>
     <string name="intro_measure_title">Comment mesurer</string>
-    <string name="intro_measure_text">Le changement après l\'ovulation est faible : environ 0,2 à 0,5 °C. Pour le voir, les mesures doivent être précises et prises de la même façon chaque jour.</string>
+    <string name="intro_measure_text">Le changement après l\'ovulation est faible : environ 0,3 à 0,7 °C. Pour le voir, les mesures doivent être précises et prises de la même façon chaque jour.</string>
     <string name="intro_rule_thermometer">Un thermomètre basal à 2 décimales (par exemple 36,47 °C). Un thermomètre médical classique n\'est pas assez précis.</string>
     <string name="intro_rule_time">Chaque matin à peu près à la même heure (à une heure près), dès le réveil : avant de vous lever, parler, manger ou boire.</string>
     <string name="intro_rule_sleep">Après au moins 3 heures de sommeil. Toujours au même endroit : bouche, vagin ou rectum.</string>

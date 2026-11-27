@@ -204,6 +204,8 @@
     <string name="src_wilcox1995">Probabilità di concepimento per ogni giorno prima dell\'ovulazione.</string>
     <string name="src_wilcox2000">La finestra fertile cambia da un ciclo all\'altro, anche nei cicli regolari.</string>
     <string name="src_ecochard2001">Quando avvengono il rialzo della temperatura e il picco del muco, rispetto all\'ovulazione vista con l\'ecografia.</string>
+    <string name="src_hilgers1978" formatted="false">L\'ovulazione avviene entro 2 giorni dal picco del muco nel 95 % dei cicli.</string>
+    <string name="src_baker2020">Dopo l\'ovulazione, la temperatura è più alta di circa 0,3–0,7 °C.</string>
     <string name="src_direito2013">L\'ovulazione segue il picco di LH (test di ovulazione positivo) di circa 1–2 giorni.</string>
     <string name="src_frank2007">Il metodo sintotermico: il doppio controllo di temperatura e muco.</string>
     <string name="src_fehring2006">Durata e variabilità delle fasi prima e dopo l\'ovulazione.</string>
@@ -359,7 +361,7 @@
     <string name="temperature_remove">Elimina questa misura</string>
     <string name="legend_typical">Curva tipica</string>
     <string name="intro_measure_title">Come misurare</string>
-    <string name="intro_measure_text">La variazione dopo l\'ovulazione è piccola: circa 0,2–0,5 °C. Per vederla, le misure devono essere precise e prese sempre allo stesso modo.</string>
+    <string name="intro_measure_text">La variazione dopo l\'ovulazione è piccola: circa 0,3–0,7 °C. Per vederla, le misure devono essere precise e prese sempre allo stesso modo.</string>
     <string name="intro_rule_thermometer">Un termometro basale con 2 decimali (per esempio 36,47 °C). Un termometro per la febbre non è abbastanza preciso.</string>
     <string name="intro_rule_time">Ogni mattina più o meno alla stessa ora (entro un\'ora), appena sveglia: prima di alzarti, parlare, mangiare o bere.</string>
     <string name="intro_rule_sleep">Dopo almeno 3 ore di sonno. Sempre nello stesso punto: bocca, vagina o retto.</string>

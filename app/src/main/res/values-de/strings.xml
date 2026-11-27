@@ -204,6 +204,8 @@
     <string name="src_wilcox1995">Empfängniswahrscheinlichkeit für jeden Tag vor dem Eisprung.</string>
     <string name="src_wilcox2000">Das fruchtbare Fenster ändert sich von Zyklus zu Zyklus, auch bei regelmäßigen Zyklen.</string>
     <string name="src_ecochard2001">Zeitpunkt von Temperaturanstieg und Schleimhöhepunkt im Vergleich zum per Ultraschall gesehenen Eisprung.</string>
+    <string name="src_hilgers1978" formatted="false">Der Eisprung liegt in 95 % der Zyklen höchstens 2 Tage vom Schleimhöhepunkt entfernt.</string>
+    <string name="src_baker2020">Nach dem Eisprung ist die Temperatur etwa 0,3 bis 0,7 °C höher.</string>
     <string name="src_direito2013">Der Eisprung folgt dem LH-Anstieg (positiver Ovulationstest) nach etwa 1 bis 2 Tagen.</string>
     <string name="src_frank2007">Die symptothermale Methode: doppelte Kontrolle durch Temperatur und Schleim.</string>
     <string name="src_fehring2006">Länge und Schwankung der Phasen vor und nach dem Eisprung.</string>
@@ -354,7 +356,7 @@
     <string name="temperature_remove">Diesen Wert löschen</string>
     <string name="legend_typical">Typische Kurve</string>
     <string name="intro_measure_title">So misst du</string>
-    <string name="intro_measure_text">Die Änderung nach dem Eisprung ist klein: etwa 0,2 bis 0,5 °C. Damit man sie sieht, müssen die Werte genau sein und jeden Tag gleich gemessen werden.</string>
+    <string name="intro_measure_text">Die Änderung nach dem Eisprung ist klein: etwa 0,3 bis 0,7 °C. Damit man sie sieht, müssen die Werte genau sein und jeden Tag gleich gemessen werden.</string>
     <string name="intro_rule_thermometer">Ein Basalthermometer mit 2 Nachkommastellen (zum Beispiel 36,47 °C). Ein Fieberthermometer ist nicht genau genug.</string>
     <string name="intro_rule_time">Jeden Morgen etwa zur gleichen Zeit (auf eine Stunde genau), direkt nach dem Aufwachen: bevor du aufstehst, sprichst, isst oder trinkst.</string>
     <string name="intro_rule_sleep">Nach mindestens 3 Stunden Schlaf. Immer an derselben Stelle: Mund, Vagina oder After.</string>

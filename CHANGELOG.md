@@ -8,6 +8,7 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 - One ovulation day for the forecast. Only you change it. After a cycle with signs, Ondea shows what your signs point to and suggests that day; the "Ondea / My day" switch is removed.
 - Today: "Do your signs agree?" When the temperature rises and the mucus peak is known, Ondea says if they point to the same ovulation, and if it is earlier or later than your forecast day. If they are far apart, it asks you to check for disturbed readings.
 - Fix: the usual gap between mucus peak and ovulation is learnt from finished cycles only.
+- Science: SCIENCE.md and Settings → Science and sources explain every new rule (day-by-day estimate, late ovulation, sign check, what Ondea learns) with its source. The tour now gives the rise as 0.3 to 0.7 °C (Baker 2020).
 - The tour has a new page: privacy and security (no internet, encryption, app lock, hidden content, encrypted backup, export).
 
 ## [1.3.0] – 2026-11-27

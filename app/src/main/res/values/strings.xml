@@ -235,6 +235,8 @@
     <string name="src_wilcox1995">Chance of conception for each day before ovulation.</string>
     <string name="src_wilcox2000">The fertile window changes from cycle to cycle, even in regular cycles.</string>
     <string name="src_ecochard2001">When the temperature rise and the mucus peak happen, compared with ovulation seen on ultrasound.</string>
+    <string name="src_hilgers1978" formatted="false">Ovulation happens within 2 days of the mucus peak in 95 % of cycles.</string>
+    <string name="src_baker2020">After ovulation, the temperature is about 0.3 to 0.7 °C higher.</string>
     <string name="src_direito2013">Ovulation follows the LH surge (a positive ovulation test) by about 1 to 2 days.</string>
     <string name="src_frank2007">The symptothermal method: the temperature and mucus double check.</string>
     <string name="src_fehring2006">Length and variability of the phases before and after ovulation.</string>
@@ -381,7 +383,7 @@
     <string name="temperature_remove">Remove this reading</string>
     <string name="legend_typical">Typical curve</string>
     <string name="intro_measure_title">How to measure</string>
-    <string name="intro_measure_text">The change after ovulation is small: about 0.2 to 0.5 °C. To see it, the readings must be precise and taken the same way every day.</string>
+    <string name="intro_measure_text">The change after ovulation is small: about 0.3 to 0.7 °C. To see it, the readings must be precise and taken the same way every day.</string>
     <string name="intro_rule_thermometer">A basal thermometer with 2 decimals (for example 36.47 °C). A fever thermometer is not precise enough.</string>
     <string name="intro_rule_time">Every morning at about the same time (within an hour), right after you wake up: before you get up, talk, eat or drink.</string>
     <string name="intro_rule_sleep">After at least 3 hours of sleep. Always at the same place: mouth, vagina or rectum.</string>
