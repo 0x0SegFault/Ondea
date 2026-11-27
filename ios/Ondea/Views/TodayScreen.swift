@@ -18,6 +18,7 @@ struct TodayScreen: View {
                     ring(today)
                     status(today)
                     facts(today)
+                    if !today.signsKey.isEmpty { signs(today) }
                     if today.adviceLearnedDay > 0 { advice(today) }
                     ChanceCard(view: today)
                 } else {
@@ -93,6 +94,15 @@ struct TodayScreen: View {
             return L10n.t(today.detailKey, Int(today.detailNumber), date)
         default:
             return String(format: L10n.t(today.detailKey), locale: Locale.current, arguments: dates)
+        }
+    }
+
+    /// Do temperature and mucus point to the same ovulation this cycle?
+    private func signs(_ today: TodayView) -> some View {
+        let dates: [CVarArg] = today.signsDates.map { EpochDay.dayMonth($0.int64Value) }
+        let icon = today.signsKey == "signs_disagree" ? "exclamationmark.triangle" : "checkmark.circle"
+        return Card(title: L10n.t("signs_title"), systemImage: icon) {
+            Text(String(format: L10n.t(today.signsKey), locale: Locale.current, arguments: dates)).font(.callout)
         }
     }
 

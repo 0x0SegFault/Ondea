@@ -277,6 +277,11 @@
     <string name="estimate_today">Estimation du jour</string>
     <string name="estimate_today_detail">Ovulation vers le %1$s. Prévue avant ce cycle : %2$s.</string>
     <string name="how_it_works_daily">Jour après jour : Ondea compare chaque nouvelle mesure aux précédentes. Une première température haute, ou une glaire crémeuse ou en blanc d\'œuf, déplace l\'estimation. Si le jour prévu passe sans signe, l\'estimation recule. La glaire notée les jours de saignement n\'est pas utilisée.</string>
+    <string name="signs_title">Vos signes concordent-ils ?</string>
+    <string name="signs_agree">Température et glaire concordent : ovulation vers le %1$s.</string>
+    <string name="signs_agree_later">Température et glaire concordent : ovulation vers le %1$s, plus tard que votre jour prévu (%2$s).</string>
+    <string name="signs_agree_earlier">Température et glaire concordent : ovulation vers le %1$s, plus tôt que votre jour prévu (%2$s).</string>
+    <string name="signs_disagree">La température indique le %1$s, la glaire le %2$s. Vérifiez les mesures perturbées : maladie, alcool, nuit courte ou mesure tardive.</string>
     <string name="advice_title">Vos cycles indiquent un autre jour</string>
     <string name="advice_text_own">Vous avez indiqué l\'ovulation au jour %1$d. D\'après vos cycles enregistrés, Ondea trouve le jour %2$d.</string>
     <string name="advice_text_typical">Un cycle type place l\'ovulation au jour %1$d. D\'après vos cycles enregistrés, Ondea trouve le jour %2$d.</string>

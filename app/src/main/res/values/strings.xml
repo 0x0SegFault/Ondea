@@ -299,6 +299,11 @@
     <string name="estimate_today_detail">Ovulation around %1$s. Planned before this cycle: %2$s.</string>
     <string name="how_it_works_daily">Day by day: Ondea compares each new reading with the ones before. A first high temperature, or creamy or egg-white mucus, moves the estimate. When the planned day passes without a sign, the estimate moves later. Mucus noted on bleeding days is not used.</string>
     <!-- Advice after a cycle -->
+    <string name="signs_title">Do your signs agree?</string>
+    <string name="signs_agree">Temperature and mucus agree: ovulation around %1$s.</string>
+    <string name="signs_agree_later">Temperature and mucus agree: ovulation around %1$s, later than your forecast day (%2$s).</string>
+    <string name="signs_agree_earlier">Temperature and mucus agree: ovulation around %1$s, earlier than your forecast day (%2$s).</string>
+    <string name="signs_disagree">Temperature points to %1$s, mucus to %2$s. Check for disturbed readings: illness, alcohol, a short night or a late measurement.</string>
     <string name="advice_title">Your cycles suggest another day</string>
     <string name="advice_text_own">You set ovulation on day %1$d. From your recorded cycles, Ondea finds day %2$d.</string>
     <string name="advice_text_typical">A typical cycle puts ovulation on day %1$d. From your recorded cycles, Ondea finds day %2$d.</string>

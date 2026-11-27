@@ -274,6 +274,11 @@
     <string name="estimate_today">Heutige Schätzung</string>
     <string name="estimate_today_detail">Eisprung um den %1$s. Vor diesem Zyklus geplant: %2$s.</string>
     <string name="how_it_works_daily">Tag für Tag: Ondea vergleicht jeden neuen Wert mit den vorherigen. Eine erste hohe Temperatur oder cremiger bzw. eiweißartiger Schleim verschiebt die Schätzung. Vergeht der geplante Tag ohne Zeichen, rückt die Schätzung nach hinten. Schleim an Blutungstagen wird nicht verwendet.</string>
+    <string name="signs_title">Passen deine Zeichen zusammen?</string>
+    <string name="signs_agree">Temperatur und Schleim passen zusammen: Eisprung um den %1$s.</string>
+    <string name="signs_agree_later">Temperatur und Schleim passen zusammen: Eisprung um den %1$s, später als dein Vorhersagetag (%2$s).</string>
+    <string name="signs_agree_earlier">Temperatur und Schleim passen zusammen: Eisprung um den %1$s, früher als dein Vorhersagetag (%2$s).</string>
+    <string name="signs_disagree">Die Temperatur zeigt auf den %1$s, der Schleim auf den %2$s. Prüfe auf gestörte Messungen: Krankheit, Alkohol, kurze Nacht oder späte Messung.</string>
     <string name="advice_title">Deine Zyklen deuten auf einen anderen Tag</string>
     <string name="advice_text_own">Du hast den Eisprung auf Tag %1$d gesetzt. Aus deinen erfassten Zyklen ermittelt Ondea Tag %2$d.</string>
     <string name="advice_text_typical">Ein typischer Zyklus legt den Eisprung auf Tag %1$d. Aus deinen erfassten Zyklen ermittelt Ondea Tag %2$d.</string>

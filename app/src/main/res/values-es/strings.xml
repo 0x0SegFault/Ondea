@@ -277,6 +277,11 @@
     <string name="estimate_today">Estimación de hoy</string>
     <string name="estimate_today_detail">Ovulación hacia el %1$s. Prevista antes de este ciclo: %2$s.</string>
     <string name="how_it_works_daily">Día a día: Ondea compara cada nueva medida con las anteriores. Una primera temperatura alta, o moco cremoso o de clara de huevo, mueve la estimación. Si el día previsto pasa sin señal, la estimación se retrasa. El moco anotado en días de sangrado no se usa.</string>
+    <string name="signs_title">¿Coinciden tus signos?</string>
+    <string name="signs_agree">La temperatura y el moco coinciden: ovulación hacia el %1$s.</string>
+    <string name="signs_agree_later">La temperatura y el moco coinciden: ovulación hacia el %1$s, más tarde que tu día previsto (%2$s).</string>
+    <string name="signs_agree_earlier">La temperatura y el moco coinciden: ovulación hacia el %1$s, antes que tu día previsto (%2$s).</string>
+    <string name="signs_disagree">La temperatura indica el %1$s, el moco el %2$s. Revisa las medidas alteradas: enfermedad, alcohol, una noche corta o una medida tardía.</string>
     <string name="advice_title">Tus ciclos indican otro día</string>
     <string name="advice_text_own">Pusiste la ovulación el día %1$d. Con tus ciclos registrados, Ondea encuentra el día %2$d.</string>
     <string name="advice_text_typical">Un ciclo típico pone la ovulación el día %1$d. Con tus ciclos registrados, Ondea encuentra el día %2$d.</string>

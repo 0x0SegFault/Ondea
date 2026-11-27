@@ -110,6 +110,8 @@ class OndeaCore(json: String?) {
             adviceSettingDay = engine.advice()?.settingDay ?: 0,
             adviceLearnedDay = engine.advice()?.learnedDay ?: 0,
             adviceFromUser = engine.advice()?.fromUser ?: false,
+            signsKey = engine.signsCheck()?.key ?: "",
+            signsDates = engine.signsCheck()?.dates?.map { it.toEpochDay() } ?: emptyList(),
             ringDays = (0 until length).map { i ->
                 val date = start.plusDaysCompat(i)
                 dayKind(engine.dayInfo(date))
@@ -168,11 +170,14 @@ data class TodayView(
     val adviceLearnedDay: Int,
     /** True: [adviceSettingDay] is the user's own day; false: a typical cycle. */
     val adviceFromUser: Boolean,
+    /** Do temperature and mucus agree this cycle: text key (empty when there is nothing to check) and its dates. */
+    val signsKey: String,
+    val signsDates: List<Long>,
     /** One kind per cycle day, for the ring. */
     val ringDays: List<String>,
 ) {
     companion object {
         fun paused() = TodayView(false, 0, 0, "NEUTRAL", "not_tracking_title", false, 0, "not_tracking_text", 0,
-            emptyList(), "", 0, 0, 0, 0, 0, "LOW", 0, 0, false, emptyList())
+            emptyList(), "", 0, 0, 0, 0, 0, "LOW", 0, 0, false, "", emptyList(), emptyList())
     }
 }

@@ -160,4 +160,39 @@ class LearningTest {
         assertEquals(16, a.learnedDay)
         assertEquals(PredictionBasis.LEARNED, CycleEngine(e.data.copy(settings = settings.acceptAdvice(a)), e.today).predictionBasis)
     }
+
+    /** Low readings on days 6-14, high from day 15 (ovulation day 14), mucus peak on [peakDay]. */
+    private fun riseAndPeak(peakDay: Int): List<DayEntry> =
+        period() + (6..14).map { entry(it, temp = 36.40, mucus = if (it == peakDay) 4 else if (it == peakDay + 1) 2 else 0) } +
+            (15..18).map { entry(it, temp = 36.65, mucus = if (it == peakDay) 4 else if (it == peakDay + 1) 2 else 0) }
+
+    @Test
+    fun temperatureAndMucusAgree() {
+        val c = assertNotNull(engine(18, riseAndPeak(12)).signsCheck())
+        assertTrue(c.agree)
+        assertTrue(c.confirmed)
+        assertEquals("signs_agree", c.key)
+        assertEquals(listOf(day(14)), c.dates)
+    }
+
+    @Test
+    fun temperatureAndMucusFarApartAskToCheckTheReadings() {
+        val c = assertNotNull(engine(18, riseAndPeak(8)).signsCheck())
+        assertFalse(c.agree)
+        assertEquals("signs_disagree", c.key)
+        assertEquals(listOf(day(14), day(8)), c.dates)
+    }
+
+    @Test
+    fun agreeingSignsLaterThanTheForecastDaySayIt() {
+        val c = assertNotNull(engine(18, riseAndPeak(12), settings.copy(ovulationDay = 10)).signsCheck())
+        assertEquals("signs_agree_later", c.key)
+        assertEquals(listOf(day(14), day(10)), c.dates)
+    }
+
+    @Test
+    fun noCheckWithoutAMucusPeak() {
+        val entries = period() + (6..14).map { entry(it, temp = 36.40) } + (15..18).map { entry(it, temp = 36.65) }
+        assertNull(engine(18, entries).signsCheck())
+    }
 }
