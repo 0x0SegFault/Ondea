@@ -47,8 +47,8 @@ function formPage(query = {}) {
 <body>
 <main>
   <h1>Ondea · anonymous report</h1>
-  <p class="lead">No account and no email. Nothing about you is stored: not your IP address, not a cookie.
-  Never write health data here. Reports are read by the maintainer before anything is made public.</p>
+  <p class="lead">Anonymous: no account, no email. Nothing about you is kept: not your IP address, not a cookie.
+  Never write health data here.</p>
   <form id="report">
     <label for="kind">Type</label>
     <select id="kind" name="kind">
@@ -145,7 +145,7 @@ form.addEventListener('submit', async (event) => {
 `;
 
 const STATUS_TEXT = {
-  received: ['Received', 'The maintainer has your report. It is private until it is published.'],
+  received: ['Received', 'The maintainer has your report.'],
   published: ['Published', 'The maintainer published your report. Follow it here:'],
   closed: ['Closed', 'The maintainer closed this report.'],
   declined: ['Closed: not planned', 'The maintainer read this report and does not plan to change the app for it.'],

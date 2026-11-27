@@ -277,9 +277,9 @@
     <string name="data_tracking">Tracking: none</string>
     <string name="data_stored">Stored only on this phone, encrypted. Erase it at any time in Settings → Erase all data.</string>
     <string name="feedback_bug">Report a problem</string>
-    <string name="feedback_bug_hint">Anonymously, with GitHub, or with any app you choose</string>
+    <string name="feedback_bug_hint">Anonymously or with GitHub</string>
     <string name="feedback_feature">Suggest a feature</string>
-    <string name="feedback_feature_hint">Anonymously, with GitHub, or with any app you choose</string>
+    <string name="feedback_feature_hint">Anonymously or with GitHub</string>
     <string name="crash_title">Ondea stopped unexpectedly</string>
     <string name="crash_text">Help fix it: send the technical report. It contains no health data, and you can read it before you send it.</string>
     <string name="crash_report">Report</string>
@@ -287,12 +287,9 @@
     <string name="report_how_title">How do you want to send it?</string>
     <string name="feedback_no_health_data">Never add health data. You see the full text before anything is sent.</string>
     <string name="report_anonymous">Anonymous form</string>
-    <string name="report_anonymous_hint">No account and no email. Opens a form in your browser. Reports stay private until the maintainer reviews them.</string>
+    <string name="report_anonymous_hint">Anonymous: no account, no email. Opens a form in your browser. Nothing about you is kept.</string>
     <string name="report_github">GitHub</string>
     <string name="report_github_hint">With your GitHub account. The report is public.</string>
-    <string name="report_share">Share as text</string>
-    <string name="report_share_hint">Send it with any app you choose: Signal, email, Matrix…</string>
-    <string name="report_share_title">Send the report</string>
     <plurals name="prediction_learned_detail">
         <item quantity="one">Cycle day %1$d: your last confirmed ovulation</item>
         <item quantity="other">Cycle day %1$d: average of your last %2$d confirmed ovulations</item>

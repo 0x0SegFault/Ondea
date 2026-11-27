@@ -24,7 +24,7 @@ object Feedback {
     enum class Kind(val formValue: String) { BUG("bug"), FEATURE("feature") }
 
     /** Last line of every anonymous issue. Same text as reports/report.js (a test checks it). */
-    const val FOOTER = "_Sent anonymously. The sender sees only the status (received, published with its public link, closed), not comments here._"
+    const val FOOTER = "_Sent anonymously._"
 
     /** A random follow-up code (32 hex characters). Only its hash goes in the issue. */
     fun newFollowUpCode(): String {
@@ -59,20 +59,6 @@ object Feedback {
 
     fun githubUri(context: Context, kind: Kind, what: String? = null): Uri =
         if (kind == Kind.BUG) bugReportUri(context, what) else featureRequestUri()
-
-    /** Plain text for "share as text": the user picks the app and sees everything. */
-    fun shareText(context: Context, kind: Kind, what: String?): String = buildString {
-        append(if (kind == Kind.BUG) "Ondea problem report" else "Ondea feature idea").append("\n\n")
-        if (!what.isNullOrBlank()) append(what.take(MAX_REPORT)).append("\n\n")
-        append("App version: ").append(version(context)).append('\n')
-        append("Device: ").append(device())
-    }
-
-    fun share(context: Context, kind: Kind, what: String?, title: String) {
-        val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, shareText(context, kind, what))
-        LockGate.skipNextLock()
-        context.startActivity(Intent.createChooser(send, title))
-    }
 
     fun version(context: Context): String =
         context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "?"

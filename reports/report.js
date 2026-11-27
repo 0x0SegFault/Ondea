@@ -4,7 +4,7 @@
 const LIMITS = { title: 120, details: 5000, version: 40, device: 120 };
 const KINDS = { bug: ['bug', 'anonymous'], feature: ['enhancement', 'anonymous'] };
 // Same text as the preview in the app and on the form page.
-const FOOTER = '_Sent anonymously. The sender sees only the status (received, published with its public link, closed), not comments here._';
+const FOOTER = '_Sent anonymously._';
 
 function clean(value, max) {
   return String(value ?? '').replace(/\r\n?/g, '\n').trim().slice(0, max);
