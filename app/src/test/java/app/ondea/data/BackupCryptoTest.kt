@@ -49,8 +49,6 @@ class BackupCryptoTest {
             "entries":[{"date":20401,"tempC":36.4,"flow":2,"mucus":0,"disturbed":false,"intercourse":false,"note":""}]}"""
         val d = Repository.decode(v100.toByteArray())
         assertEquals(15, d.settings.ovulationDay)
-        assertEquals(null, d.settings.useOwnOvulationDay) // older data: own day keeps priority
-        assertEquals(true, d.settings.usesOwnOvulationDay)
         assertEquals(0, d.entries.single().lh)
     }
 }

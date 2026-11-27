@@ -38,9 +38,8 @@ class OndeaCore(json: String?) {
                 onboarded = true,
                 cycleLength = cycleLength,
                 periodLength = periodLength,
-                // 0 means "I don't know": Ondea learns it.
+                // 0 means "I don't know": a typical cycle until Ondea suggests a day.
                 ovulationDay = ovulationDay.takeIf { it > 0 },
-                useOwnOvulationDay = false,
                 fahrenheit = fahrenheit,
             ),
             cycles = data.cycles.ifEmpty { listOf(app.ondea.data.Cycle(lastPeriod)) },

@@ -193,7 +193,7 @@
     <string name="sign_positive_on">Positivo il %s</string>
     <string name="sign_peak_on">Picco il %s</string>
     <string name="prediction_detail">Giorno %1$d del ciclo: ciclo medio di %2$d giorni meno una fase luteale di %3$d giorni</string>
-    <string name="prediction_setting_detail">Giorno %d del ciclo: il tuo giorno di ovulazione abituale</string>
+    <string name="prediction_setting_detail">Giorno %d del ciclo: il giorno che hai scelto</string>
     <string name="in_use">In uso</string>
     <string name="ovulation_day_onboarding">Giorno di ovulazione abituale</string>
     <string name="ovulation_day_onboarding_hint">Facoltativo. Se non lo conosci, Ondea lo impara dai tuoi segni.</string>
@@ -212,13 +212,6 @@
     <string name="why_timing">La temperatura sale dopo l\'ovulazione. Conferma l\'ovulazione e insegna a Ondea il tuo andamento per i cicli successivi. Il muco cervicale e i test di ovulazione arrivano prima dell\'ovulazione: usali per scegliere il momento dei rapporti in questo ciclo.</string>
     <string name="src_erden2022">L\'ovulazione avviene 22–56 ore dopo l\'inizio del picco di LH. Alcuni picchi sono brevi o non sono seguiti dall\'ovulazione.</string>
     <string name="src_mcgovern2004" formatted="false">Circa il 7% dei test di ovulazione positivi fatti a casa non è seguito dall\'ovulazione.</string>
-    <string name="prediction_to_use">Previsione da usare</string>
-    <string name="use_ondea">Ondea (impara)</string>
-    <string name="use_mine">Il mio giorno</string>
-    <string name="ondea_estimate">Stima di Ondea</string>
-    <string name="ondea_estimate_own">Giorno %d del ciclo: il tuo giorno abituale, fino al primo ciclo confermato</string>
-    <string name="my_usual_day">Il mio giorno di ovulazione abituale</string>
-    <string name="my_usual_day_hint">Sempre conservato. Con Ondea viene usato finché Ondea non ha imparato da un ciclo confermato.</string>
     <string name="source_typical">Previsto in base a un ciclo tipico</string>
     <string name="backup_where_title">Dove salvare il backup?</string>
     <string name="backup_where_intro">Ondea crittografa il backup con la tua password prima che esca dall\'app. Nessuno può leggerlo senza la password.</string>
@@ -287,6 +280,10 @@
     <string name="advice_title">I tuoi cicli indicano un altro giorno</string>
     <string name="advice_text_own">Hai indicato l\'ovulazione al giorno %1$d. Dai tuoi cicli registrati, Ondea trova il giorno %2$d.</string>
     <string name="advice_text_typical">Un ciclo tipico mette l\'ovulazione al giorno %1$d. Dai tuoi cicli registrati, Ondea trova il giorno %2$d.</string>
+    <string name="forecast_day">Giorno di ovulazione per la previsione</string>
+    <string name="forecast_day_hint">Cambia solo se lo cambi tu. I tuoi segni spostano comunque la stima giorno per giorno in ogni ciclo.</string>
+    <string name="signs_show">Cosa mostrano i tuoi segni</string>
+    <string name="signs_show_none">Non ancora. Ondea ha bisogno di un ciclo concluso con un segno (rialzo della temperatura, test di ovulazione o picco del muco).</string>
     <string name="advice_use">Usa il giorno %d</string>
     <string name="advice_keep">Tieni il giorno %d</string>
     <string name="phase_period">Mestruazioni</string>
@@ -306,6 +303,14 @@
     <string name="typical_curve_description">Curva tipica della temperatura basale: bassa fino all\'ovulazione, poi più alta fino alle mestruazioni successive.</string>
     <string name="intro_what_title">Cos\'è Ondea</string>
     <string name="intro_what_text">Ondea ti aiuta a capire il tuo ciclo con il metodo sintotermico: la tua temperatura del mattino e i segni del tuo corpo. I tuoi dati restano su questo telefono, cifrati. Nessun account, nessuna pubblicità, nessun tracciamento.</string>
+    <string name="intro_safe_title">Privato e sicuro</string>
+    <string name="intro_safe_text">Ondea non ha accesso a internet. Niente lascia questo telefono se non lo invii tu.</string>
+    <string name="intro_safe_data">I tuoi dati sono cifrati su questo telefono. Nessun account, nessuna pubblicità, nessun tracciamento.</string>
+    <string name="intro_safe_lock">Blocco: apri Ondea con l\'impronta, il volto o il blocco schermo.</string>
+    <string name="intro_safe_hide">Nascondi contenuto: niente screenshot, e Ondea resta vuota nelle app recenti.</string>
+    <string name="intro_safe_backup">Backup cifrato con la tua password: su Proton Drive, Nextcloud, e-mail o in un file.</string>
+    <string name="intro_safe_export">Esporta in un foglio di calcolo (CSV), per esempio per il tuo medico.</string>
+    <string name="intro_safe_where">Li trovi nelle Impostazioni.</string>
     <string name="intro_record_title">Cosa annoti</string>
     <string name="intro_record_temperature">Temperatura: ogni mattina, prima di alzarti, con un termometro basale (2 decimali).</string>
     <string name="intro_record_period">Mestruazioni: i giorni di sanguinamento e la quantità.</string>

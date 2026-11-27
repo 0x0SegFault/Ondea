@@ -4,6 +4,10 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 
 ## [Unreleased]
 
+### Changed
+- One ovulation day for the forecast. Only you change it. After a cycle with signs, Ondea shows what your signs point to and suggests that day; the "Ondea / My day" switch is removed.
+- The tour has a new page: privacy and security (no internet, encryption, app lock, hidden content, encrypted backup, export).
+
 ## [1.3.0] – 2026-11-27
 
 ### Added

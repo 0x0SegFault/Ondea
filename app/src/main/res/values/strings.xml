@@ -224,7 +224,7 @@
     <string name="sign_positive_on">Positive on %s</string>
     <string name="sign_peak_on">Peak on %s</string>
     <string name="prediction_detail" tools:ignore="PluralsCandidate">Cycle day %1$d: average cycle of %2$d days minus a luteal phase of %3$d days</string>
-    <string name="prediction_setting_detail">Cycle day %d: your usual ovulation day</string>
+    <string name="prediction_setting_detail">Cycle day %d: the day you set</string>
     <string name="in_use">In use</string>
     <string name="ovulation_day_onboarding">Usual ovulation day</string>
     <string name="ovulation_day_onboarding_hint">Optional. If you don\'t know it, Ondea learns it from your signs.</string>
@@ -243,13 +243,6 @@
     <string name="why_timing">The temperature rises after ovulation. It confirms ovulation and teaches Ondea your pattern for the next cycles. Cervical mucus and ovulation tests come before ovulation: use them to time intercourse in this cycle.</string>
     <string name="src_erden2022">Ovulation follows 22 to 56 hours after the LH surge starts. Some surges are short or are not followed by ovulation.</string>
     <string name="src_mcgovern2004" formatted="false">About 7% of positive home ovulation tests are not followed by ovulation.</string>
-    <string name="prediction_to_use">Prediction to use</string>
-    <string name="use_ondea">Ondea (learns)</string>
-    <string name="use_mine">My day</string>
-    <string name="ondea_estimate">Ondea\'s estimate</string>
-    <string name="ondea_estimate_own">Cycle day %d: your usual day, until your first confirmed cycle</string>
-    <string name="my_usual_day">My usual ovulation day</string>
-    <string name="my_usual_day_hint">Always kept. With Ondea, it is used until Ondea has learnt from a confirmed cycle.</string>
     <string name="source_typical">Predicted from a typical cycle</string>
     <string name="backup_where_title">Where should the backup go?</string>
     <string name="backup_where_intro">Ondea encrypts the backup with your password before it leaves the app. Nobody can read it without the password.</string>
@@ -309,6 +302,10 @@
     <string name="advice_title">Your cycles suggest another day</string>
     <string name="advice_text_own">You set ovulation on day %1$d. From your recorded cycles, Ondea finds day %2$d.</string>
     <string name="advice_text_typical">A typical cycle puts ovulation on day %1$d. From your recorded cycles, Ondea finds day %2$d.</string>
+    <string name="forecast_day">Ovulation day for the forecast</string>
+    <string name="forecast_day_hint">It changes only when you change it. Your signs still move the estimate day by day in each cycle.</string>
+    <string name="signs_show">What your signs show</string>
+    <string name="signs_show_none">Not yet. Ondea needs one finished cycle with a sign (temperature rise, ovulation test or mucus peak).</string>
     <string name="advice_use">Use day %d</string>
     <string name="advice_keep">Keep day %d</string>
     <!-- Chart: phases and your levels -->
@@ -338,6 +335,14 @@
     <!-- Intro -->
     <string name="intro_what_title">What is Ondea</string>
     <string name="intro_what_text">Ondea helps you understand your cycle with the symptothermal method: your morning temperature and your body signs. Your data stays on this phone, encrypted. No account, no ads, no tracking.</string>
+    <string name="intro_safe_title">Private and safe</string>
+    <string name="intro_safe_text">Ondea has no internet access. Nothing leaves this phone unless you send it.</string>
+    <string name="intro_safe_data">Your data is encrypted on this phone. No account, no ads, no tracking.</string>
+    <string name="intro_safe_lock">App lock: open Ondea with your fingerprint, face or screen lock.</string>
+    <string name="intro_safe_hide">Hide content: no screenshots, and Ondea stays blank in the recent apps view.</string>
+    <string name="intro_safe_backup">Backup encrypted with your password: to Proton Drive, Nextcloud, email or a file.</string>
+    <string name="intro_safe_export">Export to a spreadsheet (CSV), for example to show your doctor.</string>
+    <string name="intro_safe_where">Find them in Settings.</string>
     <string name="intro_record_title">What you record</string>
     <string name="intro_record_temperature">Temperature: each morning, before you get up, with a basal thermometer (2 decimals).</string>
     <string name="intro_record_period">Period: the days you bleed, and how much.</string>

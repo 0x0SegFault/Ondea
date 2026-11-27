@@ -1,12 +1,12 @@
 import SwiftUI
 
-/// A short tour before the setup: what Ondea is, what to record, the temperature chart, how Ondea helps.
+/// A short tour before the setup: what Ondea is, privacy and security, what to record, the temperature chart, how Ondea helps.
 /// `replay`: opened again from Settings; the last button closes instead of starting the setup.
 struct IntroView: View {
     var replay = false
     let onDone: () -> Void
     @State private var page = 0
-    private let pages = 5
+    private let pages = 6
 
     var body: some View {
         VStack(spacing: 0) {
@@ -17,10 +17,11 @@ struct IntroView: View {
             .padding(.horizontal, 20).padding(.top, 12)
             TabView(selection: $page) {
                 ScrollView { whatPage.padding(20) }.tag(0)
-                ScrollView { recordPage.padding(20) }.tag(1)
-                ScrollView { measurePage.padding(20) }.tag(2)
-                ScrollView { chartPage.padding(20) }.tag(3)
-                ScrollView { helpPage.padding(20) }.tag(4)
+                ScrollView { safePage.padding(20) }.tag(1)
+                ScrollView { recordPage.padding(20) }.tag(2)
+                ScrollView { measurePage.padding(20) }.tag(3)
+                ScrollView { chartPage.padding(20) }.tag(4)
+                ScrollView { helpPage.padding(20) }.tag(5)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
             .indexViewStyle(.page(backgroundDisplayMode: .always))
@@ -48,6 +49,17 @@ struct IntroView: View {
             badge("thermometer.medium", Palette.rose)
             Text(L10n.t("intro_what_title")).font(.title2.bold())
             Text(L10n.t("intro_what_text")).multilineTextAlignment(.center).foregroundStyle(.secondary)
+        }
+    }
+
+    // The iPhone app has the app lock; backup and export are Android only for now.
+    private var safePage: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack { Spacer(); badge("lock", Palette.rose); Spacer() }
+            Text(L10n.t("intro_safe_title")).font(.title2.bold()).frame(maxWidth: .infinity)
+            Text(L10n.t("intro_safe_text")).foregroundStyle(.secondary)
+            item("wifi.slash", Palette.fertile, "intro_safe_data")
+            item("faceid", Palette.ovulation, "intro_safe_lock")
         }
     }
 

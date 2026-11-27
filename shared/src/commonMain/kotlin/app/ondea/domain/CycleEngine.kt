@@ -3,7 +3,6 @@ package app.ondea.domain
 import app.ondea.data.AppData
 import app.ondea.data.DayEntry
 import app.ondea.data.Settings
-import app.ondea.data.usesOwnOvulationDay
 import kotlinx.datetime.LocalDate
 import kotlin.math.roundToInt
 
@@ -223,15 +222,15 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         typicalOvulationIndex = (avgCycleLength - avgLutealLength - 1).coerceAtLeast(settings.periodLength)
         learnedOvulationIndex = pastOvulations.takeIf { it.isNotEmpty() }?.average()?.roundToInt()
         val own = settings.ovulationDay?.let { it - 1 }
-        // Ondea's estimate: learnt from confirmed cycles, else the user's own day, else a typical cycle.
+        // What the signs show: learnt from finished cycles, else the day in the settings, else a typical cycle.
         ondeaOvulationIndex = learnedOvulationIndex ?: own ?: typicalOvulationIndex
+        // The forecast always uses the day in the settings. Ondea never changes it alone: it suggests (advice()).
+        predictedOvulationIndex = own ?: typicalOvulationIndex
         predictionBasis = when {
-            settings.usesOwnOvulationDay -> PredictionBasis.OWN_DAY
-            learnedOvulationIndex != null -> PredictionBasis.LEARNED
+            predictedOvulationIndex == learnedOvulationIndex -> PredictionBasis.LEARNED
             own != null -> PredictionBasis.OWN_DAY
             else -> PredictionBasis.TYPICAL
         }
-        predictedOvulationIndex = if (settings.usesOwnOvulationDay) own!! else ondeaOvulationIndex
         earliestOvulationIndex = if (predictionBasis == PredictionBasis.LEARNED)
             minOf(predictedOvulationIndex, pastOvulations.min())
         else predictedOvulationIndex
@@ -453,8 +452,8 @@ private fun LocalDate.inRange(from: LocalDate, to: LocalDate) = !isBefore(from) 
 
 private fun round2(v: Double) = kotlin.math.round(v * 100) / 100.0
 
-/** Use Ondea's learnt day from now on; the user's day is updated to it. */
-fun Settings.acceptAdvice(a: OvulationAdvice) = copy(ovulationDay = a.learnedDay, useOwnOvulationDay = false, adviceDismissedDay = null)
+/** Forecast with the learnt day from now on. */
+fun Settings.acceptAdvice(a: OvulationAdvice) = copy(ovulationDay = a.learnedDay, adviceDismissedDay = null)
 
-/** Keep predicting with the day used so far. */
-fun Settings.keepOwnDay(a: OvulationAdvice) = copy(ovulationDay = a.settingDay, useOwnOvulationDay = true, adviceDismissedDay = a.learnedDay)
+/** Keep the day used so far; the advice comes back only when the learnt day changes. */
+fun Settings.keepOwnDay(a: OvulationAdvice) = copy(adviceDismissedDay = a.learnedDay)

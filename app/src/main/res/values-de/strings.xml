@@ -193,7 +193,7 @@
     <string name="sign_positive_on">Positiv am %s</string>
     <string name="sign_peak_on">Höhepunkt am %s</string>
     <string name="prediction_detail">Zyklustag %1$d: durchschnittlicher Zyklus von %2$d Tagen minus eine Lutealphase von %3$d Tagen</string>
-    <string name="prediction_setting_detail">Zyklustag %d: dein üblicher Eisprungtag</string>
+    <string name="prediction_setting_detail">Zyklustag %d: der Tag, den du gewählt hast</string>
     <string name="in_use">Aktiv</string>
     <string name="ovulation_day_onboarding">Üblicher Eisprungtag</string>
     <string name="ovulation_day_onboarding_hint">Optional. Wenn du ihn nicht kennst, lernt Ondea ihn aus deinen Zeichen.</string>
@@ -212,13 +212,6 @@
     <string name="why_timing">Die Temperatur steigt nach dem Eisprung. Sie bestätigt den Eisprung und zeigt Ondea dein Muster für die nächsten Zyklen. Zervixschleim und Ovulationstests kommen vor dem Eisprung: Nutze sie, um in diesem Zyklus den Zeitpunkt für Geschlechtsverkehr zu wählen.</string>
     <string name="src_erden2022">Der Eisprung folgt 22 bis 56 Stunden nach Beginn des LH-Anstiegs. Manche Anstiege sind kurz oder werden von keinem Eisprung gefolgt.</string>
     <string name="src_mcgovern2004" formatted="false">Auf etwa 7 % der positiven Ovulationstests für zu Hause folgt kein Eisprung.</string>
-    <string name="prediction_to_use">Verwendete Vorhersage</string>
-    <string name="use_ondea">Ondea (lernt)</string>
-    <string name="use_mine">Mein Tag</string>
-    <string name="ondea_estimate">Schätzung von Ondea</string>
-    <string name="ondea_estimate_own">Zyklustag %d: dein üblicher Tag, bis zu deinem ersten bestätigten Zyklus</string>
-    <string name="my_usual_day">Mein üblicher Eisprungtag</string>
-    <string name="my_usual_day_hint">Bleibt immer gespeichert. Mit Ondea wird er verwendet, bis Ondea aus einem bestätigten Zyklus gelernt hat.</string>
     <string name="source_typical">Aus einem typischen Zyklus vorhergesagt</string>
     <string name="backup_where_title">Wohin soll die Sicherung?</string>
     <string name="backup_where_intro">Ondea verschlüsselt die Sicherung mit deinem Passwort, bevor sie die App verlässt. Ohne das Passwort kann niemand sie lesen.</string>
@@ -284,6 +277,10 @@
     <string name="advice_title">Deine Zyklen deuten auf einen anderen Tag</string>
     <string name="advice_text_own">Du hast den Eisprung auf Tag %1$d gesetzt. Aus deinen erfassten Zyklen ermittelt Ondea Tag %2$d.</string>
     <string name="advice_text_typical">Ein typischer Zyklus legt den Eisprung auf Tag %1$d. Aus deinen erfassten Zyklen ermittelt Ondea Tag %2$d.</string>
+    <string name="forecast_day">Eisprungtag für die Vorhersage</string>
+    <string name="forecast_day_hint">Er ändert sich nur, wenn du ihn änderst. Deine Zeichen verschieben die Schätzung in jedem Zyklus weiterhin Tag für Tag.</string>
+    <string name="signs_show">Was deine Zeichen zeigen</string>
+    <string name="signs_show_none">Noch nicht. Ondea braucht einen abgeschlossenen Zyklus mit einem Zeichen (Temperaturanstieg, Ovulationstest oder Schleimhöhepunkt).</string>
     <string name="advice_use">Tag %d verwenden</string>
     <string name="advice_keep">Tag %d behalten</string>
     <string name="phase_period">Periode</string>
@@ -303,6 +300,14 @@
     <string name="typical_curve_description">Typische Basaltemperaturkurve: niedrig bis zum Eisprung, dann höher bis zur nächsten Periode.</string>
     <string name="intro_what_title">Was ist Ondea</string>
     <string name="intro_what_text">Ondea hilft dir, deinen Zyklus mit der symptothermalen Methode zu verstehen: deine Morgentemperatur und die Zeichen deines Körpers. Deine Daten bleiben verschlüsselt auf diesem Telefon. Kein Konto, keine Werbung, kein Tracking.</string>
+    <string name="intro_safe_title">Privat und sicher</string>
+    <string name="intro_safe_text">Ondea hat keinen Internetzugang. Nichts verlässt dieses Telefon, außer du sendest es.</string>
+    <string name="intro_safe_data">Deine Daten sind auf diesem Telefon verschlüsselt. Kein Konto, keine Werbung, kein Tracking.</string>
+    <string name="intro_safe_lock">App-Sperre: Öffne Ondea mit Fingerabdruck, Gesicht oder Displaysperre.</string>
+    <string name="intro_safe_hide">Inhalt verbergen: keine Screenshots, und Ondea bleibt in den letzten Apps leer.</string>
+    <string name="intro_safe_backup">Mit deinem Passwort verschlüsseltes Backup: zu Proton Drive, Nextcloud, per E-Mail oder als Datei.</string>
+    <string name="intro_safe_export">Export als Tabelle (CSV), zum Beispiel für deine Ärztin oder deinen Arzt.</string>
+    <string name="intro_safe_where">Du findest sie in den Einstellungen.</string>
     <string name="intro_record_title">Was du erfasst</string>
     <string name="intro_record_temperature">Temperatur: jeden Morgen vor dem Aufstehen, mit einem Basalthermometer (2 Nachkommastellen).</string>
     <string name="intro_record_period">Periode: die Blutungstage und die Stärke.</string>

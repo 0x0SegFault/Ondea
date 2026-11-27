@@ -176,13 +176,18 @@ class CycleEngineTest {
     }
 
     @Test
-    fun oneConfirmedCycleMovesTheNextPredictionToTheLearntOvulationDay() {
+    fun oneConfirmedCycleSuggestsTheLearntOvulationDay() {
         val c2 = start.plusDays(30)
         // Cycle 1: rise on day 19, so ovulation on day 18 (index 17). Default would be index 13.
         val e = CycleEngine(data(start, c2, entries = temps(start, 30, riseDay = 19)), c2.plusDays(2))
         assertEquals(listOf(17), e.pastOvulations)
-        assertEquals(c2.plusDays(17), e.forecast!!.ovulation)
-        assertEquals(c2.plusDays(12), e.forecast!!.fertileStart)
+        // The forecast stays a typical cycle (30 days learnt, luteal 14: index 15) until the user accepts.
+        assertEquals(PredictionBasis.TYPICAL, e.predictionBasis)
+        assertEquals(c2.plusDays(15), e.forecast!!.ovulation)
+        val a = assertNotNull(e.advice())
+        val accepted = CycleEngine(e.data.copy(settings = settings.acceptAdvice(a)), e.today)
+        assertEquals(c2.plusDays(17), accepted.forecast!!.ovulation)
+        assertEquals(c2.plusDays(12), accepted.forecast!!.fertileStart)
     }
 
     @Test
@@ -197,28 +202,33 @@ class CycleEngineTest {
     }
 
     @Test
-    fun ondeaModeUsesTheOwnDayUntilItHasLearntThenItsOwnEstimate() {
-        val own = settings.copy(ovulationDay = 12, useOwnOvulationDay = false)
-        // No history: the user's day is the best estimate.
+    fun theForecastKeepsTheSetDayAndOndeaSuggestsTheLearntOne() {
+        val own = settings.copy(ovulationDay = 12)
         val before = CycleEngine(data(start).copy(settings = own), start.plusDays(2))
         assertEquals(PredictionBasis.OWN_DAY, before.predictionBasis)
         assertEquals(start.plusDays(11), before.forecast!!.ovulation)
-        // One confirmed cycle (ovulation index 17): Ondea now uses what it learnt; the own day is kept.
+        // One confirmed cycle (ovulation index 17): the forecast does not change alone, Ondea suggests day 18.
         val c2 = start.plusDays(30)
         val after = CycleEngine(data(start, c2, entries = temps(start, 30, riseDay = 19)).copy(settings = own), c2.plusDays(2))
-        assertEquals(PredictionBasis.LEARNED, after.predictionBasis)
-        assertEquals(c2.plusDays(17), after.forecast!!.ovulation)
-        assertEquals(12, after.data.settings.ovulationDay)
+        assertEquals(PredictionBasis.OWN_DAY, after.predictionBasis)
+        assertEquals(c2.plusDays(11), after.forecast!!.ovulation)
+        val advice = assertNotNull(after.advice())
+        assertEquals(18, advice.learnedDay)
+        // Accepted: the forecast uses the learnt day.
+        val accepted = CycleEngine(after.data.copy(settings = own.acceptAdvice(advice)), after.today)
+        assertEquals(PredictionBasis.LEARNED, accepted.predictionBasis)
+        assertEquals(c2.plusDays(17), accepted.forecast!!.ovulation)
     }
 
     @Test
-    fun myDayModeKeepsTheOwnDayEvenWithHistory() {
-        val own = settings.copy(ovulationDay = 12, useOwnOvulationDay = true)
+    fun keepingTheOwnDayHidesTheAdvice() {
+        val own = settings.copy(ovulationDay = 12, adviceDismissedDay = 18)
         val c2 = start.plusDays(30)
         val e = CycleEngine(data(start, c2, entries = temps(start, 30, riseDay = 19)).copy(settings = own), c2.plusDays(2))
         assertEquals(PredictionBasis.OWN_DAY, e.predictionBasis)
         assertEquals(c2.plusDays(11), e.forecast!!.ovulation)
-        assertEquals(17, e.ondeaOvulationIndex) // Ondea's estimate is still shown
+        assertEquals(17, e.ondeaOvulationIndex) // what the signs show is still shown
+        assertNull(e.advice())
     }
 
     @Test

@@ -83,6 +83,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private fun edit(@StringRes done: Int? = null, transform: (AppData) -> AppData) {
+        // Debug demo data: changes stay in memory and never touch the saved data.
+        demo.value?.let { demo.value = transform(it); done?.let(::say); return }
         viewModelScope.launch {
             try {
                 repo.update(transform)

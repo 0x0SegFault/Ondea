@@ -116,7 +116,7 @@ class LearningTest {
     @Test
     fun learnsProfileMucusLagAndAdvisesANewDay() {
         val (starts, entries) = history()
-        val own = settings.copy(ovulationDay = 14, useOwnOvulationDay = false)
+        val own = settings.copy(ovulationDay = 14)
         val e = CycleEngine(AppData(settings = own, cycles = starts.map { Cycle(it.toEpochDay()) }, entries = entries), starts[2].plusDays(2))
         val p = assertNotNull(e.profile)
         assertEquals(36.35, p.lowC)
@@ -154,6 +154,10 @@ class LearningTest {
         }
         val e = CycleEngine(AppData(settings = settings, cycles = starts.map { Cycle(it.toEpochDay()) }, entries = entries), starts[1].plusDays(1))
         assertEquals(listOf(15), e.pastOvulations)
-        assertEquals(PredictionBasis.LEARNED, e.predictionBasis)
+        // Learnt day 16, typical day 14: Ondea suggests it, the forecast waits for the user.
+        assertEquals(PredictionBasis.TYPICAL, e.predictionBasis)
+        val a = assertNotNull(e.advice())
+        assertEquals(16, a.learnedDay)
+        assertEquals(PredictionBasis.LEARNED, CycleEngine(e.data.copy(settings = settings.acceptAdvice(a)), e.today).predictionBasis)
     }
 }
