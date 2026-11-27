@@ -34,6 +34,6 @@ The fertility logic lives in `shared/` (Kotlin Multiplatform, no Android code), 
 
 - All pull requests need the CI checks to pass and an approval from the maintainer.
 - Keep pull requests focused: one change per pull request is easier to review.
-- By contributing, you agree that your contribution is licensed under the [GPL-3.0-or-later](LICENSE).
+- By contributing, you agree that your contribution is licensed under the [EUPL-1.2](LICENSE).
 
 Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).

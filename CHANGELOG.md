@@ -4,6 +4,9 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 
 ## [Unreleased]
 
+### Changed
+- Licence: Ondea now uses the EUPL-1.2, the open-source licence of the European Union, instead of the GPL-3.0.
+
 ## [1.3.0] – 2026-11-27
 
 ### Added

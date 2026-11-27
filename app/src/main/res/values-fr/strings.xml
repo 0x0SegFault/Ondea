@@ -158,7 +158,7 @@
     <string name="erase">Effacer</string>
     <string name="erase_confirm">Toutes vos saisies et vos réglages seront définitivement supprimés de ce téléphone. Les sauvegardes enregistrées ailleurs ne sont pas concernées.</string>
     <string name="section_about">À propos</string>
-    <string name="about_text">Ondea est un logiciel libre et open source (GPL-3.0). Pas de compte, pas de publicité, pas de pistage, pas d\'internet.</string>
+    <string name="about_text">Ondea est un logiciel libre et open source (EUPL-1.2). Pas de compte, pas de publicité, pas de pistage, pas d\'internet.</string>
     <string name="about_science">Méthodes : décalage thermique (règle des 3 sur 6) et double contrôle par la glaire cervicale, tels qu\'utilisés par la méthode symptothermique (Sensiplan ; Frank-Herrmann et al., Human Reproduction 2007). Chances de conception selon le jour : Wilcox et al., NEJM 1995.</string>
     <string name="disclaimer_full">Ondea vous aide à comprendre votre cycle et à repérer vos jours les plus fertiles. Ce n\'est pas un dispositif médical et il ne doit pas être utilisé comme moyen de contraception. Consultez un professionnel de santé pour tout avis médical.</string>
     <string name="msg_saved">Enregistré</string>
