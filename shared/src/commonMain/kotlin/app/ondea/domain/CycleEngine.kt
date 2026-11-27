@@ -3,7 +3,6 @@ package app.ondea.domain
 import app.ondea.data.AppData
 import app.ondea.data.DayEntry
 import app.ondea.data.Settings
-import app.ondea.data.usesOwnOvulationDay
 import kotlinx.datetime.LocalDate
 import kotlin.math.roundToInt
 
@@ -24,6 +23,35 @@ data class CycleAnalysis(
     /** Valid (not disturbed) temperatures by 0-based day. */
     val temps: List<Double?> = emptyList(),
 )
+
+/** Whether the temperature and the mucus of the current cycle point to the same ovulation. */
+data class SignsCheck(
+    val agree: Boolean,
+    /** The temperature rise is confirmed (3 high readings), not only starting. */
+    val confirmed: Boolean,
+    /** Ovulation from the temperature. */
+    val temperature: LocalDate,
+    /** Ovulation from the mucus peak and the usual gap. */
+    val mucus: LocalDate,
+    /** The forecast day of this cycle. */
+    val forecast: LocalDate,
+    /** Days from the forecast day to the agreed ovulation, when they agree and differ by 2 days or more; else 0. */
+    val forecastGap: Int,
+) {
+    /** Text key, shared by Android and iOS. */
+    val key: String get() = when {
+        !agree -> "signs_disagree"
+        forecastGap > 0 -> "signs_agree_later"
+        forecastGap < 0 -> "signs_agree_earlier"
+        else -> "signs_agree"
+    }
+    /** Date arguments of [key], in order. */
+    val dates: List<LocalDate> get() = when {
+        !agree -> listOf(temperature, mucus)
+        forecastGap != 0 -> listOf(temperature, forecast)
+        else -> listOf(temperature)
+    }
+}
 
 /** The user's usual temperature levels, learnt from cycles with a confirmed rise. */
 data class TempProfile(val lowC: Double, val highC: Double, val cycles: Int) {
@@ -223,15 +251,15 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         typicalOvulationIndex = (avgCycleLength - avgLutealLength - 1).coerceAtLeast(settings.periodLength)
         learnedOvulationIndex = pastOvulations.takeIf { it.isNotEmpty() }?.average()?.roundToInt()
         val own = settings.ovulationDay?.let { it - 1 }
-        // Ondea's estimate: learnt from confirmed cycles, else the user's own day, else a typical cycle.
+        // What the signs show: learnt from finished cycles, else the day in the settings, else a typical cycle.
         ondeaOvulationIndex = learnedOvulationIndex ?: own ?: typicalOvulationIndex
+        // The forecast always uses the day in the settings. Ondea never changes it alone: it suggests (advice()).
+        predictedOvulationIndex = own ?: typicalOvulationIndex
         predictionBasis = when {
-            settings.usesOwnOvulationDay -> PredictionBasis.OWN_DAY
-            learnedOvulationIndex != null -> PredictionBasis.LEARNED
+            predictedOvulationIndex == learnedOvulationIndex -> PredictionBasis.LEARNED
             own != null -> PredictionBasis.OWN_DAY
             else -> PredictionBasis.TYPICAL
         }
-        predictedOvulationIndex = if (settings.usesOwnOvulationDay) own!! else ondeaOvulationIndex
         earliestOvulationIndex = if (predictionBasis == PredictionBasis.LEARNED)
             minOf(predictedOvulationIndex, pastOvulations.min())
         else predictedOvulationIndex
@@ -246,7 +274,7 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         profile = levels.takeIf { it.isNotEmpty() }?.let { l ->
             TempProfile(round2(l.map { it.first }.average()), round2(l.map { it.second }.average()), l.size)
         }
-        val lags = cycles.filter { it.shift != null && it.mucus.peakIndex != null }
+        val lags = cycles.filter { it.end != null && it.shift != null && it.mucus.peakIndex != null }
             .map { it.shift!!.ovulationIndex - it.mucus.peakIndex!! }.takeLast(6).sorted()
         mucusLag = lags.takeIf { it.isNotEmpty() }?.let { it[it.size / 2].coerceIn(-2, 2) } ?: 0
 
@@ -436,6 +464,30 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         return OvulationAdvice(setting, learned, pastOvulations.size, fromUser = own != null)
     }
 
+    /**
+     * In the current cycle, once there is a temperature rise and a mucus peak: do they point to the same
+     * ovulation? The mucus side uses the user's usual gap between peak and ovulation ([mucusLag]).
+     */
+    fun signsCheck(): SignsCheck? {
+        val c = current ?: return null
+        if (c.end != null) return null
+        val todayIndex = days(c.start, today)
+        val confirmed = c.shift != null
+        val temp = c.shift?.ovulationIndex ?: c.rise?.takeIf { it.lastIndex >= todayIndex - 1 }?.ovulationIndex ?: return null
+        val peak = c.mucus.peakIndex ?: return null
+        val fromMucus = peak + mucusLag
+        val agree = kotlin.math.abs(temp - fromMucus) <= SIGNS_AGREE_DAYS
+        val gap = temp - predictedOvulationIndex
+        return SignsCheck(
+            agree = agree,
+            confirmed = confirmed,
+            temperature = c.start.plusDays(temp.toLong()),
+            mucus = c.start.plusDays(fromMucus.toLong()),
+            forecast = c.start.plusDays(predictedOvulationIndex.toLong()),
+            forecastGap = if (agree && kotlin.math.abs(gap) >= ADVICE_MIN_DAYS) gap else 0,
+        )
+    }
+
     /** Most recent reading, used as the starting value of the temperature input. */
     fun lastTemperature(): Double? = data.entries.lastOrNull { it.tempC != null }?.tempC
 
@@ -444,6 +496,8 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         const val MAX_LATE_DAYS = 10
         /** Advice is shown only when the learnt and the set day differ by at least this. */
         const val ADVICE_MIN_DAYS = 2
+        /** Temperature and mucus agree when they point to ovulation days at most this far apart. */
+        const val SIGNS_AGREE_DAYS = 2
 
         fun days(from: LocalDate, to: LocalDate): Int = daysBetween(from, to)
     }
@@ -453,8 +507,8 @@ private fun LocalDate.inRange(from: LocalDate, to: LocalDate) = !isBefore(from) 
 
 private fun round2(v: Double) = kotlin.math.round(v * 100) / 100.0
 
-/** Use Ondea's learnt day from now on; the user's day is updated to it. */
-fun Settings.acceptAdvice(a: OvulationAdvice) = copy(ovulationDay = a.learnedDay, useOwnOvulationDay = false, adviceDismissedDay = null)
+/** Forecast with the learnt day from now on. */
+fun Settings.acceptAdvice(a: OvulationAdvice) = copy(ovulationDay = a.learnedDay, adviceDismissedDay = null)
 
-/** Keep predicting with the day used so far. */
-fun Settings.keepOwnDay(a: OvulationAdvice) = copy(ovulationDay = a.settingDay, useOwnOvulationDay = true, adviceDismissedDay = a.learnedDay)
+/** Keep the day used so far; the advice comes back only when the learnt day changes. */
+fun Settings.keepOwnDay(a: OvulationAdvice) = copy(adviceDismissedDay = a.learnedDay)

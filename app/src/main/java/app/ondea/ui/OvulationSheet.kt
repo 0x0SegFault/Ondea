@@ -29,9 +29,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -45,7 +43,6 @@ import androidx.compose.ui.unit.dp
 import app.ondea.R
 import app.ondea.domain.CycleEngine
 import app.ondea.data.Settings
-import app.ondea.data.usesOwnOvulationDay
 import app.ondea.domain.OvulationSource
 import app.ondea.domain.PredictionBasis
 import app.ondea.ui.theme.CycleColors
@@ -95,9 +92,7 @@ fun OvulationSheet(engine: CycleEngine, onChange: ((Settings) -> Settings) -> Un
             )
             SignRow(
                 Icons.Outlined.CalendarMonth, palette.fertile, stringResource(R.string.sign_prediction),
-                if (engine.predictionBasis == PredictionBasis.OWN_DAY && engine.data.settings.usesOwnOvulationDay)
-                    stringResource(R.string.prediction_setting_detail, engine.predictedOvulationIndex + 1)
-                else ondeaEstimateText(engine),
+                forecastText(engine),
                 inUse = f.ovulationSource.calendar,
             )
 
@@ -136,63 +131,57 @@ private fun SignRow(icon: ImageVector, tint: Color, title: String, status: Strin
 }
 
 /**
- * Both ovulation-day values side by side: Ondea's estimate and the user's own day, plus which one
- * predicts. Switching never erases either value.
+ * The one ovulation day used for the forecast. Only the user changes it. Below it, what the signs of
+ * finished cycles show, with a button to use that day when it differs.
  */
 @Composable
 fun OvulationDayControls(engine: CycleEngine, onChange: ((Settings) -> Settings) -> Unit) {
-    val settings = engine.data.settings
-    val useOwn = settings.usesOwnOvulationDay
-    val ownDay = settings.ovulationDay ?: (engine.ondeaOvulationIndex + 1)
+    val day = engine.predictedOvulationIndex + 1
+    val learned = engine.learnedOvulationIndex?.plus(1)
     val palette = CycleColors.current
 
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(stringResource(R.string.prediction_to_use), style = MaterialTheme.typography.titleSmall)
-        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-            SegmentedButton(
-                selected = !useOwn,
-                onClick = { onChange { it.copy(useOwnOvulationDay = false) } },
-                shape = SegmentedButtonDefaults.itemShape(0, 2),
-            ) { Text(stringResource(R.string.use_ondea)) }
-            SegmentedButton(
-                selected = useOwn,
-                onClick = { onChange { it.copy(ovulationDay = it.ovulationDay ?: ownDay, useOwnOvulationDay = true) } },
-                shape = SegmentedButtonDefaults.itemShape(1, 2),
-            ) { Text(stringResource(R.string.use_mine)) }
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(stringResource(R.string.forecast_day), style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.fillMaxWidth())
+            Text(stringResource(R.string.forecast_day_hint), style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.fillMaxWidth())
+            Spacer(Modifier.height(8.dp))
+            NumberStepper(day, 8..35, stringResource(R.string.day_n, day)) { v ->
+                onChange { it.copy(ovulationDay = v) }
+            }
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconBadge(Icons.Outlined.CalendarMonth, palette.fertile)
+            IconBadge(Icons.Outlined.AutoGraph, palette.ovulation)
             Spacer(Modifier.width(14.dp))
             Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.ondea_estimate), style = MaterialTheme.typography.bodyLarge)
-                Text(ondeaEstimateText(engine), style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.signs_show), style = MaterialTheme.typography.bodyLarge)
+                Text(
+                    if (learned == null) stringResource(R.string.signs_show_none)
+                    else pluralStringResource(R.plurals.prediction_learned_detail, engine.pastOvulations.size, learned, engine.pastOvulations.size),
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
-
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(stringResource(R.string.my_usual_day), style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxWidth())
-            Text(stringResource(R.string.my_usual_day_hint), style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(8.dp))
-            NumberStepper(ownDay, 8..35, stringResource(R.string.day_n, ownDay)) { v ->
-                onChange { it.copy(ovulationDay = v, useOwnOvulationDay = it.useOwnOvulationDay ?: false) }
-            }
+        if (learned != null && learned != day) {
+            OutlinedButton(
+                onClick = { onChange { it.copy(ovulationDay = learned, adviceDismissedDay = null) } },
+                modifier = Modifier.fillMaxWidth(),
+            ) { Text(stringResource(R.string.advice_use, learned)) }
         }
     }
 }
 
-/** One line saying what Ondea's own estimate is based on. */
+/** One line saying where the forecast day comes from. */
 @Composable
-fun ondeaEstimateText(engine: CycleEngine): String {
-    val day = engine.ondeaOvulationIndex + 1
-    return when {
-        engine.learnedOvulationIndex != null -> pluralStringResource(
+fun forecastText(engine: CycleEngine): String {
+    val day = engine.predictedOvulationIndex + 1
+    return when (engine.predictionBasis) {
+        PredictionBasis.LEARNED -> pluralStringResource(
             R.plurals.prediction_learned_detail, engine.pastOvulations.size, day, engine.pastOvulations.size,
         )
-        engine.data.settings.ovulationDay != null -> stringResource(R.string.ondea_estimate_own, day)
+        PredictionBasis.OWN_DAY -> stringResource(R.string.prediction_setting_detail, day)
         else -> stringResource(R.string.prediction_detail, day, engine.avgCycleLength, engine.avgLutealLength)
     }
 }

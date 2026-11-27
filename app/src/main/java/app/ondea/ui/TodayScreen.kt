@@ -1,8 +1,11 @@
 package app.ondea.ui
 
 import androidx.compose.material.icons.outlined.AutoGraph
+import androidx.compose.material.icons.outlined.WarningAmber
+import androidx.compose.material.icons.outlined.CheckCircle
 import app.ondea.data.Settings
 import app.ondea.domain.OvulationAdvice
+import app.ondea.domain.SignsCheck
 import app.ondea.domain.acceptAdvice
 import app.ondea.domain.keepOwnDay
 
@@ -137,6 +140,7 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
                 StatTile(stringResource(R.string.stat_ovulation), forecast.ovulation.dayMonth(), palette.ovulation)
                 StatTile(stringResource(R.string.stat_next_period), forecast.nextPeriod.dayMonth(), palette.period)
             }
+            engine.signsCheck()?.let { SignsCard(it) }
             engine.advice()?.let { AdviceCard(it, vm::updateSettings) }
             if (forecast.daysLate == 0) FertilityCard(forecast)
         }
@@ -346,6 +350,21 @@ private fun AdviceCard(a: OvulationAdvice, onChange: ((Settings) -> Settings) ->
             Button(onClick = { onChange { it.acceptAdvice(a) } }) { Text(stringResource(R.string.advice_use, a.learnedDay)) }
             TextButton(onClick = { onChange { it.keepOwnDay(a) } }) { Text(stringResource(R.string.advice_keep, a.settingDay)) }
         }
+    }
+}
+
+/** Do temperature and mucus point to the same ovulation this cycle? */
+@Composable
+private fun SignsCard(c: SignsCheck) {
+    val id = when (c.key) {
+        "signs_disagree" -> R.string.signs_disagree
+        "signs_agree_later" -> R.string.signs_agree_later
+        "signs_agree_earlier" -> R.string.signs_agree_earlier
+        else -> R.string.signs_agree
+    }
+    SectionCard(title = stringResource(R.string.signs_title),
+        icon = if (c.agree) Icons.Outlined.CheckCircle else Icons.Outlined.WarningAmber) {
+        Text(stringResource(id, *c.dates.map { it.dayMonth() }.toTypedArray()), style = MaterialTheme.typography.bodyMedium)
     }
 }
 

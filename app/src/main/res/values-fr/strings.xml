@@ -193,7 +193,7 @@
     <string name="sign_positive_on">Positif le %s</string>
     <string name="sign_peak_on">Pic le %s</string>
     <string name="prediction_detail">Jour %1$d du cycle : cycle moyen de %2$d jours moins une phase lutéale de %3$d jours</string>
-    <string name="prediction_setting_detail">Jour %d du cycle : votre jour d\'ovulation habituel</string>
+    <string name="prediction_setting_detail">Jour %d du cycle : le jour que vous avez choisi</string>
     <string name="in_use">Utilisé</string>
     <string name="ovulation_day_onboarding">Jour d\'ovulation habituel</string>
     <string name="ovulation_day_onboarding_hint">Facultatif. Si vous ne le connaissez pas, Ondea l\'apprend à partir de vos signes.</string>
@@ -204,6 +204,8 @@
     <string name="src_wilcox1995">Chances de conception pour chaque jour avant l\'ovulation.</string>
     <string name="src_wilcox2000">La période fertile change d\'un cycle à l\'autre, même avec des cycles réguliers.</string>
     <string name="src_ecochard2001">Moment de la hausse de température et du pic de glaire, comparé à l\'ovulation vue à l\'échographie.</string>
+    <string name="src_hilgers1978" formatted="false">L\'ovulation a lieu à 2 jours ou moins du pic de glaire dans 95 % des cycles.</string>
+    <string name="src_baker2020">Après l\'ovulation, la température est plus haute d\'environ 0,3 à 0,7 °C.</string>
     <string name="src_direito2013">L\'ovulation suit le pic de LH (test d\'ovulation positif) d\'environ 1 à 2 jours.</string>
     <string name="src_frank2007">La méthode symptothermique : le double contrôle température et glaire.</string>
     <string name="src_fehring2006">Durée et variabilité des phases avant et après l\'ovulation.</string>
@@ -212,13 +214,6 @@
     <string name="why_timing">La température monte après l\'ovulation. Elle confirme l\'ovulation et apprend à Ondea votre rythme pour les cycles suivants. La glaire cervicale et les tests d\'ovulation arrivent avant l\'ovulation : utilisez-les pour choisir le moment des rapports dans ce cycle.</string>
     <string name="src_erden2022">L\'ovulation a lieu 22 à 56 heures après le début du pic de LH. Certains pics sont courts ou ne sont pas suivis d\'une ovulation.</string>
     <string name="src_mcgovern2004" formatted="false">Environ 7 % des tests d\'ovulation positifs faits à domicile ne sont pas suivis d\'une ovulation.</string>
-    <string name="prediction_to_use">Prévision à utiliser</string>
-    <string name="use_ondea">Ondea (apprend)</string>
-    <string name="use_mine">Mon jour</string>
-    <string name="ondea_estimate">Estimation d\'Ondea</string>
-    <string name="ondea_estimate_own">Jour %d du cycle : votre jour habituel, jusqu\'à votre premier cycle confirmé</string>
-    <string name="my_usual_day">Mon jour d\'ovulation habituel</string>
-    <string name="my_usual_day_hint">Toujours conservé. Avec Ondea, il est utilisé jusqu\'à ce qu\'Ondea ait appris d\'un cycle confirmé.</string>
     <string name="source_typical">Prévu d\'après un cycle type</string>
     <string name="backup_where_title">Où envoyer la sauvegarde ?</string>
     <string name="backup_where_intro">Ondea chiffre la sauvegarde avec votre mot de passe avant qu\'elle ne quitte l\'application. Personne ne peut la lire sans le mot de passe.</string>
@@ -284,9 +279,18 @@
     <string name="estimate_today">Estimation du jour</string>
     <string name="estimate_today_detail">Ovulation vers le %1$s. Prévue avant ce cycle : %2$s.</string>
     <string name="how_it_works_daily">Jour après jour : Ondea compare chaque nouvelle mesure aux précédentes. Une première température haute, ou une glaire crémeuse ou en blanc d\'œuf, déplace l\'estimation. Si le jour prévu passe sans signe, l\'estimation recule. La glaire notée les jours de saignement n\'est pas utilisée.</string>
+    <string name="signs_title">Vos signes concordent-ils ?</string>
+    <string name="signs_agree">Température et glaire concordent : ovulation vers le %1$s.</string>
+    <string name="signs_agree_later">Température et glaire concordent : ovulation vers le %1$s, plus tard que votre jour prévu (%2$s).</string>
+    <string name="signs_agree_earlier">Température et glaire concordent : ovulation vers le %1$s, plus tôt que votre jour prévu (%2$s).</string>
+    <string name="signs_disagree">La température indique le %1$s, la glaire le %2$s. Vérifiez les mesures perturbées : maladie, alcool, nuit courte ou mesure tardive.</string>
     <string name="advice_title">Vos cycles indiquent un autre jour</string>
     <string name="advice_text_own">Vous avez indiqué l\'ovulation au jour %1$d. D\'après vos cycles enregistrés, Ondea trouve le jour %2$d.</string>
     <string name="advice_text_typical">Un cycle type place l\'ovulation au jour %1$d. D\'après vos cycles enregistrés, Ondea trouve le jour %2$d.</string>
+    <string name="forecast_day">Jour d\'ovulation pour la prévision</string>
+    <string name="forecast_day_hint">Il change seulement si vous le changez. Vos signes déplacent toujours l\'estimation jour après jour dans chaque cycle.</string>
+    <string name="signs_show">Ce que montrent vos signes</string>
+    <string name="signs_show_none">Pas encore. Ondea a besoin d\'un cycle terminé avec un signe (hausse de température, test d\'ovulation ou pic de glaire).</string>
     <string name="advice_use">Utiliser le jour %d</string>
     <string name="advice_keep">Garder le jour %d</string>
     <string name="phase_period">Règles</string>
@@ -306,6 +310,14 @@
     <string name="typical_curve_description">Courbe type de la température basale : basse jusqu\'à l\'ovulation, puis plus haute jusqu\'aux règles suivantes.</string>
     <string name="intro_what_title">Qu\'est-ce qu\'Ondea</string>
     <string name="intro_what_text">Ondea vous aide à comprendre votre cycle avec la méthode symptothermique : votre température du matin et les signes de votre corps. Vos données restent sur ce téléphone, chiffrées. Pas de compte, pas de pub, pas de pistage.</string>
+    <string name="intro_safe_title">Privé et sûr</string>
+    <string name="intro_safe_text">Ondea n\'a pas accès à internet. Rien ne quitte ce téléphone sans votre action.</string>
+    <string name="intro_safe_data">Vos données sont chiffrées sur ce téléphone. Pas de compte, pas de pub, pas de pistage.</string>
+    <string name="intro_safe_lock">Verrouillage : ouvrez Ondea avec votre empreinte, votre visage ou le verrouillage de l\'écran.</string>
+    <string name="intro_safe_hide">Masquer le contenu : pas de captures d\'écran, et Ondea reste vide dans les applications récentes.</string>
+    <string name="intro_safe_backup">Sauvegarde chiffrée avec votre mot de passe : vers Proton Drive, Nextcloud, un e-mail ou un fichier.</string>
+    <string name="intro_safe_export">Export en tableur (CSV), par exemple pour votre médecin.</string>
+    <string name="intro_safe_where">Retrouvez-les dans Réglages.</string>
     <string name="intro_record_title">Ce que vous notez</string>
     <string name="intro_record_temperature">Température : chaque matin, avant de vous lever, avec un thermomètre basal (2 décimales).</string>
     <string name="intro_record_period">Règles : les jours de saignement, et leur abondance.</string>
@@ -349,7 +361,7 @@
     <string name="temperature_remove">Supprimer cette mesure</string>
     <string name="legend_typical">Courbe type</string>
     <string name="intro_measure_title">Comment mesurer</string>
-    <string name="intro_measure_text">Le changement après l\'ovulation est faible : environ 0,2 à 0,5 °C. Pour le voir, les mesures doivent être précises et prises de la même façon chaque jour.</string>
+    <string name="intro_measure_text">Le changement après l\'ovulation est faible : environ 0,3 à 0,7 °C. Pour le voir, les mesures doivent être précises et prises de la même façon chaque jour.</string>
     <string name="intro_rule_thermometer">Un thermomètre basal à 2 décimales (par exemple 36,47 °C). Un thermomètre médical classique n\'est pas assez précis.</string>
     <string name="intro_rule_time">Chaque matin à peu près à la même heure (à une heure près), dès le réveil : avant de vous lever, parler, manger ou boire.</string>
     <string name="intro_rule_sleep">Après au moins 3 heures de sommeil. Toujours au même endroit : bouche, vagin ou rectum.</string>

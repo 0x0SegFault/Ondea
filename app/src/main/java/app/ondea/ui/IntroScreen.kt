@@ -19,6 +19,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AutoGraph
 import androidx.compose.material.icons.outlined.EditNote
+import androidx.compose.material.icons.outlined.TableChart
+import androidx.compose.material.icons.outlined.Backup
+import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material.icons.outlined.Fingerprint
+import androidx.compose.material.icons.outlined.WifiOff
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Opacity
 import androidx.compose.material.icons.outlined.Thermostat
 import androidx.compose.material.icons.outlined.WaterDrop
@@ -50,7 +56,7 @@ import androidx.compose.ui.window.DialogProperties
 import app.ondea.R
 import app.ondea.ui.theme.CycleColors
 
-private const val PAGES = 5
+private const val PAGES = 6
 
 /**
  * A short tour before the setup: what Ondea is, what to record, the temperature chart, how Ondea helps.
@@ -76,6 +82,18 @@ fun IntroScreen(onDone: () -> Unit, replay: Boolean = false) {
                     Body(R.string.intro_what_text)
                 }
                 1 -> {
+                    Badge(Icons.Outlined.Lock, MaterialTheme.colorScheme.primary)
+                    Title(R.string.intro_safe_title)
+                    Body(R.string.intro_safe_text)
+                    Item(Icons.Outlined.WifiOff, palette.fertile, R.string.intro_safe_data)
+                    Item(Icons.Outlined.Fingerprint, palette.ovulation, R.string.intro_safe_lock)
+                    Item(Icons.Outlined.VisibilityOff, palette.mucus, R.string.intro_safe_hide)
+                    Item(Icons.Outlined.Backup, palette.period, R.string.intro_safe_backup)
+                    Item(Icons.Outlined.TableChart, palette.fertile, R.string.intro_safe_export)
+                    Text(stringResource(R.string.intro_safe_where), style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                2 -> {
                     Badge(Icons.Outlined.EditNote, MaterialTheme.colorScheme.primary)
                     Title(R.string.intro_record_title)
                     Item(Icons.Outlined.Thermostat, palette.ovulation, R.string.intro_record_temperature)
@@ -83,7 +101,7 @@ fun IntroScreen(onDone: () -> Unit, replay: Boolean = false) {
                     Item(Icons.Outlined.WaterDrop, palette.mucus, R.string.intro_record_mucus)
                     Item(Icons.Outlined.EditNote, palette.fertile, R.string.intro_record_other)
                 }
-                2 -> {
+                3 -> {
                     Badge(Icons.Outlined.Thermostat, palette.ovulation)
                     Title(R.string.intro_measure_title)
                     Body(R.string.intro_measure_text)
@@ -92,7 +110,7 @@ fun IntroScreen(onDone: () -> Unit, replay: Boolean = false) {
                     Item(Icons.Outlined.Bedtime, palette.mucus, R.string.intro_rule_sleep)
                     Item(Icons.Outlined.WarningAmber, palette.period, R.string.intro_rule_disturbed)
                 }
-                3 -> {
+                4 -> {
                     Title(R.string.intro_chart_title)
                     TypicalCurve(showLevels = true)
                     Body(R.string.intro_chart_text)
