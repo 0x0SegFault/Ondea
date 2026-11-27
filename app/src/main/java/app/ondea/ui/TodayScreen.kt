@@ -357,7 +357,7 @@ private fun CrashBanner() {
     var choose by remember { mutableStateOf(false) }
     val text = report ?: return
     if (choose) {
-        ReportSheet(Feedback.Kind.BUG, what = "Crash report:\n```\n$text\n```",
+        ReportSheet(Feedback.Kind.BUG, crash = text,
             onSent = { CrashLog.clear(context); report = null }, onDismiss = { choose = false })
     }
     SectionCard(title = stringResource(R.string.crash_title), icon = Icons.Outlined.BugReport) {

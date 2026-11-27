@@ -1,5 +1,7 @@
 package app.ondea.ui
 
+import androidx.compose.material.icons.outlined.Inbox
+
 import androidx.compose.material.icons.outlined.AutoGraph
 
 import android.Manifest
@@ -96,6 +98,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
     var lockUnavailable by rememberSaveable { mutableStateOf(false) }
     var showSources by rememberSaveable { mutableStateOf(false) }
     var showIntro by rememberSaveable { mutableStateOf(false) }
+    var showMyReports by rememberSaveable { mutableStateOf(false) }
     var showPermissions by rememberSaveable { mutableStateOf(false) }
     var reportKind by rememberSaveable { mutableStateOf<Feedback.Kind?>(null) }
 
@@ -233,6 +236,10 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
                 stringResource(R.string.feedback_bug_hint)) { reportKind = Feedback.Kind.BUG }
             ClickRow(Icons.Outlined.TipsAndUpdates, MaterialTheme.colorScheme.primary, stringResource(R.string.feedback_feature),
                 stringResource(R.string.feedback_feature_hint)) { reportKind = Feedback.Kind.FEATURE }
+            if (Feedback.anonymousFormAvailable) {
+                ClickRow(Icons.Outlined.Inbox, MaterialTheme.colorScheme.primary, stringResource(R.string.my_reports),
+                    stringResource(R.string.my_reports_hint)) { showMyReports = true }
+            }
             Text(stringResource(R.string.about_science), style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(stringResource(R.string.disclaimer_full), style = MaterialTheme.typography.bodySmall,
@@ -266,7 +273,8 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
     if (showSources) SourcesSheet(onDismiss = { showSources = false })
     if (showIntro) IntroDialog(onDismiss = { showIntro = false })
     if (showPermissions) PermissionsSheet(onDismiss = { showPermissions = false })
-    reportKind?.let { kind -> ReportSheet(kind, what = null, onSent = {}, onDismiss = { reportKind = null }) }
+    reportKind?.let { kind -> ReportSheet(kind, onSent = {}, onDismiss = { reportKind = null }) }
+    if (showMyReports) MyReportsSheet(onDismiss = { showMyReports = false })
     if (chooseBackup) {
         BackupChoiceSheet(
             onFile = { shareBackup = false; chooseBackup = false; askExportPassword = true },

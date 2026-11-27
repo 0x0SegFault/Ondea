@@ -330,4 +330,13 @@
         <item quantity="one">Der Schleimhöhepunkt (P) lag %d Tag nach dem Eisprungtag laut Temperatur.</item>
         <item quantity="other">Der Schleimhöhepunkt (P) lag %d Tage nach dem Eisprungtag laut Temperatur.</item>
     </plurals>
+    <string name="report_preview_title">Was der Bericht enthält</string>
+    <string name="report_preview_note">Zusammenfassung und Details schreibst du im Formular. Es zeigt vor dem Senden noch einmal das ganze Issue.</string>
+    <string name="report_include_crash">Absturzdetails anhängen (anonymisiert)</string>
+    <string name="report_include_crash_hint">Nur der Fehlertyp und Codezeilen. Keine Fehlermeldungen, keine Gesundheitsdaten.</string>
+    <string name="my_reports">Meine Berichte</string>
+    <string name="my_reports_hint">Der Status deiner gesendeten anonymen Berichte</string>
+    <string name="my_reports_empty">Noch kein anonymer Bericht.</string>
+    <string name="my_reports_note">Tippe auf einen Bericht, um seinen Status im Browser zu sehen: erhalten, veröffentlicht mit öffentlichem Link, oder geschlossen.</string>
+    <string name="my_reports_remove">Aus dieser Liste entfernen</string>
 </resources>

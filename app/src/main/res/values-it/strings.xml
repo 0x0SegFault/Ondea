@@ -335,4 +335,13 @@
         <item quantity="many">Il picco del muco (P) era %d giorni dopo il giorno di ovulazione trovato dalla temperatura.</item>
         <item quantity="other">Il picco del muco (P) era %d giorni dopo il giorno di ovulazione trovato dalla temperatura.</item>
     </plurals>
+    <string name="report_preview_title">Cosa conterrà la segnalazione</string>
+    <string name="report_preview_note">Scrivi riepilogo e dettagli nel modulo. Il modulo mostra di nuovo la segnalazione completa prima dell\'invio.</string>
+    <string name="report_include_crash">Includi i dettagli dell\'arresto (anonimizzati)</string>
+    <string name="report_include_crash_hint">Solo il tipo di errore e le righe di codice. Nessun messaggio di errore, nessun dato sanitario.</string>
+    <string name="my_reports">Le mie segnalazioni</string>
+    <string name="my_reports_hint">Lo stato delle segnalazioni anonime inviate</string>
+    <string name="my_reports_empty">Ancora nessuna segnalazione anonima.</string>
+    <string name="my_reports_note">Tocca una segnalazione per vederne lo stato nel browser: ricevuta, pubblicata con il link pubblico, o chiusa.</string>
+    <string name="my_reports_remove">Togli da questo elenco</string>
 </resources>

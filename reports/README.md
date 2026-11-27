@@ -21,19 +21,19 @@ App (no internet permission) ──opens──▶ browser ──▶ form page (t
 
 | File | Role |
 |---|---|
-| `handler.js` | Routes: `GET /` form, `GET /form.js` script, `GET /challenge` puzzle, `POST /report` |
+| `handler.js` | Routes: `GET /` form, `GET /form.js` script, `GET /challenge` puzzle, `POST /report`, `GET /follow?code=` status page, `GET /status?code=` status as JSON |
 | `pow.js` | Creates and checks the puzzles |
 | `report.js` | Validates a report and turns it into an issue |
 | `github.js` | Creates the issue (retries without labels if they are missing) |
-| `page.js` | The form page and its script |
+| `page.js` | The form page (with a live preview of the issue), its script, and the status page |
+| `publish.sh` | Publish a reviewed report in the public repository |
 | `test/` | `npm test` (Node 18+, no dependencies) |
 
 ## Deploy (once)
 
 ### 1. GitHub
-1. Create a **private** repository `ondea-reports`.
-2. In it, create the labels `bug`, `enhancement` and `anonymous`.
-3. Create a fine-grained token: Settings → Developer settings → Fine-grained tokens.
+1. The **private** repository `ondea-reports` exists, with the labels `bug`, `enhancement`, `anonymous` and `crash`.
+2. Create a fine-grained token: Settings → Developer settings → Fine-grained tokens.
    - Repository access: **Only select repositories** → `ondea-reports`
    - Permissions: **Issues: Read and write** (nothing else)
    - Expiration: 1 year (set a reminder to renew it)
@@ -55,6 +55,26 @@ App (no internet permission) ──opens──▶ browser ──▶ form page (t
 
 ### 3. Turn it on in the app
 Set `ANONYMOUS_FORM_URL` in `app/src/main/java/app/ondea/feedback/Feedback.kt` to the function URL, then release a new version. The app then offers "Anonymous form" in Settings → About and after a crash.
+
+## Follow-up, preview and crashes
+
+- **Follow-up:** Ondea has no internet permission. When the user opens the form, the app makes a random
+  code, keeps it in Settings → My reports, and puts it in the form link. The issue holds only a hash of
+  the code. "My reports" opens `/follow?code=…` in the browser: Received, Published (with the public
+  link), Closed, or Closed: not planned. Comments are never shown.
+- **Preview:** the app shows what the issue will contain before the browser opens. The form shows the
+  exact issue text, live, before Send.
+- **Crashes:** after a crash, the user can include the crash details. The app removes error messages
+  (they can hold user text) and keeps error types and code lines. Such issues get the `crash` label.
+  Nothing is sent automatically: Ondea cannot connect to the internet.
+
+## Triage
+
+- A good report: read it, remove anything personal, then `reports/publish.sh <number>`. It creates the public
+  issue in `0x0SegFault/ondea` (without the device line unless `--keep-device`), adds
+  "Public issue: <link>" to the private issue and closes it.
+- Not planned: `gh issue close <n> -R 0x0SegFault/ondea-reports --reason "not planned"`.
+- Fixed without publishing: close it as completed.
 
 ## Update
 Run the tests (`npm test`), package again (step 2), and upload the new `function.zip`.

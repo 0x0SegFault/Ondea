@@ -10,9 +10,9 @@
 // user agent or cookies. Nothing is logged.
 
 const { createChallenge, verifySolution } = require('./pow');
-const { validate, toIssue } = require('./report');
-const { createIssue } = require('./github');
-const { formPage, formScript } = require('./page');
+const { validate, toIssue, followUpHash, statusOf, FOLLOW_UP } = require('./report');
+const { createIssue, findByFollowUp } = require('./github');
+const { formPage, formScript, statusPage } = require('./page');
 
 const MAX_BODY = 20000;
 
@@ -58,14 +58,34 @@ async function handle(event, context, deps = {}) {
 
   if (method === 'GET' && name === 'form.js') return reply(200, 'text/javascript; charset=utf-8', formScript);
   if (method === 'GET' && name === 'challenge') return json(200, createChallenge(env.POW_KEY));
+  if (method === 'GET' && name === 'status') {
+    // The app asks with its follow-up code; the answer says only received / published (+ public link) / closed.
+    const code = String((event.queryStringParameters || {}).code || '');
+    if (!FOLLOW_UP.test(code)) return json(400, { error: 'code' });
+    const found = await findByFollowUp({ token: env.GITHUB_TOKEN, repo: env.GITHUB_REPO, hash: followUpHash(code), fetchImpl: deps.fetch });
+    if (!found.ok) return json(502, { error: 'upstream', github: found.status });
+    return found.issue ? json(200, statusOf(found.issue)) : json(404, { status: 'unknown' });
+  }
+  if (method === 'GET' && name === 'follow') {
+    // Ondea has no internet permission: "My reports" opens this page in the browser instead.
+    const code = String((event.queryStringParameters || {}).code || '');
+    if (!FOLLOW_UP.test(code)) return reply(400, 'text/html; charset=utf-8', statusPage({ status: 'invalid' }));
+    const found = await findByFollowUp({ token: env.GITHUB_TOKEN, repo: env.GITHUB_REPO, hash: followUpHash(code), fetchImpl: deps.fetch });
+    if (!found.ok) return reply(502, 'text/html; charset=utf-8', statusPage({ status: 'error' }));
+    return reply(200, 'text/html; charset=utf-8', statusPage(found.issue ? statusOf(found.issue) : { status: 'unknown' }));
+  }
   if (method === 'POST' && name === 'report') {
     const input = readBody(event);
     if (!input) return json(400, { error: 'invalid' });
     if (!verifySolution(env.POW_KEY, input.proof) || !firstUse(input.proof.salt)) return json(403, { error: 'proof' });
     const { report, error } = validate(input);
     if (error) return json(400, { error });
-    const ok = await createIssue({ token: env.GITHUB_TOKEN, repo: env.GITHUB_REPO, issue: toIssue(report), fetchImpl: deps.fetch });
-    return ok ? json(200, { ok: true }) : json(502, { error: 'upstream' });
+    // Setting problems are named (never their values), so the maintainer can fix the deployment.
+    const missing = ['GITHUB_TOKEN', 'GITHUB_REPO', 'POW_KEY'].filter((k) => !env[k]);
+    if (missing.length) return json(500, { error: 'config', missing });
+    const result = await createIssue({ token: env.GITHUB_TOKEN, repo: env.GITHUB_REPO, issue: toIssue(report), fetchImpl: deps.fetch });
+    // 401: token wrong or expired. 403: token without "Issues: write". 404: repository name wrong or not in the token.
+    return result.ok ? json(200, { ok: true }) : json(502, { error: 'upstream', github: result.status });
   }
   if (method === 'GET') return reply(200, 'text/html; charset=utf-8', formPage(event.queryStringParameters || {}));
   return json(405, { error: 'method' });

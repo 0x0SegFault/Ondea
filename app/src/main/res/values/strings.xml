@@ -357,4 +357,13 @@
     <string name="intro_close">Close</string>
     <string name="intro_open">How Ondea works</string>
     <string name="intro_open_hint">The short tour: what to record and how to read the chart</string>
+    <string name="report_preview_title">What the report will contain</string>
+    <string name="report_preview_note">You write the summary and details in the form. The form shows the full issue again before you send it.</string>
+    <string name="report_include_crash">Include the crash details (anonymised)</string>
+    <string name="report_include_crash_hint">Only the error type and code lines. No error messages and no health data.</string>
+    <string name="my_reports">My reports</string>
+    <string name="my_reports_hint">The status of the anonymous reports you sent</string>
+    <string name="my_reports_empty">No anonymous report yet.</string>
+    <string name="my_reports_note">Tap a report to see its status in your browser: received, published with its public link, or closed.</string>
+    <string name="my_reports_remove">Remove from this list</string>
 </resources>

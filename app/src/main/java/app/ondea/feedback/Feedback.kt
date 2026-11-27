@@ -26,11 +26,35 @@ object Feedback {
 
     enum class Kind(val formValue: String) { BUG("bug"), FEATURE("feature") }
 
+    /** Last line of every anonymous issue. Same text as reports/report.js (a test checks it). */
+    const val FOOTER = "_Sent anonymously. The sender sees only the status (received, published with its public link, closed), not comments here._"
+
+    /** A random follow-up code (32 hex characters). Only its hash goes in the issue. */
+    fun newFollowUpCode(): String {
+        val bytes = ByteArray(16).also { java.security.SecureRandom().nextBytes(it) }
+        return bytes.joinToString("") { "%02x".format(it) }
+    }
+
+    /** Status page of one anonymous report, opened in the browser (Ondea itself has no internet). */
+    fun followUri(code: String): Uri? =
+        ANONYMOUS_FORM_URL?.trimEnd('/')?.plus("/follow")?.toUri()?.buildUpon()?.appendQueryParameter("code", code)?.build()
+
+    /** What the issue will contain, as shown in the app before the browser opens. The summary is written in the form. */
+    fun preview(context: Context, kind: Kind, what: String?): String = buildString {
+        append(if (kind == Kind.BUG) "Bug: …" else "Idea: …").append("\n\n")
+        append(if (what.isNullOrBlank()) "…" else what.take(MAX_REPORT)).append("\n\n---\n")
+        append("App version: ").append(version(context)).append('\n')
+        append("Device: ").append(device()).append("\n\n")
+        append(FOOTER)
+    }
+
     val anonymousFormAvailable: Boolean get() = ANONYMOUS_FORM_URL != null
 
-    fun anonymousFormUri(context: Context, kind: Kind, what: String? = null): Uri? =
+    fun anonymousFormUri(context: Context, kind: Kind, what: String? = null, followUp: String? = null, crash: Boolean = false): Uri? =
         ANONYMOUS_FORM_URL?.toUri()?.buildUpon()
             ?.appendQueryParameter("kind", kind.formValue)
+            ?.apply { if (followUp != null) appendQueryParameter("followUp", followUp) }
+            ?.apply { if (crash) appendQueryParameter("crash", "1") }
             ?.appendQueryParameter("version", version(context))
             ?.appendQueryParameter("device", device())
             ?.apply { if (what != null) appendQueryParameter("what", what.take(MAX_REPORT)) }
@@ -105,6 +129,22 @@ object CrashLog {
     fun clear(context: Context) {
         file(context).delete()
     }
+
+    /**
+     * Crash text without messages: the first line (app version and phone), error types and code lines.
+     * Exception messages can contain user text, so they are removed.
+     */
+    fun anonymize(trace: String): String = trace.lines().mapIndexedNotNull { i, raw ->
+        val line = raw.trimEnd()
+        when {
+            i == 0 && line.startsWith("Ondea") -> line
+            line.trimStart().startsWith("at ") -> "    " + line.trimStart()
+            line.trimStart().startsWith("...") -> "    " + line.trimStart()
+            line.startsWith("Caused by:") -> "Caused by: " + line.removePrefix("Caused by:").trim().substringBefore(':').trim()
+            Regex("^[a-zA-Z_][\\w.$]*(Exception|Error|Throwable)\\b.*").matches(line) -> line.substringBefore(':').trim()
+            else -> null
+        }
+    }.take(MAX_LINES).joinToString("\n")
 
     private fun report(context: Context, error: Throwable): String {
         val stack = error.stackTraceToString().lineSequence().take(MAX_LINES).joinToString("\n")

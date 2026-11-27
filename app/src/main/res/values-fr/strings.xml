@@ -335,4 +335,13 @@
         <item quantity="many">Le pic de glaire (P) était %d jours après le jour d\'ovulation trouvé par la température.</item>
         <item quantity="other">Le pic de glaire (P) était %d jours après le jour d\'ovulation trouvé par la température.</item>
     </plurals>
+    <string name="report_preview_title">Contenu du rapport</string>
+    <string name="report_preview_note">Vous écrivez le résumé et les détails dans le formulaire. Il montre à nouveau le ticket complet avant l\'envoi.</string>
+    <string name="report_include_crash">Inclure les détails du plantage (anonymisés)</string>
+    <string name="report_include_crash_hint">Seulement le type d\'erreur et les lignes de code. Pas de message d\'erreur, pas de données de santé.</string>
+    <string name="my_reports">Mes rapports</string>
+    <string name="my_reports_hint">L\'état des rapports anonymes envoyés</string>
+    <string name="my_reports_empty">Aucun rapport anonyme pour l\'instant.</string>
+    <string name="my_reports_note">Touchez un rapport pour voir son état dans votre navigateur : reçu, publié avec son lien public, ou fermé.</string>
+    <string name="my_reports_remove">Retirer de cette liste</string>
 </resources>

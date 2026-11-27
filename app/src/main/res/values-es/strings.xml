@@ -335,4 +335,13 @@
         <item quantity="many">El pico de moco (P) fue %d días después del día de ovulación hallado por la temperatura.</item>
         <item quantity="other">El pico de moco (P) fue %d días después del día de ovulación hallado por la temperatura.</item>
     </plurals>
+    <string name="report_preview_title">Lo que contendrá el informe</string>
+    <string name="report_preview_note">Escribes el resumen y los detalles en el formulario. Este vuelve a mostrar la incidencia completa antes de enviarla.</string>
+    <string name="report_include_crash">Incluir los detalles del fallo (anonimizados)</string>
+    <string name="report_include_crash_hint">Solo el tipo de error y las líneas de código. Sin mensajes de error ni datos de salud.</string>
+    <string name="my_reports">Mis informes</string>
+    <string name="my_reports_hint">El estado de los informes anónimos que enviaste</string>
+    <string name="my_reports_empty">Aún no hay informes anónimos.</string>
+    <string name="my_reports_note">Toca un informe para ver su estado en tu navegador: recibido, publicado con su enlace público o cerrado.</string>
+    <string name="my_reports_remove">Quitar de esta lista</string>
 </resources>
