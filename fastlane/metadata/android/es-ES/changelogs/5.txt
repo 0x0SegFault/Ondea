@@ -1,0 +1,6 @@
+Nuevo: «¿Coinciden tus signos?» compara tu temperatura y tu moco en cada ciclo.
+Un solo día de ovulación para la previsión. Solo tú lo cambias; Ondea propone un nuevo día según tus signos.
+Nueva página del recorrido sobre privacidad y seguridad.
+Fuentes de cada regla en Ajustes → Ciencia y fuentes.
+Licencia: EUPL-1.2.
+Corrección: el formulario de informe anónimo muestra su progreso y su resultado.
