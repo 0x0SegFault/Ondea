@@ -18,11 +18,8 @@ object Feedback {
     private const val REPO = "https://github.com/0x0SegFault/ondea"
     private const val MAX_REPORT = 3000
 
-    /**
-     * Anonymous form (reports/ folder, Scaleway function in Paris). Null until it is deployed:
-     * then the app offers only GitHub and "share as text".
-     */
-    val ANONYMOUS_FORM_URL: String? = null
+    /** Anonymous form (reports/ folder, Scaleway function in Paris). Null: the app offers only GitHub and "share as text". */
+    val ANONYMOUS_FORM_URL: String? = "https://nshopefulperlmanczocka0s-fct-interesting-knuth.functions.fnc.fr-par.scw.cloud"
 
     enum class Kind(val formValue: String) { BUG("bug"), FEATURE("feature") }
 
