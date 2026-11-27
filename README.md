@@ -10,7 +10,7 @@
 [![iOS build & test](https://github.com/0x0SegFault/ondea/actions/workflows/ios.yml/badge.svg)](https://github.com/0x0SegFault/ondea/actions/workflows/ios.yml)
 [![Latest release](https://img.shields.io/github/v/release/0x0SegFault/ondea?label=release)](https://github.com/0x0SegFault/ondea/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/0x0SegFault/ondea/total.svg?label=downloads)](https://github.com/0x0SegFault/ondea/releases)
-[![License: GPL v3](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
+[![License: EUPL 1.2](https://img.shields.io/badge/license-EUPL--1.2-blue.svg)](LICENSE)
 [![Android 8.0+](https://img.shields.io/badge/Android-8.0%2B-3DDC84.svg?logo=android&logoColor=white)](#get-the-app)
 [![iOS 17+ (in progress)](https://img.shields.io/badge/iOS-17%2B%20in%20progress-lightgrey.svg?logo=apple&logoColor=white)](ios)
 [![No internet permission](https://img.shields.io/badge/internet%20permission-none-success.svg)](#privacy)
@@ -126,4 +126,4 @@ Ondea is AI-assisted. The code was written with an AI coding assistant. The main
 
 ## License
 
-[GPL-3.0-or-later](LICENSE). The bundled Nunito font uses the [SIL Open Font License 1.1](LICENSE-font-Nunito.txt).
+[EUPL-1.2](LICENSE), the open-source licence of the European Union. The bundled Nunito font uses the [SIL Open Font License 1.1](LICENSE-font-Nunito.txt).

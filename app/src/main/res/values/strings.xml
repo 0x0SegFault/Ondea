@@ -185,7 +185,7 @@
     <string name="erase">Erase</string>
     <string name="erase_confirm">All your entries and settings will be permanently deleted from this phone. Backups you saved elsewhere are not affected.</string>
     <string name="section_about">About</string>
-    <string name="about_text">Ondea is free and open-source software (GPL-3.0). No account, no ads, no tracking, no internet.</string>
+    <string name="about_text">Ondea is free and open-source software (EUPL-1.2). No account, no ads, no tracking, no internet.</string>
     <string name="about_science">Methods: temperature shift (3-over-6 rule) and cervical mucus double check as used by the symptothermal method (Sensiplan; Frank-Herrmann et al., Human Reproduction 2007). Conception chance by day: Wilcox et al., NEJM 1995.</string>
     <string name="disclaimer_full">Ondea is meant to help you understand your cycle and find your most fertile days. It is not a medical device and must not be used as contraception. Consult a health professional for medical advice.</string>
 

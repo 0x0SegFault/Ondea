@@ -68,10 +68,8 @@ Relevant review rules: 1.4.1 (medical accuracy: methods and sources are disclose
 ### Upload
 In Xcode: Product → Archive → Distribute App → App Store Connect. Test with TestFlight first, then submit for review.
 
-## Licence note: GPL and the App Store
+## Licence note: EUPL and the App Store
 
-The App Store terms add restrictions that the FSF considers incompatible with the GPL. As the only copyright holder, you can publish your own code there. Code from other contributors is under the GPL only. Before you accept outside contributions to the iOS app, choose one:
-- Add a GPL "additional permission" (section 7) that allows distribution through app stores, and ask contributors to accept it.
-- Or ask contributors to agree to a contributor licence agreement.
+Ondea uses the EUPL-1.2. As the only copyright holder, you can publish your own code in any store. Before you accept outside contributions to the iOS app, ask contributors to agree that their code can also be published through app stores (a contributor licence agreement).
 
 Ask a lawyer if you are unsure.

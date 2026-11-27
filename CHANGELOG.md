@@ -10,6 +10,7 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 - Fix: the usual gap between mucus peak and ovulation is learnt from finished cycles only.
 - Science: SCIENCE.md and Settings → Science and sources explain every new rule (day-by-day estimate, late ovulation, sign check, what Ondea learns) with its source. The tour now gives the rise as 0.3 to 0.7 °C (Baker 2020).
 - The tour has a new page: privacy and security (no internet, encryption, app lock, hidden content, encrypted backup, export).
+- Licence: Ondea now uses the EUPL-1.2, the open-source licence of the European Union, instead of the GPL-3.0.
 
 ## [1.3.0] – 2026-11-27
 
