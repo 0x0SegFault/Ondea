@@ -297,4 +297,64 @@
         <item quantity="one">Cycle day %1$d: your last confirmed ovulation</item>
         <item quantity="other">Cycle day %1$d: average of your last %2$d confirmed ovulations</item>
     </plurals>
+    <!-- Day by day estimate -->
+    <string name="temp_rising">Your temperature is rising: high day %1$d of 3. Ovulation was probably on %2$s.</string>
+    <string name="mucus_suggests">Your mucus suggests ovulation around %s.</string>
+    <string name="mucus_moved">Your mucus suggests ovulation around %1$s, not %2$s as planned.</string>
+    <string name="ovulation_late">No sign of ovulation yet (planned for %s). It may be later this cycle, so you may still be fertile.</string>
+    <string name="source_temp_rising">Temperature rising, not yet confirmed</string>
+    <string name="source_mucus_sign">Estimated from your recent mucus</string>
+    <string name="source_late">Estimate moved: no sign yet</string>
+    <string name="estimate_today">Today\'s estimate</string>
+    <string name="estimate_today_detail">Ovulation around %1$s. Planned before this cycle: %2$s.</string>
+    <string name="how_it_works_daily">Day by day: Ondea compares each new reading with the ones before. A first high temperature, or creamy or egg-white mucus, moves the estimate. When the planned day passes without a sign, the estimate moves later. Mucus noted on bleeding days is not used.</string>
+    <!-- Advice after a cycle -->
+    <string name="advice_title">Your cycles suggest another day</string>
+    <string name="advice_text_own">You set ovulation on day %1$d. From your recorded cycles, Ondea finds day %2$d.</string>
+    <string name="advice_text_typical">A typical cycle puts ovulation on day %1$d. From your recorded cycles, Ondea finds day %2$d.</string>
+    <string name="advice_use">Use day %d</string>
+    <string name="advice_keep">Keep day %d</string>
+    <!-- Chart: phases and your levels -->
+    <string name="phase_period">Period</string>
+    <string name="phase_follicular">Follicular</string>
+    <string name="phase_ovulation">Ovulation</string>
+    <string name="phase_luteal">Luteal</string>
+    <string name="profile_low">Your low</string>
+    <string name="profile_high">Your high</string>
+    <string name="profile_text">Your usual levels: low phase %1$s, high phase %2$s, a rise of %3$s.</string>
+    <string name="mucus_peak_same">The mucus peak (P) was on the ovulation day found by temperature.</string>
+    <plurals name="mucus_peak_before">
+        <item quantity="one">The mucus peak (P) was %d day before the ovulation day found by temperature.</item>
+        <item quantity="other">The mucus peak (P) was %d days before the ovulation day found by temperature.</item>
+    </plurals>
+    <plurals name="mucus_peak_after">
+        <item quantity="one">The mucus peak (P) was %d day after the ovulation day found by temperature.</item>
+        <item quantity="other">The mucus peak (P) was %d days after the ovulation day found by temperature.</item>
+    </plurals>
+    <string name="phases_title">The phases of the cycle</string>
+    <string name="phases_intro">In research charts, basal temperature has two levels. This is the typical shape:</string>
+    <string name="phase_period_text">Period: the cycle starts on the first day of bleeding. The temperature is low.</string>
+    <string name="phase_follicular_text">Follicular phase: estrogen rises. The temperature stays low. The mucus changes from dry to sticky, creamy, then egg white.</string>
+    <string name="phase_ovulation_text">Ovulation: most often the last low day before the rise. The mucus peak is usually within a day of it.</string>
+    <string name="phase_luteal_text">Luteal phase: progesterone raises the temperature by about 0.2–0.5 °C for 10 to 16 days, until the next period.</string>
+    <string name="typical_curve_description">Typical basal temperature curve: low until ovulation, then higher until the next period.</string>
+    <!-- Intro -->
+    <string name="intro_what_title">What is Ondea</string>
+    <string name="intro_what_text">Ondea helps you understand your cycle with the symptothermal method: your morning temperature and your body signs. Your data stays on this phone, encrypted. No account, no ads, no tracking.</string>
+    <string name="intro_record_title">What you record</string>
+    <string name="intro_record_temperature">Temperature: each morning, before you get up, with a basal thermometer (2 decimals).</string>
+    <string name="intro_record_period">Period: the days you bleed, and how much.</string>
+    <string name="intro_record_mucus">Cervical mucus: dry, sticky, creamy or egg white.</string>
+    <string name="intro_record_other">Optional: ovulation tests, intercourse, disturbed readings (illness, short sleep) and notes.</string>
+    <string name="intro_chart_title">The temperature chart</string>
+    <string name="intro_chart_text">After ovulation, your temperature goes up and stays higher until your next period. When 3 readings in a row are above the 6 before them, the rise is confirmed and Ondea marks the ovulation.</string>
+    <string name="intro_help_title">How Ondea helps</string>
+    <string name="intro_help_text">At first, Ondea estimates your fertile days from what you enter in the setup. Day by day, your temperature and mucus move the estimate. After each cycle, Ondea learns your own pattern and tells you when it differs from your settings.</string>
+    <string name="intro_help_warning">Ondea is not a contraceptive and not a medical device.</string>
+    <string name="intro_skip">Skip</string>
+    <string name="intro_next">Next</string>
+    <string name="intro_start">Set up</string>
+    <string name="intro_close">Close</string>
+    <string name="intro_open">How Ondea works</string>
+    <string name="intro_open_hint">The short tour: what to record and how to read the chart</string>
 </resources>

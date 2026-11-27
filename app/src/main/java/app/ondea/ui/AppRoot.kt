@@ -62,6 +62,7 @@ fun AppRoot(
     canUseLock: () -> Boolean,
 ) {
     val state by vm.state.collectAsState()
+    var introDone by rememberSaveable { mutableStateOf(false) }
     val snackbar = remember { SnackbarHostState() }
     val context = LocalContext.current
     LaunchedEffect(Unit) {
@@ -74,6 +75,7 @@ fun AppRoot(
             UiState.Failed -> DataErrorScreen(vm, snackbar)
             is UiState.Ready -> when {
                 s.data.settings.appLock && !unlocked -> LockScreen(onUnlock)
+                !s.data.settings.onboarded && !introDone -> IntroScreen(onDone = { introDone = true })
                 !s.data.settings.onboarded -> OnboardingScreen(onDone = vm::completeOnboarding)
                 else -> MainScaffold(vm, s, snackbar, canUseLock)
             }

@@ -1,5 +1,7 @@
 package app.ondea.ui
 
+import androidx.compose.material.icons.outlined.AutoGraph
+
 import android.Manifest
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -93,6 +95,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
     var confirmWipe by rememberSaveable { mutableStateOf(false) }
     var lockUnavailable by rememberSaveable { mutableStateOf(false) }
     var showSources by rememberSaveable { mutableStateOf(false) }
+    var showIntro by rememberSaveable { mutableStateOf(false) }
     var showPermissions by rememberSaveable { mutableStateOf(false) }
     var reportKind by rememberSaveable { mutableStateOf<Feedback.Kind?>(null) }
 
@@ -222,6 +225,8 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             val version = remember { context.packageManager.getPackageInfo(context.packageName, 0).versionName }
             Text("${stringResource(R.string.app_name)} $version", style = MaterialTheme.typography.titleSmall)
             Text(stringResource(R.string.about_text), style = MaterialTheme.typography.bodyMedium)
+            ClickRow(Icons.Outlined.AutoGraph, palette.fertile, stringResource(R.string.intro_open),
+                stringResource(R.string.intro_open_hint)) { showIntro = true }
             ClickRow(Icons.Outlined.MenuBook, palette.ovulation, stringResource(R.string.sources_title),
                 stringResource(R.string.sources_hint)) { showSources = true }
             ClickRow(Icons.Outlined.BugReport, MaterialTheme.colorScheme.primary, stringResource(R.string.feedback_bug),
@@ -259,6 +264,7 @@ fun SettingsScreen(vm: MainViewModel, s: UiState.Ready, canUseLock: () -> Boolea
             stringResource(R.string.erase), onConfirm = vm::wipe, onDismiss = { confirmWipe = false })
     }
     if (showSources) SourcesSheet(onDismiss = { showSources = false })
+    if (showIntro) IntroDialog(onDismiss = { showIntro = false })
     if (showPermissions) PermissionsSheet(onDismiss = { showPermissions = false })
     reportKind?.let { kind -> ReportSheet(kind, what = null, onSent = {}, onDismiss = { reportKind = null }) }
     if (chooseBackup) {

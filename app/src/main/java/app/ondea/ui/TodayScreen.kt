@@ -1,5 +1,11 @@
 package app.ondea.ui
 
+import androidx.compose.material.icons.outlined.AutoGraph
+import app.ondea.data.Settings
+import app.ondea.domain.OvulationAdvice
+import app.ondea.domain.acceptAdvice
+import app.ondea.domain.keepOwnDay
+
 import app.ondea.domain.isAfter
 import app.ondea.domain.isBefore
 import app.ondea.domain.minusDays
@@ -131,6 +137,7 @@ fun TodayScreen(vm: MainViewModel, s: UiState.Ready) {
                 StatTile(stringResource(R.string.stat_ovulation), forecast.ovulation.dayMonth(), palette.ovulation)
                 StatTile(stringResource(R.string.stat_next_period), forecast.nextPeriod.dayMonth(), palette.period)
             }
+            engine.advice()?.let { AdviceCard(it, vm::updateSettings) }
             if (forecast.daysLate == 0) FertilityCard(forecast)
         }
 
@@ -232,6 +239,10 @@ private fun Status(engine: CycleEngine, f: Forecast, onExplain: () -> Unit) {
         Detail.FERTILE_UNTIL -> stringResource(R.string.fertile_until_confirmed, *dates)
         Detail.OVULATION_EXPECTED -> stringResource(R.string.ovulation_expected, *dates)
         Detail.WAITING_FOR_SHIFT -> stringResource(R.string.waiting_for_shift_text)
+        Detail.TEMP_RISING -> stringResource(R.string.temp_rising, status.detailNumber ?: 1, *dates)
+        Detail.MUCUS_SUGGESTS -> stringResource(R.string.mucus_suggests, *dates)
+        Detail.MUCUS_MOVED -> stringResource(R.string.mucus_moved, *dates)
+        Detail.OVULATION_LATE -> stringResource(R.string.ovulation_late, *dates)
     }
     val source = when (status.source) {
         Source.TEMPERATURE -> R.string.source_temperature
@@ -240,6 +251,9 @@ private fun Status(engine: CycleEngine, f: Forecast, onExplain: () -> Unit) {
         Source.OWN_DAY -> R.string.source_setting
         Source.LEARNED -> R.string.source_prediction
         Source.TYPICAL -> R.string.source_typical
+        Source.TEMP_RISING -> R.string.source_temp_rising
+        Source.MUCUS_SIGN -> R.string.source_mucus_sign
+        Source.LATE -> R.string.source_late
     }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -310,10 +324,28 @@ private fun FertilityCard(f: Forecast) {
             }
         }
         Text(
-            stringResource(if (f.ovulationSource == OvulationSource.PREDICTED) R.string.chance_source_predicted else R.string.chance_source),
+            stringResource(if (f.ovulationSource.firm) R.string.chance_source else R.string.chance_source_predicted),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
+}
+
+/**
+ * After a cycle with signs, Ondea's learnt ovulation day may differ from the day used so far.
+ * The user chooses; nothing changes on its own.
+ */
+@Composable
+private fun AdviceCard(a: OvulationAdvice, onChange: ((Settings) -> Settings) -> Unit) {
+    SectionCard(title = stringResource(R.string.advice_title), icon = Icons.Outlined.AutoGraph) {
+        Text(
+            stringResource(if (a.fromUser) R.string.advice_text_own else R.string.advice_text_typical, a.settingDay, a.learnedDay),
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = { onChange { it.acceptAdvice(a) } }) { Text(stringResource(R.string.advice_use, a.learnedDay)) }
+            TextButton(onClick = { onChange { it.keepOwnDay(a) } }) { Text(stringResource(R.string.advice_keep, a.settingDay)) }
+        }
     }
 }
 

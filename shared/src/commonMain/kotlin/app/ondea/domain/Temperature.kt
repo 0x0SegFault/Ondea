@@ -14,8 +14,8 @@ object Temperature {
 
     fun unit(fahrenheit: Boolean) = if (fahrenheit) "°F" else "°C"
 
-    /** Step used by the +/- buttons, in display units. */
-    fun step(fahrenheit: Boolean) = if (fahrenheit) 0.1 else 0.05
+    /** Step used by the +/- buttons, in display units: the resolution of a basal thermometer. */
+    fun step(fahrenheit: Boolean) = if (fahrenheit) 0.02 else 0.01
 
     /** Parses user input in display units (accepts "36.5" and "36,5"); returns °C or null if implausible. */
     fun parse(text: String, fahrenheit: Boolean): Double? {

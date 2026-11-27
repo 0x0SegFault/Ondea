@@ -1,5 +1,8 @@
 package app.ondea.ui
 
+import androidx.compose.material.icons.outlined.AutoGraph
+import androidx.compose.ui.res.pluralStringResource
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -64,7 +67,8 @@ import kotlin.math.roundToInt
 private val MIN_DAY_WIDTH = 8.dp
 private val MAX_DAY_WIDTH = 32.dp
 private val CHART_HEIGHT = 320.dp
-private val TOP_PAD = 16.dp
+private val TOP_PAD = 34.dp
+private val PHASE_H = 16.dp
 private val BOTTOM_PAD = 64.dp
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -149,6 +153,8 @@ fun ChartScreen(s: UiState.Ready) {
                     window.source == OvulationSource.TEMPERATURE -> R.string.summary_waiting_mucus
                     window.source == OvulationSource.LH_TEST -> R.string.summary_lh
                     window.source == OvulationSource.MUCUS -> R.string.summary_mucus_only
+                    window.source == OvulationSource.TEMP_RISING -> R.string.source_temp_rising
+                    window.source == OvulationSource.MUCUS_SIGN -> R.string.source_mucus_sign
                     else -> R.string.summary_predicted
                 },
             ),
@@ -156,11 +162,39 @@ fun ChartScreen(s: UiState.Ready) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
+        val lag = shift?.let { sh -> chart.cycle.mucus.peakIndex?.let { sh.ovulationIndex - it } }
+        if (lag != null) {
+            Text(
+                when {
+                    lag == 0 -> stringResource(R.string.mucus_peak_same)
+                    lag > 0 -> pluralStringResource(R.plurals.mucus_peak_before, lag, lag)
+                    else -> pluralStringResource(R.plurals.mucus_peak_after, -lag, -lag)
+                },
+                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        chart.profile?.let { p ->
+            val unit = " " + Temperature.unit(fahrenheit)
+            val rise = Temperature.toDisplay(p.highC, fahrenheit) - Temperature.toDisplay(p.lowC, fahrenheit)
+            Text(
+                stringResource(R.string.profile_text, Temperature.format(p.lowC, fahrenheit) + unit,
+                    Temperature.format(p.highC, fahrenheit) + unit, String.format(Locale.getDefault(), "%.2f", rise) + unit),
+                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+
+        SectionCard(title = stringResource(R.string.phases_title), icon = Icons.Outlined.AutoGraph) {
+            Text(stringResource(R.string.phases_intro), style = MaterialTheme.typography.bodyMedium)
+            TypicalCurve()
+            PhaseTexts()
+        }
+
         SectionCard(title = stringResource(R.string.how_it_works_title), icon = Icons.Outlined.Lightbulb) {
             Text(stringResource(R.string.how_it_works_temperature), style = MaterialTheme.typography.bodyMedium)
             Text(stringResource(R.string.how_it_works_lh), style = MaterialTheme.typography.bodyMedium)
             Text(stringResource(R.string.how_it_works_mucus), style = MaterialTheme.typography.bodyMedium)
             Text(stringResource(R.string.how_it_works_prediction), style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.how_it_works_daily), style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
@@ -185,8 +219,16 @@ private fun TemperatureChart(chart: ChartData, fahrenheit: Boolean) {
     val maxY = ceil(((present.maxOrNull() ?: defaultMax).coerceAtLeast(minY + 8 * step) + step) / step) * step
     val gridLines = ((maxY - minY) / step).roundToInt()
     val window = chart.window
-    val predicted = window?.source == OvulationSource.PREDICTED
+    val predicted = window?.source?.calendar == true
     val peakMucus = chart.cycle.mucus.peakIndex
+    val phaseStyle = labelStyle.copy(fontSize = 9.sp, fontWeight = FontWeight.Bold)
+    val periodDays = chart.flow.indexOfFirst { it == 0 }.let { if (it < 0) chart.flow.size else it }
+    // Ovulation and luteal phase only once a sign gives the ovulation day; before that, the phases stop at today.
+    val phases = if (window?.source?.firm == true) cyclePhases(periodDays, window.ovulationIndex, chart.days)
+    else cyclePhases(periodDays, null, chart.days, follicularUntil = chart.todayIndex ?: (chart.days - 1))
+    val profile = chart.profile
+    val lowLabel = stringResource(R.string.profile_low)
+    val highLabel = stringResource(R.string.profile_high)
 
     // Fresh scroll position per cycle: past cycles open at day 1, the current one around today.
     val scroll = key(chart.cycle.start) { rememberScrollState() }
@@ -209,7 +251,9 @@ private fun TemperatureChart(chart: ChartData, fahrenheit: Boolean) {
     val labelEvery = if (dayWidth >= 20.dp) 1 else 5
     Row(Modifier.fillMaxWidth()) {
         Canvas(Modifier.width(36.dp).height(CHART_HEIGHT)) {
-            for (g in 0..gridLines step 2) {
+            // A label on every 0.1 °C line when there is room for it.
+            val labelStep = if (gridLines <= 12) 1 else 2
+            for (g in 0..gridLines step labelStep) {
                 val v = minY + g * step
                 val layout = measurer.measure(String.format(Locale.getDefault(), "%.1f", v), labelStyle)
                 drawText(layout, topLeft = Offset(size.width - layout.size.width - 6.dp.toPx(), yOf(v) - layout.size.height / 2f))
@@ -240,6 +284,21 @@ private fun TemperatureChart(chart: ChartData, fahrenheit: Boolean) {
                     )
                 }
 
+                drawPhases(phases, dw, 2.dp.toPx(), PHASE_H.toPx(), measurer, phaseStyle)
+
+                // The user's usual levels, learnt from past cycles.
+                profile?.let { p ->
+                    listOf(p.lowC to lowLabel, p.highC to highLabel).forEach { (c, label) ->
+                        val y = yOf(Temperature.toDisplay(c, fahrenheit))
+                        if (y in plotTop..plotBottom) {
+                            drawLine(line.copy(alpha = 0.35f), Offset(0f, y), Offset(size.width, y), 1.dp.toPx(),
+                                pathEffect = PathEffect.dashPathEffect(floatArrayOf(4f, 6f)))
+                            val t = measurer.measure(label, labelStyle.copy(fontSize = 9.sp, color = line.copy(alpha = 0.8f)))
+                            drawText(t, topLeft = Offset(4.dp.toPx(), y - t.size.height - 1f))
+                        }
+                    }
+                }
+
                 for (g in 0..gridLines) {
                     val y = yOf(minY + g * step)
                     drawLine(grid, Offset(0f, y), Offset(size.width, y), strokeWidth = if (g % 2 == 0) 1.2f else 0.5f)
@@ -253,7 +312,7 @@ private fun TemperatureChart(chart: ChartData, fahrenheit: Boolean) {
                     drawLine(
                         palette.ovulation, Offset(xOf(w.ovulationIndex), plotTop), Offset(xOf(w.ovulationIndex), plotBottom),
                         strokeWidth = 2.dp.toPx(),
-                        pathEffect = if (w.source != OvulationSource.TEMPERATURE) PathEffect.dashPathEffect(floatArrayOf(8f, 8f)) else null,
+                        pathEffect = if (!w.source.firm) PathEffect.dashPathEffect(floatArrayOf(8f, 8f)) else null,
                     )
                 }
 

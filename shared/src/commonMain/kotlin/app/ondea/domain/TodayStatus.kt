@@ -27,6 +27,14 @@ enum class Detail(val key: String) {
     FERTILE_UNTIL("fertile_until_confirmed"),
     OVULATION_EXPECTED("ovulation_expected"),
     WAITING_FOR_SHIFT("waiting_for_shift_text"),
+    /** Number: high days so far; date: probable ovulation. */
+    TEMP_RISING("temp_rising"),
+    /** Date: probable ovulation from the mucus. */
+    MUCUS_SUGGESTS("mucus_suggests"),
+    /** Dates: probable ovulation from the mucus, the planned day. */
+    MUCUS_MOVED("mucus_moved"),
+    /** Date: the planned day that passed without a sign. */
+    OVULATION_LATE("ovulation_late"),
 }
 
 /** What the current ovulation date is based on. */
@@ -37,6 +45,9 @@ enum class Source(val key: String) {
     OWN_DAY("source_setting"),
     LEARNED("source_prediction"),
     TYPICAL("source_typical"),
+    TEMP_RISING("source_temp_rising"),
+    MUCUS_SIGN("source_mucus_sign"),
+    LATE("source_late"),
 }
 
 data class TodayStatus(
@@ -62,6 +73,9 @@ fun CycleEngine.todayStatus(): TodayStatus? {
         OvulationSource.TEMPERATURE -> Source.TEMPERATURE
         OvulationSource.LH_TEST -> Source.LH_TEST
         OvulationSource.MUCUS -> Source.MUCUS
+        OvulationSource.TEMP_RISING -> Source.TEMP_RISING
+        OvulationSource.MUCUS_SIGN -> Source.MUCUS_SIGN
+        OvulationSource.LATE -> Source.LATE
         OvulationSource.PREDICTED -> when (predictionBasis) {
             PredictionBasis.OWN_DAY -> Source.OWN_DAY
             PredictionBasis.LEARNED -> Source.LEARNED
@@ -83,6 +97,13 @@ fun CycleEngine.todayStatus(): TodayStatus? {
             val tone = if (peakToday) StatusTone.PEAK else StatusTone.FERTILE
             val headline = if (peakToday) Headline.PEAK_FERTILITY else Headline.FERTILE_WINDOW
             when {
+                f.ovulationSource == OvulationSource.TEMP_RISING ->
+                    status(StatusTone.PEAK, Headline.PEAK_FERTILITY, 0, Detail.TEMP_RISING, f.risingDays, f.ovulation)
+                f.ovulationSource == OvulationSource.MUCUS_SIGN ->
+                    if (f.ovulation == f.plannedOvulation) status(tone, headline, 0, Detail.MUCUS_SUGGESTS, null, f.ovulation)
+                    else status(tone, headline, 0, Detail.MUCUS_MOVED, null, f.ovulation, f.plannedOvulation)
+                f.ovulationSource == OvulationSource.LATE ->
+                    status(StatusTone.FERTILE, Headline.FERTILE_WINDOW, 0, Detail.OVULATION_LATE, null, f.plannedOvulation)
                 f.mucusToday == 4 -> status(tone, headline, 0, Detail.EGGWHITE_TODAY)
                 f.window.waitingFor == Waiting.MUCUS -> status(tone, headline, 0, Detail.WAITING_MUCUS, null, f.fertileEnd)
                 f.ovulationSource == OvulationSource.LH_TEST -> status(tone, headline, 0, Detail.AFTER_LH, null, f.ovulation)

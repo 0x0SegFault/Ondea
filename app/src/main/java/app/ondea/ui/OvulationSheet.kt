@@ -1,5 +1,7 @@
 package app.ondea.ui
 
+import androidx.compose.material.icons.outlined.AutoGraph
+
 import app.ondea.domain.isAfter
 import app.ondea.domain.isBefore
 import app.ondea.domain.minusDays
@@ -79,7 +81,7 @@ fun OvulationSheet(engine: CycleEngine, onChange: ((Settings) -> Settings) -> Un
             SignRow(
                 Icons.Outlined.Thermostat, palette.ovulation, stringResource(R.string.sign_temperature),
                 cycle.shift?.let { stringResource(R.string.sign_ovulation_on, dateOf(it.ovulationIndex)) } ?: notYet,
-                inUse = f.ovulationSource == OvulationSource.TEMPERATURE,
+                inUse = f.ovulationSource == OvulationSource.TEMPERATURE || f.ovulationSource == OvulationSource.TEMP_RISING,
             )
             SignRow(
                 Icons.Outlined.Science, palette.ovulation, stringResource(R.string.sign_lh),
@@ -89,15 +91,23 @@ fun OvulationSheet(engine: CycleEngine, onChange: ((Settings) -> Settings) -> Un
             SignRow(
                 Icons.Outlined.WaterDrop, palette.mucus, stringResource(R.string.sign_mucus),
                 cycle.mucus.peakIndex?.let { stringResource(R.string.sign_peak_on, dateOf(it)) } ?: notYet,
-                inUse = f.ovulationSource == OvulationSource.MUCUS,
+                inUse = f.ovulationSource == OvulationSource.MUCUS || f.ovulationSource == OvulationSource.MUCUS_SIGN,
             )
             SignRow(
                 Icons.Outlined.CalendarMonth, palette.fertile, stringResource(R.string.sign_prediction),
                 if (engine.predictionBasis == PredictionBasis.OWN_DAY && engine.data.settings.usesOwnOvulationDay)
                     stringResource(R.string.prediction_setting_detail, engine.predictedOvulationIndex + 1)
                 else ondeaEstimateText(engine),
-                inUse = f.ovulationSource == OvulationSource.PREDICTED,
+                inUse = f.ovulationSource.calendar,
             )
+
+            if (!f.ovulationSource.firm && f.ovulation != f.plannedOvulation) {
+                SignRow(
+                    Icons.Outlined.AutoGraph, palette.ovulation, stringResource(R.string.estimate_today),
+                    stringResource(R.string.estimate_today_detail, f.ovulation.dayMonth(), f.plannedOvulation.dayMonth()),
+                    inUse = true,
+                )
+            }
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
