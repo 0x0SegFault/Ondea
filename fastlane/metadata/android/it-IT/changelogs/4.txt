@@ -1,0 +1,6 @@
+Novità: breve tour prima della configurazione, anche nelle Impostazioni.
+Temperatura: una rotella per cifra, a 0,01 °C.
+Ondea impara giorno per giorno: un rialzo di temperatura o un muco fertile sposta la stima, e il messaggio di oggi concorda con l'anello.
+Dopo un ciclo, Ondea confronta il tuo giorno di ovulazione con ciò che ha imparato.
+Grafico: fasi, i tuoi livelli abituali e la curva tipica.
+Segnalazioni anonime: nessun account, nulla su di te viene conservato.

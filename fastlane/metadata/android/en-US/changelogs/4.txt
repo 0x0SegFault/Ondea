@@ -1,0 +1,6 @@
+New: short tour before the setup, and again in Settings.
+Temperature: one wheel per digit, to 0.01 °C.
+Ondea learns day by day: a temperature rise or fertile mucus moves the estimate, and the Today message and the ring agree.
+After a cycle, Ondea compares your ovulation day with what it learnt.
+Chart: phases, your usual levels and the typical curve.
+Anonymous reports: no account, nothing about you kept.

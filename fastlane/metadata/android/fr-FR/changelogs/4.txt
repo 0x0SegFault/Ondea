@@ -1,0 +1,6 @@
+Nouveau : courte visite avant la configuration, et dans Réglages.
+Température : une roue par chiffre, au 0,01 °C.
+Ondea apprend jour après jour : une hausse de température ou une glaire fertile déplace l'estimation, et le message du jour suit l'anneau.
+Après un cycle, Ondea compare votre jour d'ovulation avec ce qu'il a appris.
+Graphique : phases, vos niveaux habituels et la courbe type.
+Rapports anonymes : sans compte, rien sur vous n'est gardé.

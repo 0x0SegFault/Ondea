@@ -4,6 +4,8 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 
 ## [Unreleased]
 
+## [1.3.0] – 2026-11-27
+
 ### Added
 - Short tour before the setup: what Ondea is, what to record, how to read the temperature chart, how Ondea helps. Skip it, or open it again in Settings → How Ondea works.
 - Day by day estimate: a first high temperature, or creamy or egg-white mucus, moves the expected ovulation before it is confirmed. When the planned day passes without a sign while you record, the estimate moves later. The Today message and the ring always agree.
@@ -14,8 +16,9 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 - Chart: phase bands (period, follicular, ovulation, luteal), your usual levels, the link between mucus peak and temperature rise, and the typical research curve with an explanation of each phase.
 
 ### Changed
-- The +/- buttons change the temperature by 0.01 °C (0.02 °F), the resolution of a basal thermometer. The chart labels every 0.1 °C when there is room.
+- Temperature entry: one wheel per digit, to 0.01 °C (0.02 °F), the resolution of a basal thermometer. You can also type it. The chart labels every 0.1 °C when there is room.
 - Mucus noted on bleeding days no longer opens the fertile window.
+- Reports: "Share as text" is removed. Send a report with the anonymous form or GitHub.
 
 ## [1.2.0] – 2026-11-21
 

@@ -1,0 +1,6 @@
+Nuevo: breve recorrido antes de la configuración, también en Ajustes.
+Temperatura: una rueda por dígito, a 0,01 °C.
+Ondea aprende día a día: una subida de temperatura o un moco fértil mueve la estimación, y el mensaje de hoy coincide con el anillo.
+Tras un ciclo, Ondea compara tu día de ovulación con lo aprendido.
+Gráfico: fases, tus niveles habituales y la curva típica.
+Informes anónimos: sin cuenta, no se guarda nada sobre ti.
