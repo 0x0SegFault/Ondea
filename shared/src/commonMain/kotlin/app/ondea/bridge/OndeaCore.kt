@@ -1,5 +1,8 @@
 package app.ondea.bridge
 
+import app.ondea.domain.acceptAdvice
+import app.ondea.domain.keepOwnDay
+
 import app.ondea.data.AppData
 import app.ondea.data.AppDataJson
 import app.ondea.data.DayEntry
@@ -63,6 +66,18 @@ class OndeaCore(json: String?) {
     fun startCycle(day: Long) { data = data.withCycleStart(day) }
     fun stopTracking(day: Long) { data = data.withTrackingStopped(day) }
 
+    /** Use Ondea's learnt ovulation day (the advice on the Today screen). */
+    fun acceptAdvice(today: Long) {
+        val a = CycleEngine(data, epochDayToDate(today)).advice() ?: return
+        data = data.copy(settings = data.settings.acceptAdvice(a))
+    }
+
+    /** Keep the day used so far. */
+    fun keepOwnDay(today: Long) {
+        val a = CycleEngine(data, epochDayToDate(today)).advice() ?: return
+        data = data.copy(settings = data.settings.keepOwnDay(a))
+    }
+
     /** Most recent temperature in °C, or null. */
     fun lastTemperature(): Double? = data.entries.lastOrNull { it.tempC != null }?.tempC
 
@@ -93,6 +108,9 @@ class OndeaCore(json: String?) {
             nextPeriod = f.nextPeriod.toEpochDay(),
             chancePercent = (FertilityChance.probability(offset) * 100).roundToInt(),
             chanceLevel = level.name,
+            adviceSettingDay = engine.advice()?.settingDay ?: 0,
+            adviceLearnedDay = engine.advice()?.learnedDay ?: 0,
+            adviceFromUser = engine.advice()?.fromUser ?: false,
             ringDays = (0 until length).map { i ->
                 val date = start.plusDaysCompat(i)
                 dayKind(engine.dayInfo(date))
@@ -146,11 +164,16 @@ data class TodayView(
     val chancePercent: Int,
     /** HIGH, MEDIUM or LOW. */
     val chanceLevel: String,
+    /** Advice: the day used so far and Ondea's learnt day (both 0 when there is no advice). */
+    val adviceSettingDay: Int,
+    val adviceLearnedDay: Int,
+    /** True: [adviceSettingDay] is the user's own day; false: a typical cycle. */
+    val adviceFromUser: Boolean,
     /** One kind per cycle day, for the ring. */
     val ringDays: List<String>,
 ) {
     companion object {
         fun paused() = TodayView(false, 0, 0, "NEUTRAL", "not_tracking_title", false, 0, "not_tracking_text", 0,
-            emptyList(), "", 0, 0, 0, 0, 0, "LOW", emptyList())
+            emptyList(), "", 0, 0, 0, 0, 0, "LOW", 0, 0, false, emptyList())
     }
 }

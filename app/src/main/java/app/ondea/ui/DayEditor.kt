@@ -1,5 +1,35 @@
 package app.ondea.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.snapping.SnapPosition
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.outlined.Keyboard
+import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.unit.Dp
+import java.text.DecimalFormatSymbols
+import kotlinx.coroutines.launch
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -56,7 +86,9 @@ import app.ondea.ui.theme.Nunito
 import kotlinx.datetime.LocalDate
 
 /**
- * Large temperature input with +/- steps. [onSave] receives °C, or null to clear the reading.
+ * Temperature input: one wheel per digit (degrees, tenths, hundredths), so any reading takes at most
+ * three moves and each digit is copied from the thermometer. The wheels start at the last reading.
+ * The keyboard button switches to typing. [onSave] receives °C, or null to clear the reading.
  * Keyed on date + stored value by the caller so it resets after saving.
  */
 @Composable
@@ -67,27 +99,24 @@ fun TemperatureInput(
     lastTempC: Double?,
     onSave: (Double?) -> Unit,
 ) {
+    val start = Temperature.toHundredths(savedC ?: lastTempC ?: 36.5, fahrenheit)
+    var hundredths by rememberSaveable(date, savedC, fahrenheit) { mutableIntStateOf(start) }
+    var typing by rememberSaveable(date, savedC) { mutableStateOf(false) }
     var text by rememberSaveable(date, savedC) { mutableStateOf(savedC?.let { Temperature.format(it, fahrenheit) } ?: "") }
     val focus = LocalFocusManager.current
-    val parsed = Temperature.parse(text, fahrenheit)
-    val invalid = text.isNotBlank() && parsed == null
-    val dirty = parsed != savedC && !(text.isBlank() && savedC == null)
-
-    fun nudge(direction: Int) {
-        val base = parsed ?: lastTempC ?: 36.5
-        val c = Temperature.fromDisplay(Temperature.toDisplay(base, fahrenheit) + direction * Temperature.step(fahrenheit), fahrenheit)
-        if (c in Temperature.VALID_RANGE_C) text = Temperature.format(c, fahrenheit)
-    }
+    val typed = Temperature.parse(text, fahrenheit)
+    val invalid = typing && text.isNotBlank() && typed == null
+    val value: Double? = if (typing) typed else Temperature.fromHundredths(hundredths, fahrenheit)
+    val dirty = value != null && value != savedC
 
     fun save() {
         focus.clearFocus()
-        if (!invalid) onSave(parsed)
+        if (!invalid && value != null) onSave(value)
     }
 
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            StepButton(Icons.Filled.Remove, stringResource(R.string.decrease)) { nudge(-1) }
-            Row(verticalAlignment = Alignment.Bottom) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if (typing) {
                 val numberStyle = TextStyle(
                     fontFamily = Nunito, fontWeight = FontWeight.ExtraBold, fontSize = 52.sp, textAlign = TextAlign.Center,
                     color = if (invalid) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface,
@@ -103,23 +132,43 @@ fun TemperatureInput(
                     modifier = Modifier.width(170.dp),
                     decorationBox = { inner ->
                         if (text.isEmpty()) {
-                            Text(
-                                lastTempC?.let { Temperature.format(it, fahrenheit) } ?: if (fahrenheit) "97.70" else "36.50",
-                                style = numberStyle.copy(color = MaterialTheme.colorScheme.outlineVariant),
-                                modifier = Modifier.fillMaxWidth(),
-                            )
+                            Text(Temperature.format(Temperature.fromHundredths(hundredths, fahrenheit), fahrenheit),
+                                style = numberStyle.copy(color = MaterialTheme.colorScheme.outlineVariant), modifier = Modifier.fillMaxWidth())
                         }
                         inner()
                     },
                 )
-                Text(
-                    Temperature.unit(fahrenheit),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 12.dp),
+            } else {
+                val (whole, tenths, hund) = Temperature.digits(hundredths, fahrenheit)
+                DigitWheel(Temperature.wholeRange(fahrenheit).toList(), whole, stringResource(R.string.temperature_degrees), 84.dp) {
+                    hundredths = Temperature.fromDigits(it, tenths, hund)
+                }
+                Text(DecimalFormatSymbols.getInstance().decimalSeparator.toString(),
+                    style = MaterialTheme.typography.displaySmall, fontWeight = FontWeight.ExtraBold)
+                DigitWheel((0..9).toList(), tenths, stringResource(R.string.temperature_tenths), 48.dp) {
+                    hundredths = Temperature.fromDigits(whole, it, hund)
+                }
+                DigitWheel((0..9).toList(), hund, stringResource(R.string.temperature_hundredths), 48.dp) {
+                    hundredths = Temperature.fromDigits(whole, tenths, it)
+                }
+            }
+            Text(
+                Temperature.unit(fahrenheit),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 6.dp),
+            )
+            IconButton(onClick = {
+                if (!typing) text = Temperature.format(Temperature.fromHundredths(hundredths, fahrenheit), fahrenheit)
+                else typed?.let { hundredths = Temperature.toHundredths(it, fahrenheit) }
+                typing = !typing
+            }) {
+                Icon(
+                    if (typing) Icons.Outlined.Tune else Icons.Outlined.Keyboard,
+                    stringResource(if (typing) R.string.temperature_use_wheels else R.string.temperature_type),
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
-            StepButton(Icons.Filled.Add, stringResource(R.string.increase)) { nudge(1) }
         }
         Text(
             if (invalid) stringResource(R.string.temperature_invalid) else stringResource(R.string.temperature_hint),
@@ -138,17 +187,74 @@ fun TemperatureInput(
                 androidx.compose.foundation.layout.Spacer(Modifier.width(8.dp))
                 Text(stringResource(R.string.temperature_saved), style = MaterialTheme.typography.titleSmall)
             }
+            TextButton(onClick = { onSave(null) }) { Text(stringResource(R.string.temperature_remove)) }
         }
     }
 }
 
+private val WHEEL_ITEM = 44.dp
+
+/**
+ * A vertical wheel of numbers: scroll or tap a number. The middle row is the value.
+ * For TalkBack it is one adjustable control (swipe up or down to change it).
+ */
 @Composable
-private fun StepButton(icon: androidx.compose.ui.graphics.vector.ImageVector, description: String, onClick: () -> Unit) {
-    FilledTonalIconButton(
-        onClick = onClick,
-        modifier = Modifier.size(52.dp),
-        colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-    ) { Icon(icon, description, tint = MaterialTheme.colorScheme.onPrimaryContainer) }
+private fun DigitWheel(values: List<Int>, selected: Int, description: String, width: Dp, onSelect: (Int) -> Unit) {
+    val index = values.indexOf(selected).coerceAtLeast(0)
+    val state = rememberLazyListState(initialFirstVisibleItemIndex = index)
+    val scope = rememberCoroutineScope()
+    val latest by rememberUpdatedState(onSelect)
+    // With one row of padding above and below, the first visible item is the one in the middle.
+    LaunchedEffect(state) {
+        snapshotFlow { state.isScrollInProgress }.collect { moving ->
+            if (!moving) {
+                val centre = state.layoutInfo.viewportStartOffset + state.layoutInfo.viewportSize.height / 2
+                val item = state.layoutInfo.visibleItemsInfo.minByOrNull { kotlin.math.abs(it.offset + it.size / 2 - centre) }
+                item?.let { latest(values[it.index]) }
+            }
+        }
+    }
+    LaunchedEffect(index) { if (!state.isScrollInProgress && state.firstVisibleItemIndex != index) state.animateScrollToItem(index) }
+    val primary = MaterialTheme.colorScheme.primary
+    Box(
+        Modifier.width(width).height(WHEEL_ITEM * 3).semantics {
+            contentDescription = description
+            stateDescription = selected.toString()
+            customActions = listOf(
+                CustomAccessibilityAction("+") { values.getOrNull(index + 1)?.let(onSelect); true },
+                CustomAccessibilityAction("−") { values.getOrNull(index - 1)?.let(onSelect); true },
+            )
+        },
+        contentAlignment = Alignment.Center,
+    ) {
+        Box(Modifier.fillMaxWidth().height(WHEEL_ITEM).clip(RoundedCornerShape(12.dp)).background(primary.copy(alpha = 0.10f)))
+        LazyColumn(
+            state = state,
+            contentPadding = PaddingValues(vertical = WHEEL_ITEM),
+            flingBehavior = rememberSnapFlingBehavior(state, SnapPosition.Center),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize().clearAndSetSemantics {},
+        ) {
+            items(values.size) { i ->
+                val isSelected = i == index
+                Box(
+                    Modifier.fillMaxWidth().height(WHEEL_ITEM).clickable {
+                        onSelect(values[i])
+                        scope.launch { state.animateScrollToItem(i) }
+                    },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        values[i].toString(),
+                        fontFamily = Nunito,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = if (isSelected) 40.sp else 26.sp,
+                        color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.outline,
+                    )
+                }
+            }
+        }
+    }
 }
 
 /** Period, mucus and other observations of one day. Every change is saved immediately. */

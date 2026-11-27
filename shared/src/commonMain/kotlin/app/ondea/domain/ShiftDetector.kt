@@ -28,9 +28,33 @@ data class Shift(
  *
  * Missing days and readings marked as disturbed are skipped (they are passed as null).
  */
+/** A rise that has started but is not yet confirmed: the last [highDays] readings are above the coverline. */
+data class Rise(val firstHighIndex: Int, val highDays: Int, val lastIndex: Int) {
+    val ovulationIndex: Int get() = (firstHighIndex - 1).coerceAtLeast(0)
+}
+
 object ShiftDetector {
     const val MIN_RISE_C = 0.2
+    /** A single high reading counts as a possible start only if it is this much above the coverline. */
+    const val FIRST_HIGH_C = 0.1
     private const val EPS = 1e-6
+
+    /**
+     * A temperature rise that may have started: the last 1 or 2 valid readings are above the 6 before them.
+     * Null when the rise is already confirmed ([detect]) or when there is no such rise.
+     */
+    fun rising(temps: List<Double?>): Rise? {
+        if (detect(temps) != null) return null
+        val valid = temps.withIndex().mapNotNull { (i, t) -> t?.let { i to it } }
+        for (k in 2 downTo 1) {
+            val i = valid.size - k
+            if (i < 6) continue
+            val coverline = (i - 6 until i).maxOf { valid[it].second }
+            val min = if (k == 1) coverline + FIRST_HIGH_C - EPS else coverline + EPS
+            if ((i until valid.size).all { valid[it].second > min }) return Rise(valid[i].first, k, valid.last().first)
+        }
+        return null
+    }
 
     fun detect(temps: List<Double?>): Shift? {
         val valid = temps.withIndex().mapNotNull { (i, t) -> t?.let { i to it } }

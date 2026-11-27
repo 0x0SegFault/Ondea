@@ -4,6 +4,7 @@ struct SettingsScreen: View {
     @EnvironmentObject private var model: AppModel
     @State private var lockUnavailable = false
     @State private var confirmErase = false
+    @State private var showIntro = false
 
     var body: some View {
         NavigationStack {
@@ -31,10 +32,14 @@ struct SettingsScreen: View {
                     Text("Ondea " + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""))
                         .font(.headline)
                     Text(L10n.t("about_text"))
+                    Button(L10n.t("intro_open")) { showIntro = true }
                     Text(L10n.t("disclaimer_full")).font(.footnote).foregroundStyle(.secondary)
                 }
             }
             .navigationTitle(L10n.t("tab_settings"))
+            .fullScreenCover(isPresented: $showIntro) {
+                IntroView(replay: true) { showIntro = false }
+            }
             .alert(L10n.t("app_lock_unavailable"), isPresented: $lockUnavailable) {
                 Button(L10n.t("ok")) {}
             }

@@ -27,7 +27,8 @@ Ondea has no crash reporter and sends nothing by itself.
   - **GitHub**: with your GitHub account; the report is public.
   - **Share as text**: with any app you choose.
   - The app version and phone model are filled in; you can delete them.
-- **After a crash**, Ondea saves the technical error (no health data) on the phone. On the next launch it offers to report it; you read the text in the form before sending. "Dismiss" deletes it.
+- **After a crash**, Ondea saves the technical error (no health data) on the phone. On the next launch it offers to report it. You choose to include it; Ondea then removes the error messages and keeps only error types and code lines. You see the text before anything is sent. "Dismiss" deletes it.
+- **Follow-up**: for the anonymous form, Ondea keeps a random code on the phone (Settings → My reports). The report holds only a hash of it. Opening a report in "My reports" shows its status in your browser: received, published (with the public link) or closed.
 
 ## Permissions
 

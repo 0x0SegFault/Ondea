@@ -1,5 +1,6 @@
 package app.ondea.ui
 
+
 import app.ondea.domain.isAfter
 import app.ondea.domain.isBefore
 import app.ondea.domain.minusDays
@@ -48,11 +49,16 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val repo: Repository = (app as OndeaApp).repository
     private val today = MutableStateFlow(today())
 
-    val state: StateFlow<UiState> = combine(repo.state, today) { s, t ->
-        when (s) {
-            LoadState.Loading -> UiState.Loading
-            is LoadState.Failed -> UiState.Failed
-            is LoadState.Ready -> UiState.Ready(s.data, CycleEngine(s.data, t))
+    /** Debug builds only: sample data shown instead of the stored data, never saved. */
+    private val demo = MutableStateFlow<AppData?>(null)
+
+    val state: StateFlow<UiState> = combine(repo.state, today, demo) { s, t, d ->
+        when {
+            d != null -> UiState.Ready(d, CycleEngine(d, t))
+            s == LoadState.Loading -> UiState.Loading
+            s is LoadState.Failed -> UiState.Failed
+            s is LoadState.Ready -> UiState.Ready(s.data, CycleEngine(s.data, t))
+            else -> UiState.Loading
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, UiState.Loading)
 
@@ -62,6 +68,11 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     /** A decrypted backup waiting for the user to confirm it should replace current data. */
     val pendingImport = MutableStateFlow<AppData?>(null)
     val busy = MutableStateFlow(false)
+
+    fun showDemoData() {
+        val debuggable = getApplication<Application>().applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0
+        if (debuggable) demo.value = app.ondea.bridge.DemoData.appData(today().toEpochDay())
+    }
 
     fun refreshDate() {
         today.value = today()

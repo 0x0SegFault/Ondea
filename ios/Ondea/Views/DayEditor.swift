@@ -1,66 +1,116 @@
 import OndeaShared
 import SwiftUI
 
-/// Temperature with +/- steps and a Save button. Values are stored in °C.
+/// Temperature input: one wheel per digit (degrees, tenths, hundredths), so each digit is copied from the
+/// thermometer. The wheels start at the last reading. The keyboard button switches to typing. Values are stored in °C.
 struct TemperatureInput: View {
     @EnvironmentObject private var model: AppModel
     let day: Int64
+    @State private var hundredths = 3650
+    @State private var typing = false
     @State private var text = ""
 
     var body: some View {
         let fahrenheit = model.fahrenheit
         let saved = model.entry(day).tempC?.doubleValue
-        let parsed = Temperature.shared.parse(text: text, fahrenheit: fahrenheit)?.doubleValue
-        let invalid = !text.isEmpty && parsed == nil
+        let value = currentValue(fahrenheit)
+        let invalid = typing && !text.isEmpty && value == nil
         VStack(spacing: 12) {
-            HStack(spacing: 12) {
-                step("minus", -1, fahrenheit)
-                TextField(placeholder(fahrenheit), text: $text)
-                    .keyboardType(.decimalPad)
-                    .font(.system(size: 44, weight: .heavy, design: .rounded))
-                    .multilineTextAlignment(.center)
-                    .frame(width: 160)
-                    .foregroundStyle(invalid ? .red : .primary)
+            HStack(spacing: 4) {
+                if typing {
+                    TextField(format(fromHundredths(hundredths, fahrenheit), fahrenheit), text: $text)
+                        .keyboardType(.decimalPad)
+                        .font(.system(size: 44, weight: .heavy, design: .rounded))
+                        .multilineTextAlignment(.center)
+                        .frame(width: 160)
+                        .foregroundStyle(invalid ? .red : .primary)
+                } else {
+                    wheels(fahrenheit)
+                }
                 Text(fahrenheit ? "°F" : "°C").foregroundStyle(.secondary)
-                step("plus", 1, fahrenheit)
+                Button {
+                    switchMode(fahrenheit)
+                } label: {
+                    Image(systemName: typing ? "slider.vertical.3" : "keyboard")
+                }
+                .accessibilityLabel(L10n.t(typing ? "temperature_use_wheels" : "temperature_type"))
             }
             Text(invalid ? L10n.t("temperature_invalid") : L10n.t("temperature_hint"))
                 .font(.footnote).foregroundStyle(invalid ? .red : .secondary)
             Button {
-                if let parsed {
-                    model.change { $0.setTemperature(day: day, tempC: parsed) }
-                } else if text.isEmpty {
-                    model.change { $0.clearTemperature(day: day) }
-                }
+                if let value { model.change { $0.setTemperature(day: day, tempC: value) } }
             } label: {
-                Label(saved != nil && parsed == saved ? L10n.t("temperature_saved") : L10n.t("save_temperature"),
-                      systemImage: saved != nil && parsed == saved ? "checkmark" : "square.and.arrow.down")
+                Label(saved != nil && value == saved ? L10n.t("temperature_saved") : L10n.t("save_temperature"),
+                      systemImage: saved != nil && value == saved ? "checkmark" : "square.and.arrow.down")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
-            .disabled(invalid || parsed == saved)
+            .disabled(invalid || value == nil || value == saved)
+            if saved != nil && value == saved {
+                Button(L10n.t("temperature_remove"), role: .destructive) { model.change { $0.clearTemperature(day: day) } }
+                    .font(.footnote)
+            }
         }
-        .onAppear { text = format(saved, fahrenheit) }
-        .onChange(of: day) { _, _ in text = format(model.entry(day).tempC?.doubleValue, fahrenheit) }
+        .onAppear { reset(fahrenheit) }
+        .onChange(of: day) { _, _ in reset(fahrenheit) }
     }
 
-    private func step(_ icon: String, _ direction: Double, _ fahrenheit: Bool) -> some View {
-        Button {
-            let base = Temperature.shared.parse(text: text, fahrenheit: fahrenheit)?.doubleValue ?? model.lastTemperature() ?? 36.5
-            let display = Temperature.shared.toDisplay(c: base, fahrenheit: fahrenheit)
-                + direction * Temperature.shared.step(fahrenheit: fahrenheit)
-            let celsius = Temperature.shared.fromDisplay(v: display, fahrenheit: fahrenheit)
-            text = format(celsius, fahrenheit)
-        } label: {
-            Image(systemName: icon).font(.title2.bold()).frame(width: 48, height: 48)
+    private func wheels(_ fahrenheit: Bool) -> some View {
+        let range = fahrenheit ? 95...101 : 35...38
+        let whole = Binding(get: { hundredths / 100 }, set: { hundredths = $0 * 100 + hundredths % 100 })
+        let tenths = Binding(get: { hundredths / 10 % 10 }, set: { hundredths = hundredths / 100 * 100 + $0 * 10 + hundredths % 10 })
+        let last = Binding(get: { hundredths % 10 }, set: { hundredths = hundredths / 10 * 10 + $0 })
+        return HStack(spacing: 0) {
+            wheel(Array(range), whole, "temperature_degrees", width: 76)
+            Text(Locale.current.decimalSeparator ?? ".").font(.title.bold())
+            wheel(Array(0...9), tenths, "temperature_tenths", width: 52)
+            wheel(Array(0...9), last, "temperature_hundredths", width: 52)
         }
-        .buttonStyle(.bordered)
-        .clipShape(Circle())
-        .accessibilityLabel(L10n.t(direction > 0 ? "increase" : "decrease"))
     }
 
-    private func placeholder(_ fahrenheit: Bool) -> String {
-        format(model.lastTemperature() ?? 36.5, fahrenheit)
+    private func wheel(_ values: [Int], _ selection: Binding<Int>, _ key: String, width: CGFloat) -> some View {
+        Picker(L10n.t(key), selection: selection) {
+            ForEach(values, id: \.self) { number in
+                Text("\(number)").font(.system(size: 34, weight: .heavy, design: .rounded)).tag(number)
+            }
+        }
+        .pickerStyle(.wheel)
+        .frame(width: width, height: 130)
+        .clipped()
+        .accessibilityLabel(L10n.t(key))
+    }
+
+    private func currentValue(_ fahrenheit: Bool) -> Double? {
+        if typing { return Temperature.shared.parse(text: text, fahrenheit: fahrenheit)?.doubleValue }
+        return fromHundredths(hundredths, fahrenheit)
+    }
+
+    private func switchMode(_ fahrenheit: Bool) {
+        if typing {
+            if let typed = Temperature.shared.parse(text: text, fahrenheit: fahrenheit)?.doubleValue {
+                hundredths = clamp(Int(Temperature.shared.toHundredths(c: typed, fahrenheit: fahrenheit)), fahrenheit)
+            }
+        } else {
+            text = format(fromHundredths(hundredths, fahrenheit), fahrenheit)
+        }
+        typing.toggle()
+    }
+
+    private func reset(_ fahrenheit: Bool) {
+        let start = model.entry(day).tempC?.doubleValue ?? model.lastTemperature() ?? 36.5
+        hundredths = clamp(Int(Temperature.shared.toHundredths(c: start, fahrenheit: fahrenheit)), fahrenheit)
+        text = model.entry(day).tempC.map { format($0.doubleValue, fahrenheit) } ?? ""
+        typing = false
+    }
+
+    /// Keeps the whole degrees inside the wheel range.
+    private func clamp(_ value: Int, _ fahrenheit: Bool) -> Int {
+        let range = fahrenheit ? 95...101 : 35...38
+        return min(max(value, range.lowerBound * 100), range.upperBound * 100 + 99)
+    }
+
+    private func fromHundredths(_ value: Int, _ fahrenheit: Bool) -> Double {
+        Temperature.shared.fromHundredths(h: Int32(value), fahrenheit: fahrenheit)
     }
 
     private func format(_ celsius: Double?, _ fahrenheit: Bool) -> String {

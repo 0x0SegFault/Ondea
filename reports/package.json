@@ -6,5 +6,5 @@
   "license": "GPL-3.0-or-later",
   "main": "handler.js",
   "engines": { "node": ">=18" },
-  "scripts": { "test": "node --test test/" }
+  "scripts": { "test": "node --test test/*.test.js" }
 }

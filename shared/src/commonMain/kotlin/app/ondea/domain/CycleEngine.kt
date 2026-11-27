@@ -2,6 +2,7 @@ package app.ondea.domain
 
 import app.ondea.data.AppData
 import app.ondea.data.DayEntry
+import app.ondea.data.Settings
 import app.ondea.data.usesOwnOvulationDay
 import kotlinx.datetime.LocalDate
 import kotlin.math.roundToInt
@@ -16,9 +17,43 @@ data class CycleAnalysis(
     val mucus: MucusSign,
     /** First day with a positive ovulation (LH) test. */
     val lhPositiveIndex: Int?,
+    /** A temperature rise that has started but is not confirmed yet. */
+    val rise: Rise? = null,
+    /** Mucus by 0-based day, 0 on bleeding days (mucus cannot be observed then). */
+    val mucusDays: List<Int> = emptyList(),
+    /** Valid (not disturbed) temperatures by 0-based day. */
+    val temps: List<Double?> = emptyList(),
 )
 
-enum class OvulationSource { TEMPERATURE, LH_TEST, MUCUS, PREDICTED }
+/** The user's usual temperature levels, learnt from cycles with a confirmed rise. */
+data class TempProfile(val lowC: Double, val highC: Double, val cycles: Int) {
+    val riseC: Double get() = highC - lowC
+}
+
+/** Ondea's learnt ovulation day differs from the day in the settings: the user can choose. Days are 1-based. */
+data class OvulationAdvice(
+    /** The day the prediction used until now: the user's own day, or a typical cycle when they gave none. */
+    val settingDay: Int,
+    val learnedDay: Int,
+    val cycles: Int,
+    /** True when [settingDay] is the user's own day, false when it is the typical-cycle day. */
+    val fromUser: Boolean,
+)
+
+/**
+ * Where the ovulation date of a cycle comes from.
+ * Confirmed or strong signs: [TEMPERATURE], [LH_TEST], [MUCUS] (peak). Signs that point to ovulation but are
+ * not confirmed yet: [TEMP_RISING], [MUCUS_SIGN]. No sign: [PREDICTED] (calendar), or [LATE] when the
+ * calendar day has passed without a sign and the estimate moves later day by day.
+ */
+enum class OvulationSource {
+    TEMPERATURE, LH_TEST, MUCUS, TEMP_RISING, MUCUS_SIGN, PREDICTED, LATE;
+
+    /** Based on the calendar only, not on a sign of this cycle. */
+    val calendar: Boolean get() = this == PREDICTED || this == LATE
+    /** The ovulation day is known from a sign (not an estimate that can still move). */
+    val firm: Boolean get() = this == TEMPERATURE || this == LH_TEST || this == MUCUS
+}
 
 /** Basis of a prediction made before any sign of the current cycle. */
 enum class PredictionBasis { OWN_DAY, LEARNED, TYPICAL }
@@ -60,6 +95,8 @@ data class ChartData(
     val intercourse: List<Boolean>,
     val window: Window?,
     val todayIndex: Int?,
+    /** The user's usual low and high temperature, if learnt. */
+    val profile: TempProfile? = null,
 )
 
 /** Everything about the current cycle that the Today screen shows. */
@@ -77,6 +114,10 @@ data class Forecast(
     val highDays: Int,
     /** Today's mucus observation (0 if none). */
     val mucusToday: Int,
+    /** Ovulation date planned before this cycle's signs (settings or learnt). */
+    val plannedOvulation: LocalDate,
+    /** High readings so far of a rise that is not yet confirmed (0 if none). */
+    val risingDays: Int,
 ) {
     val ovulationSource get() = window.source
     val closed get() = window.closed
@@ -123,6 +164,13 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
     val ondeaOvulationIndex: Int
     /** Where [predictedOvulationIndex] comes from. */
     val predictionBasis: PredictionBasis
+    /** Usual low and high temperature, or null before the first cycle with a confirmed rise. */
+    val profile: TempProfile?
+    /**
+     * Days from the mucus peak to ovulation (temperature), learnt from past cycles; 0 by default
+     * (ovulation is most often within a day of the mucus peak: Ecochard et al., BJOG 2001).
+     */
+    val mucusLag: Int
     val current: CycleAnalysis?
     val forecast: Forecast?
     private val windows: List<Window?>
@@ -139,13 +187,19 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
             val natural = if (next != null && !stoppedEarly) (next.start - c.start).toInt() else null
             val lastDay = end ?: maxOf(todayDay, c.start)
             val days = (c.start..lastDay).map { entries[it] }
+            val temps = days.map { e -> e?.takeIf { !it.disturbed }?.tempC }
+            // Mucus cannot be observed during bleeding: those observations do not count.
+            val mucus = days.map { e -> if ((e?.flow ?: 0) >= 2) 0 else e?.mucus ?: 0 }
             CycleAnalysis(
                 start = epochDayToDate(c.start),
                 end = end?.let(::epochDayToDate),
                 naturalLength = natural,
-                shift = ShiftDetector.detect(days.map { e -> e?.takeIf { !it.disturbed }?.tempC }),
-                mucus = MucusDetector.analyze(days.map { it?.mucus ?: 0 }),
+                shift = ShiftDetector.detect(temps),
+                mucus = MucusDetector.analyze(mucus),
                 lhPositiveIndex = days.indexOfFirst { it?.lh == 2 }.takeIf { it >= 0 },
+                rise = ShiftDetector.rising(temps),
+                mucusDays = mucus,
+                temps = temps,
             )
         }
 
@@ -162,7 +216,10 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         // Learn the ovulation day itself from finished cycles with a confirmed temperature rise.
         // The fertile window varies even in regular cycles (Wilcox et al., BMJ 2000), so the
         // predicted window opens 5 days before the earliest recent ovulation.
-        pastOvulations = cycles.filter { it.end != null && it.shift != null }.map { it.shift!!.ovulationIndex }.takeLast(6)
+        // Every finished cycle with a sign counts: temperature first, then LH test, then mucus peak.
+        pastOvulations = cycles.filter { it.end != null }.mapNotNull { c ->
+            c.shift?.ovulationIndex ?: c.lhPositiveIndex?.plus(1) ?: c.mucus.peakIndex
+        }.takeLast(6)
         typicalOvulationIndex = (avgCycleLength - avgLutealLength - 1).coerceAtLeast(settings.periodLength)
         learnedOvulationIndex = pastOvulations.takeIf { it.isNotEmpty() }?.average()?.roundToInt()
         val own = settings.ovulationDay?.let { it - 1 }
@@ -179,6 +236,20 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
             minOf(predictedOvulationIndex, pastOvulations.min())
         else predictedOvulationIndex
 
+        val confirmed = cycles.filter { it.end != null && it.shift != null }.takeLast(6)
+        val levels = confirmed.mapNotNull { c ->
+            val first = c.shift!!.firstHighIndex
+            val low = c.temps.take(first).filterNotNull()
+            val high = c.temps.drop(first).filterNotNull()
+            if (low.size >= 3 && high.size >= 3) low.average() to high.average() else null
+        }
+        profile = levels.takeIf { it.isNotEmpty() }?.let { l ->
+            TempProfile(round2(l.map { it.first }.average()), round2(l.map { it.second }.average()), l.size)
+        }
+        val lags = cycles.filter { it.shift != null && it.mucus.peakIndex != null }
+            .map { it.shift!!.ovulationIndex - it.mucus.peakIndex!! }.takeLast(6).sorted()
+        mucusLag = lags.takeIf { it.isNotEmpty() }?.let { it[it.size / 2].coerceIn(-2, 2) } ?: 0
+
         current = cycles.lastOrNull()?.takeIf { it.end == null && !it.start.isAfter(today) }
         windows = cycles.map { windowFor(it, isCurrent = it == current) }
         forecast = current?.let { forecastFor(it, windows.last()!!) }
@@ -192,13 +263,35 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
     private fun windowFor(c: CycleAnalysis, isCurrent: Boolean): Window? {
         val shift = c.shift
         val m = c.mucus
+        val todayIndex = days(c.start, today)
+        // Best mucus of the last 3 days (creamy or egg white), if any.
+        val recentMucus = (todayIndex downTo (todayIndex - 2).coerceAtLeast(0))
+            .firstOrNull { (c.mucusDays.getOrNull(it) ?: 0) >= 3 }
+        val rise = c.rise?.takeIf { it.lastIndex >= todayIndex - 1 }
+        var signEnd: Int? = null
         val (ov, source) = when {
             shift != null -> shift.ovulationIndex to OvulationSource.TEMPERATURE
             // Ovulation follows the LH surge by about 24-36 h (Direito et al., Fertil Steril 2013).
             c.lhPositiveIndex != null -> c.lhPositiveIndex + 1 to OvulationSource.LH_TEST
             m.peakIndex != null -> m.peakIndex to OvulationSource.MUCUS
-            isCurrent -> predictedOvulationIndex to OvulationSource.PREDICTED
-            else -> return null
+            !isCurrent -> return null
+            // Day by day, the latest signs move the estimate before they are confirmed.
+            rise != null -> {
+                signEnd = rise.firstHighIndex + 2
+                rise.ovulationIndex to OvulationSource.TEMP_RISING
+            }
+            recentMucus != null -> {
+                // Creamy mucus usually comes a day or so before egg white.
+                val extra = if (c.mucusDays[recentMucus] == 3) 1 else 0
+                val est = maxOf(recentMucus + mucusLag + extra, todayIndex)
+                signEnd = maxOf(est + 1, recentMucus + MucusDetector.DAYS_AFTER_PEAK)
+                est to OvulationSource.MUCUS_SIGN
+            }
+            // The calendar day has passed without a sign while the user keeps recording: ovulation may be
+            // late this cycle. Without recent records there is nothing to learn from, so the calendar stays.
+            todayIndex > predictedOvulationIndex + 1 && recording(c, todayIndex) ->
+                minOf(todayIndex, predictedOvulationIndex + MAX_LATE_DAYS) to OvulationSource.LATE
+            else -> predictedOvulationIndex to OvulationSource.PREDICTED
         }
         val mucusClose = m.peakIndex?.plus(MucusDetector.DAYS_AFTER_PEAK)
         // A finished cycle with a confirmed rise is closed even if mucus logging stopped early.
@@ -206,9 +299,10 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         val end = when {
             shift != null -> maxOf(shift.confirmIndex, mucusClose ?: 0)
             mucusClose != null -> maxOf(mucusClose, ov + 1)
+            signEnd != null -> signEnd
             else -> ov + 1
         }
-        val earliest = if (source == OvulationSource.PREDICTED) earliestOvulationIndex else ov
+        val earliest = if (source.firm) ov else minOf(earliestOvulationIndex, ov)
         val start = minOf(earliest - 5, ov - 5, m.firstIndex ?: Int.MAX_VALUE).coerceAtLeast(0)
         return Window(
             ovulationIndex = ov,
@@ -228,8 +322,13 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
     private fun forecastFor(cycle: CycleAnalysis, w: Window): Forecast {
         val cycleDay = days(cycle.start, today) + 1
         val ovulation = cycle.start.plusDays(w.ovulationIndex.toLong())
-        val nextPeriod = if (w.source == OvulationSource.PREDICTED) cycle.start.plusDays(avgCycleLength.toLong())
-        else ovulation.plusDays(avgLutealLength + 1L)
+        val calendarPeriod = cycle.start.plusDays(avgCycleLength.toLong())
+        val nextPeriod = when (w.source) {
+            OvulationSource.PREDICTED -> calendarPeriod
+            OvulationSource.LATE -> maxOf(calendarPeriod, ovulation.plusDays(avgLutealLength + 1L))
+            else -> ovulation.plusDays(avgLutealLength + 1L)
+        }
+        val todayIndex = cycleDay - 1
         return Forecast(
             cycleDay = cycleDay,
             window = w,
@@ -241,6 +340,8 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
             daysLate = days(nextPeriod, today).coerceAtLeast(0),
             highDays = cycle.shift?.let { cycleDay - it.firstHighIndex } ?: 0,
             mucusToday = entries[today.toEpochDay()]?.mucus ?: 0,
+            plannedOvulation = cycle.start.plusDays(predictedOvulationIndex.toLong()),
+            risingDays = cycle.rise?.takeIf { it.lastIndex >= todayIndex - 1 }?.highDays ?: 0,
         )
     }
 
@@ -262,12 +363,12 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
         if (index != null && window != null) {
             val d = days(cycles[index].start, date)
             val inFertile = d in window.fertileStart..window.fertileEnd
-            val predicted = window.source == OvulationSource.PREDICTED
+            val predicted = window.source.calendar
             fertile = inFertile && !predicted
             fertilePredicted = inFertile && predicted
             peak = d in window.peakStart..window.ovulationIndex
-            ovulation = d == window.ovulationIndex && !predicted
-            ovulationPredicted = d == window.ovulationIndex && predicted
+            ovulation = d == window.ovulationIndex && window.source.firm
+            ovulationPredicted = d == window.ovulationIndex && !window.source.firm
         }
 
         if (current != null && index != null && cycles[index] == current && date.isAfter(today) &&
@@ -314,16 +415,46 @@ class CycleEngine(val data: AppData, val today: LocalDate) {
             mucus = dayEntries.map { it?.mucus ?: 0 },
             intercourse = dayEntries.map { it?.intercourse == true },
             window = windows[index],
+            profile = profile,
             todayIndex = days(cycle.start, today).takeIf { it in 0 until shown },
         )
+    }
+
+    /** A temperature or mucus observation in the last 3 days. */
+    private fun recording(c: CycleAnalysis, todayIndex: Int): Boolean =
+        ((todayIndex - 2).coerceAtLeast(0)..todayIndex).any { (c.temps.getOrNull(it) != null) || (c.mucusDays.getOrNull(it) ?: 0) > 0 }
+
+    /**
+     * After at least one cycle with a sign, Ondea's learnt ovulation day may differ from the day used so far.
+     * Shown until the user chooses; it comes back only if the learnt day changes again.
+     */
+    fun advice(): OvulationAdvice? {
+        val learned = (learnedOvulationIndex ?: return null) + 1
+        val own = settings.ovulationDay
+        val setting = own ?: (typicalOvulationIndex + 1)
+        if (kotlin.math.abs(learned - setting) < ADVICE_MIN_DAYS || settings.adviceDismissedDay == learned) return null
+        return OvulationAdvice(setting, learned, pastOvulations.size, fromUser = own != null)
     }
 
     /** Most recent reading, used as the starting value of the temperature input. */
     fun lastTemperature(): Double? = data.entries.lastOrNull { it.tempC != null }?.tempC
 
     companion object {
+        /** A late ovulation estimate moves at most this many days past the planned day. */
+        const val MAX_LATE_DAYS = 10
+        /** Advice is shown only when the learnt and the set day differ by at least this. */
+        const val ADVICE_MIN_DAYS = 2
+
         fun days(from: LocalDate, to: LocalDate): Int = daysBetween(from, to)
     }
 }
 
 private fun LocalDate.inRange(from: LocalDate, to: LocalDate) = !isBefore(from) && !isAfter(to)
+
+private fun round2(v: Double) = kotlin.math.round(v * 100) / 100.0
+
+/** Use Ondea's learnt day from now on; the user's day is updated to it. */
+fun Settings.acceptAdvice(a: OvulationAdvice) = copy(ovulationDay = a.learnedDay, useOwnOvulationDay = false, adviceDismissedDay = null)
+
+/** Keep predicting with the day used so far. */
+fun Settings.keepOwnDay(a: OvulationAdvice) = copy(ovulationDay = a.settingDay, useOwnOvulationDay = true, adviceDismissedDay = a.learnedDay)

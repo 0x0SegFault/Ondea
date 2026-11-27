@@ -27,6 +27,7 @@ struct OndeaApp: App {
 
 struct RootView: View {
     @EnvironmentObject private var model: AppModel
+    @State private var introDone = false
 
     var body: some View {
         switch model.state {
@@ -37,6 +38,8 @@ struct RootView: View {
         case .ready:
             if model.appLock && !model.unlocked {
                 LockView()
+            } else if !model.onboarded && !introDone {
+                IntroView { introDone = true }
             } else if !model.onboarded {
                 OnboardingView()
             } else {

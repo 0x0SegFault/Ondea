@@ -89,3 +89,69 @@ test('pages carry strict security headers and the handler never reads request he
   assert.equal(page.headers['Referrer-Policy'], 'no-referrer');
   assert.match(page.body, /value="feature" selected/);
 });
+
+test('deployment problems are named: missing settings and the GitHub status (never the values)', async () => {
+  const report = async (testEnv, fetch) => {
+    const challenge = JSON.parse((await handle({ httpMethod: 'GET', path: '/challenge' }, {}, { env: testEnv })).body);
+    const body = JSON.stringify({ kind: 'bug', title: 'App closes', details: 'It closes when I save.', proof: solve(challenge) });
+    return handle({ httpMethod: 'POST', path: '/report', body }, {}, { env: testEnv, fetch });
+  };
+  const missing = await report({ POW_KEY: KEY, GITHUB_REPO: 'owner/reports' }, async () => ({ ok: true, status: 201 }));
+  assert.equal(missing.statusCode, 500);
+  assert.deepEqual(JSON.parse(missing.body), { error: 'config', missing: ['GITHUB_TOKEN'] });
+  const denied = await report(env, async () => ({ ok: false, status: 404 }));
+  assert.deepEqual(JSON.parse(denied.body), { error: 'upstream', github: 404 });
+  assert.ok(!denied.body.includes('t"'));
+});
+
+test('follow-up: only a hash goes in the issue; status shows received, published with link, or closed', async () => {
+  const { followUpHash, statusOf } = require('../report');
+  const code = '0123456789abcdef0123456789abcdef';
+  const issues = [];
+  const fetch = async (url, init) => {
+    if (init && init.method === 'POST') { issues.push(JSON.parse(init.body)); return { ok: true, status: 201 }; }
+    const hit = issues.find((i) => decodeURIComponent(url).includes(followUpHash(code)) && i.body.includes(followUpHash(code)));
+    return { ok: true, status: 200, json: async () => ({ items: hit ? [{ state: 'open', body: hit.body }] : [] }) };
+  };
+  const challenge = JSON.parse((await handle({ httpMethod: 'GET', path: '/challenge' }, {}, { env })).body);
+  const body = JSON.stringify({ kind: 'bug', title: 'App closes', details: 'It closes when I save.', followUp: code, proof: solve(challenge) });
+  assert.equal((await handle({ httpMethod: 'POST', path: '/report', body }, {}, { env, fetch })).statusCode, 200);
+  assert.ok(issues[0].body.includes(followUpHash(code)) && !issues[0].body.includes(code));
+  const status = await handle({ httpMethod: 'GET', path: '/status', queryStringParameters: { code } }, {}, { env, fetch });
+  assert.deepEqual(JSON.parse(status.body), { status: 'received' });
+  assert.equal((await handle({ httpMethod: 'GET', path: '/status', queryStringParameters: { code: 'nope' } }, {}, { env, fetch })).statusCode, 400);
+  assert.deepEqual(statusOf({ state: 'closed', body: 'x\nPublic issue: https://github.com/o/r/issues/7' }), { status: 'published', public: 'https://github.com/o/r/issues/7' });
+  assert.deepEqual(statusOf({ state: 'closed', state_reason: 'not_planned', body: '' }), { status: 'declined' });
+});
+
+test('the app preview and the issue have the same text', () => {
+  const fs = require('node:fs');
+  const kotlin = fs.readFileSync(require('node:path').join(__dirname, '../../app/src/main/java/app/ondea/feedback/Feedback.kt'), 'utf8');
+  const footer = /const val FOOTER = "(.*)"/.exec(kotlin)[1];
+  const { body } = toIssue({ kind: 'bug', title: 'Closes', details: 'When I save.', version: '1.3.0', device: '' });
+  assert.equal(body, `When I save.\n\n---\nApp version: 1.3.0\nDevice: not given\n\n${footer}`);
+});
+
+test('crash reports get the crash label; an empty follow-up code is allowed', () => {
+  const { report } = validate({ kind: 'bug', title: 'Crash: IllegalStateException', details: 'Crash details here', followUp: '', crash: 'true' });
+  assert.deepEqual(toIssue(report).labels, ['bug', 'anonymous', 'crash']);
+  assert.equal(validate({ kind: 'bug', title: 'Crash on save', details: 'Crash details', followUp: 'bad' }).error, 'followUp');
+});
+
+test('the form carries the follow-up code and the preview; the follow page shows only the status', async () => {
+  const code = '0123456789abcdef0123456789abcdef';
+  const html = formPage({ followUp: code, crash: '1' });
+  assert.match(html, new RegExp(`name="followUp" value="${code}"`));
+  assert.match(html, /name="crash" value="true"/);
+  assert.match(html, /id="preview"/);
+  assert.match(formPage({ followUp: '<x>' }), /name="followUp" value=""/);
+  const fetch = async () => ({ ok: true, status: 200, json: async () => ({ items: [{ state: 'closed', body: 'Public issue: https://github.com/o/r/issues/9' }] }) });
+  const page = await handle({ httpMethod: 'GET', path: '/follow', queryStringParameters: { code } }, {}, { env, fetch });
+  assert.equal(page.statusCode, 200);
+  assert.match(page.body, /Published/);
+  assert.match(page.body, /https:\/\/github.com\/o\/r\/issues\/9/);
+  const bad = await handle({ httpMethod: 'GET', path: '/follow', queryStringParameters: { code: 'x' } }, {}, { env, fetch });
+  assert.equal(bad.statusCode, 400);
+  const { statusPage } = require('../page');
+  assert.ok(!statusPage({ status: 'published', public: 'javascript:alert(1)' }).includes('javascript:'));
+});

@@ -32,6 +32,8 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         unlocked = savedInstanceState?.getBoolean(KEY_UNLOCKED) ?: false
+        // Debug builds: `adb shell am start -n <app>/app.ondea.MainActivity --ez demo_data true` shows sample cycles.
+        if (intent.getBooleanExtra("demo_data", false)) vm.showDemoData()
 
         setContent {
             OndeaTheme {

@@ -53,7 +53,10 @@ class TodayStatusTest {
         val today = start.plusDays(10)
         val s = engine(today, listOf(DayEntry(today.toEpochDay(), mucus = 4))).todayStatus()!!
         assertEquals(Headline.PEAK_FERTILITY, s.headline)
-        assertEquals(Detail.EGGWHITE_TODAY, s.detail)
+        // Egg white on day 11 moves the estimate from the calendar day (14) to today.
+        assertEquals(Detail.MUCUS_MOVED, s.detail)
+        assertEquals(listOf(today, start.plusDays(13)), s.detailDates)
+        assertEquals(Source.MUCUS_SIGN, s.source)
     }
 
     @Test

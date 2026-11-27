@@ -21,6 +21,8 @@ data class Settings(
     val ovulationDay: Int? = null,
     /** True: always predict with [ovulationDay]. False: Ondea learns. Null (older data): own day if set. */
     val useOwnOvulationDay: Boolean? = null,
+    /** Learnt ovulation day the user chose not to use; the advice comes back only when the learnt day changes. */
+    val adviceDismissedDay: Int? = null,
     val fahrenheit: Boolean = false,
     val appLock: Boolean = false,
     val secureScreen: Boolean = true,

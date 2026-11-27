@@ -18,6 +18,7 @@ struct TodayScreen: View {
                     ring(today)
                     status(today)
                     facts(today)
+                    if today.adviceLearnedDay > 0 { advice(today) }
                     ChanceCard(view: today)
                 } else {
                     paused
@@ -71,9 +72,7 @@ struct TodayScreen: View {
             ? L10n.plural(today.headlineKey, Int(today.headlineCount))
             : L10n.t(today.headlineKey)
         let dates: [CVarArg] = today.detailDates.map { EpochDay.dayMonth($0.int64Value) }
-        let detail = today.detailKey == "maybe_pregnant"
-            ? L10n.t(today.detailKey, Int(today.detailNumber))
-            : String(format: L10n.t(today.detailKey), locale: Locale.current, arguments: dates)
+        let detail = detailText(today, dates)
         return VStack(spacing: 6) {
             Text(headline).font(.title2.bold()).foregroundStyle(accent).multilineTextAlignment(.center)
             Text(detail).font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center)
@@ -82,6 +81,33 @@ struct TodayScreen: View {
                 .foregroundStyle(accent)
                 .padding(.horizontal, 12).padding(.vertical, 4)
                 .background(accent.opacity(0.12), in: Capsule())
+        }
+    }
+
+    private func detailText(_ today: TodayView, _ dates: [CVarArg]) -> String {
+        switch today.detailKey {
+        case "maybe_pregnant":
+            return L10n.t(today.detailKey, Int(today.detailNumber))
+        case "temp_rising":
+            let date: CVarArg = dates.first ?? ""
+            return L10n.t(today.detailKey, Int(today.detailNumber), date)
+        default:
+            return String(format: L10n.t(today.detailKey), locale: Locale.current, arguments: dates)
+        }
+    }
+
+    /// After a cycle with signs, Ondea's learnt ovulation day may differ from the day used so far. The user chooses.
+    private func advice(_ today: TodayView) -> some View {
+        let setting = Int(today.adviceSettingDay)
+        let learned = Int(today.adviceLearnedDay)
+        let textKey = today.adviceFromUser ? "advice_text_own" : "advice_text_typical"
+        return Card(title: L10n.t("advice_title"), systemImage: "chart.line.uptrend.xyaxis") {
+            Text(L10n.t(textKey, setting, learned)).font(.callout)
+            HStack {
+                Button(L10n.t("advice_use", learned)) { model.change { $0.acceptAdvice(today: model.todayDay) } }
+                    .buttonStyle(.borderedProminent)
+                Button(L10n.t("advice_keep", setting)) { model.change { $0.keepOwnDay(today: model.todayDay) } }
+            }
         }
     }
 
