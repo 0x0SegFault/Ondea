@@ -246,9 +246,9 @@
     <string name="data_tracking">Rastreo: ninguno</string>
     <string name="data_stored">Guardados solo en este teléfono, cifrados. Bórralos cuando quieras en Ajustes → Borrar todos los datos.</string>
     <string name="feedback_bug">Informar de un problema</string>
-    <string name="feedback_bug_hint">De forma anónima, con GitHub o con la app que elijas</string>
+    <string name="feedback_bug_hint">De forma anónima o con GitHub</string>
     <string name="feedback_feature">Proponer una función</string>
-    <string name="feedback_feature_hint">De forma anónima, con GitHub o con la app que elijas</string>
+    <string name="feedback_feature_hint">De forma anónima o con GitHub</string>
     <string name="crash_title">Ondea se cerró de forma inesperada</string>
     <string name="crash_text">Ayuda a solucionarlo: envía el informe técnico. No contiene datos de salud y puedes leerlo antes de enviarlo.</string>
     <string name="crash_report">Informar</string>
@@ -256,12 +256,9 @@
     <string name="report_how_title">¿Cómo quieres enviarlo?</string>
     <string name="feedback_no_health_data">Nunca añadas datos de salud. Ves todo el texto antes de enviarlo.</string>
     <string name="report_anonymous">Formulario anónimo</string>
-    <string name="report_anonymous_hint">Sin cuenta ni correo. Abre un formulario en tu navegador. Los informes son privados hasta que el responsable los revisa.</string>
+    <string name="report_anonymous_hint">Anónimo: sin cuenta ni correo. Abre un formulario en tu navegador. No se guarda nada sobre ti.</string>
     <string name="report_github">GitHub</string>
     <string name="report_github_hint">Con tu cuenta de GitHub. El informe es público.</string>
-    <string name="report_share">Compartir como texto</string>
-    <string name="report_share_hint">Envíalo con la app que elijas: Signal, correo, Matrix…</string>
-    <string name="report_share_title">Enviar el informe</string>
     <plurals name="period_late">
         <item quantity="one">La regla se retrasa %d día</item>
         <item quantity="many">La regla se retrasa %d días</item>

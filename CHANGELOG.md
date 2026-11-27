@@ -10,6 +10,7 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 - After a cycle with a sign, Ondea compares the day it learnt with your setting ("You set day 14. Ondea finds day 17") and lets you choose.
 - Ondea learns from every sign of a finished cycle (temperature, ovulation test or mucus peak), your usual low and high temperature, and your usual gap between mucus peak and ovulation.
 - Reports: a preview of the issue in the app and on the form, an option to include anonymised crash details, and Settings → My reports to follow the status of anonymous reports.
+- Reports: the anonymous form is now online (Scaleway, Paris).
 - Chart: phase bands (period, follicular, ovulation, luteal), your usual levels, the link between mucus peak and temperature rise, and the typical research curve with an explanation of each phase.
 
 ### Changed

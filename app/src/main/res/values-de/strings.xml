@@ -246,9 +246,9 @@
     <string name="data_tracking">Tracking: keines</string>
     <string name="data_stored">Nur auf diesem Telefon gespeichert, verschlüsselt. Jederzeit löschbar unter Einstellungen → Alle Daten löschen.</string>
     <string name="feedback_bug">Problem melden</string>
-    <string name="feedback_bug_hint">Anonym, mit GitHub oder mit einer App deiner Wahl</string>
+    <string name="feedback_bug_hint">Anonym oder mit GitHub</string>
     <string name="feedback_feature">Funktion vorschlagen</string>
-    <string name="feedback_feature_hint">Anonym, mit GitHub oder mit einer App deiner Wahl</string>
+    <string name="feedback_feature_hint">Anonym oder mit GitHub</string>
     <string name="crash_title">Ondea wurde unerwartet beendet</string>
     <string name="crash_text">Hilf bei der Behebung: Sende den technischen Bericht. Er enthält keine Gesundheitsdaten, und du kannst ihn vor dem Senden lesen.</string>
     <string name="crash_report">Melden</string>
@@ -256,12 +256,9 @@
     <string name="report_how_title">Wie möchtest du es senden?</string>
     <string name="feedback_no_health_data">Füge nie Gesundheitsdaten hinzu. Du siehst den ganzen Text, bevor etwas gesendet wird.</string>
     <string name="report_anonymous">Anonymes Formular</string>
-    <string name="report_anonymous_hint">Kein Konto, keine E-Mail. Öffnet ein Formular in deinem Browser. Berichte bleiben privat, bis der Betreuer sie gelesen hat.</string>
+    <string name="report_anonymous_hint">Anonym: kein Konto, keine E-Mail. Öffnet ein Formular in deinem Browser. Nichts über dich wird gespeichert.</string>
     <string name="report_github">GitHub</string>
     <string name="report_github_hint">Mit deinem GitHub-Konto. Der Bericht ist öffentlich.</string>
-    <string name="report_share">Als Text teilen</string>
-    <string name="report_share_hint">Sende ihn mit einer App deiner Wahl: Signal, E-Mail, Matrix …</string>
-    <string name="report_share_title">Bericht senden</string>
     <plurals name="period_late">
         <item quantity="one">Periode %d Tag überfällig</item>
         <item quantity="other">Periode %d Tage überfällig</item>

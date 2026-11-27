@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Code
-import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -50,7 +49,7 @@ import java.text.DateFormat
 import java.util.Date
 
 /**
- * How to send a report: anonymous form (when deployed), GitHub, or plain text through any app.
+ * How to send a report: anonymous form (when deployed) or GitHub.
  * A preview shows what the issue will contain. After a crash, [crash] holds the crash text: the user
  * chooses to include it, anonymised (error types and code lines only).
  */
@@ -58,7 +57,6 @@ import java.util.Date
 @Composable
 fun ReportSheet(kind: Feedback.Kind, crash: String? = null, onSent: () -> Unit, onDismiss: () -> Unit) {
     val context = LocalContext.current
-    val shareTitle = stringResource(R.string.report_share_title)
     var includeCrash by rememberSaveable { mutableStateOf(true) }
     val what = crash?.takeIf { includeCrash }?.let { "Crash report:\n```\n${CrashLog.anonymize(it)}\n```" }
     fun done() { onSent(); onDismiss() }
@@ -110,9 +108,6 @@ fun ReportSheet(kind: Feedback.Kind, crash: String? = null, onSent: () -> Unit, 
             }
             Option(Icons.Outlined.Code, stringResource(R.string.report_github), stringResource(R.string.report_github_hint)) {
                 Feedback.open(context, Feedback.githubUri(context, kind, what)); done()
-            }
-            Option(Icons.Outlined.Share, stringResource(R.string.report_share), stringResource(R.string.report_share_hint)) {
-                Feedback.share(context, kind, what, shareTitle); done()
             }
             Spacer(Modifier.height(12.dp))
         }
