@@ -339,4 +339,10 @@
     <string name="my_reports_empty">Noch kein anonymer Bericht.</string>
     <string name="my_reports_note">Tippe auf einen Bericht, um seinen Status im Browser zu sehen: erhalten, veröffentlicht mit öffentlichem Link, oder geschlossen.</string>
     <string name="my_reports_remove">Aus dieser Liste entfernen</string>
+    <string name="temperature_degrees">Grad</string>
+    <string name="temperature_tenths">Zehntelgrad</string>
+    <string name="temperature_hundredths">Hundertstelgrad</string>
+    <string name="temperature_type">Temperatur eintippen</string>
+    <string name="temperature_use_wheels">Räder verwenden</string>
+    <string name="temperature_remove">Diesen Wert löschen</string>
 </resources>

@@ -366,4 +366,10 @@
     <string name="my_reports_empty">No anonymous report yet.</string>
     <string name="my_reports_note">Tap a report to see its status in your browser: received, published with its public link, or closed.</string>
     <string name="my_reports_remove">Remove from this list</string>
+    <string name="temperature_degrees">Degrees</string>
+    <string name="temperature_tenths">Tenths of a degree</string>
+    <string name="temperature_hundredths">Hundredths of a degree</string>
+    <string name="temperature_type">Type the temperature</string>
+    <string name="temperature_use_wheels">Use the wheels</string>
+    <string name="temperature_remove">Remove this reading</string>
 </resources>

@@ -344,4 +344,10 @@
     <string name="my_reports_empty">Aucun rapport anonyme pour l\'instant.</string>
     <string name="my_reports_note">Touchez un rapport pour voir son état dans votre navigateur : reçu, publié avec son lien public, ou fermé.</string>
     <string name="my_reports_remove">Retirer de cette liste</string>
+    <string name="temperature_degrees">Degrés</string>
+    <string name="temperature_tenths">Dixièmes de degré</string>
+    <string name="temperature_hundredths">Centièmes de degré</string>
+    <string name="temperature_type">Saisir la température</string>
+    <string name="temperature_use_wheels">Utiliser les roues</string>
+    <string name="temperature_remove">Supprimer cette mesure</string>
 </resources>

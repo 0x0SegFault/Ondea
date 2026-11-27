@@ -344,4 +344,10 @@
     <string name="my_reports_empty">Aún no hay informes anónimos.</string>
     <string name="my_reports_note">Toca un informe para ver su estado en tu navegador: recibido, publicado con su enlace público o cerrado.</string>
     <string name="my_reports_remove">Quitar de esta lista</string>
+    <string name="temperature_degrees">Grados</string>
+    <string name="temperature_tenths">Décimas de grado</string>
+    <string name="temperature_hundredths">Centésimas de grado</string>
+    <string name="temperature_type">Escribir la temperatura</string>
+    <string name="temperature_use_wheels">Usar las ruedas</string>
+    <string name="temperature_remove">Borrar esta medida</string>
 </resources>
