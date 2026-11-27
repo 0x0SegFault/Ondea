@@ -166,6 +166,6 @@ private struct CurvePhase {
         CurvePhase(key: "phase_period", color: Palette.period, first: 0, last: 4),
         CurvePhase(key: "phase_follicular", color: Palette.fertile, first: 5, last: 12),
         CurvePhase(key: "phase_ovulation", color: Palette.ovulation, first: 13, last: 13),
-        CurvePhase(key: "phase_luteal", color: Palette.ovulation, first: 14, last: 27),
+        CurvePhase(key: "phase_luteal", color: Palette.ovulation, first: 14, last: 27)
     ]
 }
