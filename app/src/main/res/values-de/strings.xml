@@ -345,4 +345,11 @@
     <string name="temperature_type">Temperatur eintippen</string>
     <string name="temperature_use_wheels">Räder verwenden</string>
     <string name="temperature_remove">Diesen Wert löschen</string>
+    <string name="legend_typical">Typische Kurve</string>
+    <string name="intro_measure_title">So misst du</string>
+    <string name="intro_measure_text">Die Änderung nach dem Eisprung ist klein: etwa 0,2 bis 0,5 °C. Damit man sie sieht, müssen die Werte genau sein und jeden Tag gleich gemessen werden.</string>
+    <string name="intro_rule_thermometer">Ein Basalthermometer mit 2 Nachkommastellen (zum Beispiel 36,47 °C). Ein Fieberthermometer ist nicht genau genug.</string>
+    <string name="intro_rule_time">Jeden Morgen etwa zur gleichen Zeit (auf eine Stunde genau), direkt nach dem Aufwachen: bevor du aufstehst, sprichst, isst oder trinkst.</string>
+    <string name="intro_rule_sleep">Nach mindestens 3 Stunden Schlaf. Immer an derselben Stelle: Mund, Vagina oder After.</string>
+    <string name="intro_rule_disturbed">Markiere einen Wert als gestört nach Krankheit, Alkohol, einer kurzen oder unruhigen Nacht, einer Reise oder einer späten Messung. Ondea ignoriert ihn dann.</string>
 </resources>

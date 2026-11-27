@@ -350,4 +350,11 @@
     <string name="temperature_type">Saisir la température</string>
     <string name="temperature_use_wheels">Utiliser les roues</string>
     <string name="temperature_remove">Supprimer cette mesure</string>
+    <string name="legend_typical">Courbe type</string>
+    <string name="intro_measure_title">Comment mesurer</string>
+    <string name="intro_measure_text">Le changement après l\'ovulation est faible : environ 0,2 à 0,5 °C. Pour le voir, les mesures doivent être précises et prises de la même façon chaque jour.</string>
+    <string name="intro_rule_thermometer">Un thermomètre basal à 2 décimales (par exemple 36,47 °C). Un thermomètre médical classique n\'est pas assez précis.</string>
+    <string name="intro_rule_time">Chaque matin à peu près à la même heure (à une heure près), dès le réveil : avant de vous lever, parler, manger ou boire.</string>
+    <string name="intro_rule_sleep">Après au moins 3 heures de sommeil. Toujours au même endroit : bouche, vagin ou rectum.</string>
+    <string name="intro_rule_disturbed">Marquez une mesure comme perturbée après une maladie, de l\'alcool, une nuit courte ou agitée, un voyage ou une mesure tardive. Ondea l\'ignore alors.</string>
 </resources>

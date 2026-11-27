@@ -350,4 +350,11 @@
     <string name="temperature_type">Scrivi la temperatura</string>
     <string name="temperature_use_wheels">Usa le rotelle</string>
     <string name="temperature_remove">Elimina questa misura</string>
+    <string name="legend_typical">Curva tipica</string>
+    <string name="intro_measure_title">Come misurare</string>
+    <string name="intro_measure_text">La variazione dopo l\'ovulazione è piccola: circa 0,2–0,5 °C. Per vederla, le misure devono essere precise e prese sempre allo stesso modo.</string>
+    <string name="intro_rule_thermometer">Un termometro basale con 2 decimali (per esempio 36,47 °C). Un termometro per la febbre non è abbastanza preciso.</string>
+    <string name="intro_rule_time">Ogni mattina più o meno alla stessa ora (entro un\'ora), appena sveglia: prima di alzarti, parlare, mangiare o bere.</string>
+    <string name="intro_rule_sleep">Dopo almeno 3 ore di sonno. Sempre nello stesso punto: bocca, vagina o retto.</string>
+    <string name="intro_rule_disturbed">Segna una misura come disturbata dopo una malattia, alcol, una notte breve o agitata, un viaggio o una misura in ritardo. Ondea allora la ignora.</string>
 </resources>

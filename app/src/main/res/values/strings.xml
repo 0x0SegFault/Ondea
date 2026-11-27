@@ -372,4 +372,11 @@
     <string name="temperature_type">Type the temperature</string>
     <string name="temperature_use_wheels">Use the wheels</string>
     <string name="temperature_remove">Remove this reading</string>
+    <string name="legend_typical">Typical curve</string>
+    <string name="intro_measure_title">How to measure</string>
+    <string name="intro_measure_text">The change after ovulation is small: about 0.2 to 0.5 °C. To see it, the readings must be precise and taken the same way every day.</string>
+    <string name="intro_rule_thermometer">A basal thermometer with 2 decimals (for example 36.47 °C). A fever thermometer is not precise enough.</string>
+    <string name="intro_rule_time">Every morning at about the same time (within an hour), right after you wake up: before you get up, talk, eat or drink.</string>
+    <string name="intro_rule_sleep">After at least 3 hours of sleep. Always at the same place: mouth, vagina or rectum.</string>
+    <string name="intro_rule_disturbed">Mark a reading as disturbed after illness, alcohol, a short or broken night, travel or a late measurement. Ondea then ignores it.</string>
 </resources>

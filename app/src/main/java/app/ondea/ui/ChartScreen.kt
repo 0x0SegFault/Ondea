@@ -1,5 +1,7 @@
 package app.ondea.ui
 
+import androidx.compose.ui.graphics.StrokeCap
+
 import androidx.compose.material.icons.outlined.AutoGraph
 import androidx.compose.ui.res.pluralStringResource
 
@@ -114,6 +116,7 @@ fun ChartScreen(s: UiState.Ready) {
                 LegendItem(palette.fertile, stringResource(R.string.legend_fertile))
                 LegendItem(palette.ovulation, stringResource(R.string.legend_ovulation))
                 LegendItem(palette.disturbed, stringResource(R.string.legend_disturbed), ring = true)
+                if (chart.window != null) LegendItem(MaterialTheme.colorScheme.outline, stringResource(R.string.legend_typical))
             }
         }
 
@@ -227,6 +230,17 @@ private fun TemperatureChart(chart: ChartData, fahrenheit: Boolean) {
     val phases = if (window?.source?.firm == true) cyclePhases(periodDays, window.ovulationIndex, chart.days)
     else cyclePhases(periodDays, null, chart.days, follicularUntil = chart.todayIndex ?: (chart.days - 1))
     val profile = chart.profile
+    // The typical two-level curve, in grey behind the readings: the user's usual levels when known, else
+    // textbook values (low about 36.45 °C, about 0.35 °C higher after ovulation).
+    val typicalLow = profile?.lowC ?: 36.45
+    val typicalHigh = profile?.highC ?: (typicalLow + 0.35)
+    val typical: List<Double>? = window?.let { w ->
+        (0 until chart.days).map { d ->
+            val rise = ((d - w.ovulationIndex) / 2.0).coerceIn(0.0, 1.0)
+            Temperature.toDisplay(typicalLow + (typicalHigh - typicalLow) * rise, fahrenheit)
+        }
+    }
+    val typicalColor = MaterialTheme.colorScheme.outline
     val lowLabel = stringResource(R.string.profile_low)
     val highLabel = stringResource(R.string.profile_high)
 
@@ -294,7 +308,7 @@ private fun TemperatureChart(chart: ChartData, fahrenheit: Boolean) {
                             drawLine(line.copy(alpha = 0.35f), Offset(0f, y), Offset(size.width, y), 1.dp.toPx(),
                                 pathEffect = PathEffect.dashPathEffect(floatArrayOf(4f, 6f)))
                             val t = measurer.measure(label, labelStyle.copy(fontSize = 9.sp, color = line.copy(alpha = 0.8f)))
-                            drawText(t, topLeft = Offset(4.dp.toPx(), y - t.size.height - 1f))
+                            drawText(t, topLeft = Offset(size.width - t.size.width - 4.dp.toPx(), y - t.size.height - 1f))
                         }
                     }
                 }
@@ -322,6 +336,12 @@ private fun TemperatureChart(chart: ChartData, fahrenheit: Boolean) {
                         palette.ovulation.copy(alpha = 0.8f), Offset(0f, y), Offset(size.width, y),
                         strokeWidth = 1.5.dp.toPx(), pathEffect = PathEffect.dashPathEffect(floatArrayOf(14f, 10f)),
                     )
+                }
+
+                typical?.let { values ->
+                    val path = Path()
+                    values.forEachIndexed { i, v -> if (i == 0) path.moveTo(xOf(i), yOf(v)) else path.lineTo(xOf(i), yOf(v)) }
+                    drawPath(path, typicalColor.copy(alpha = 0.45f), style = Stroke(width = 6.dp.toPx(), cap = StrokeCap.Round))
                 }
 
                 // Line + soft gradient through valid readings; disturbed readings are not connected.

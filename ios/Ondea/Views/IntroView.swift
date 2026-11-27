@@ -6,7 +6,7 @@ struct IntroView: View {
     var replay = false
     let onDone: () -> Void
     @State private var page = 0
-    private let pages = 4
+    private let pages = 5
 
     var body: some View {
         VStack(spacing: 0) {
@@ -18,8 +18,9 @@ struct IntroView: View {
             TabView(selection: $page) {
                 ScrollView { whatPage.padding(20) }.tag(0)
                 ScrollView { recordPage.padding(20) }.tag(1)
-                ScrollView { chartPage.padding(20) }.tag(2)
-                ScrollView { helpPage.padding(20) }.tag(3)
+                ScrollView { measurePage.padding(20) }.tag(2)
+                ScrollView { chartPage.padding(20) }.tag(3)
+                ScrollView { helpPage.padding(20) }.tag(4)
             }
             .tabViewStyle(.page(indexDisplayMode: .always))
             .indexViewStyle(.page(backgroundDisplayMode: .always))
@@ -61,10 +62,22 @@ struct IntroView: View {
         }
     }
 
+    private var measurePage: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack { Spacer(); badge("thermometer.medium", Palette.ovulation); Spacer() }
+            Text(L10n.t("intro_measure_title")).font(.title2.bold()).frame(maxWidth: .infinity)
+            Text(L10n.t("intro_measure_text")).foregroundStyle(.secondary)
+            item("ruler", Palette.ovulation, "intro_rule_thermometer")
+            item("clock", Palette.fertile, "intro_rule_time")
+            item("bed.double", Palette.peak, "intro_rule_sleep")
+            item("exclamationmark.triangle", Palette.period, "intro_rule_disturbed")
+        }
+    }
+
     private var chartPage: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text(L10n.t("intro_chart_title")).font(.title2.bold()).frame(maxWidth: .infinity)
-            TypicalCurve().frame(height: 150)
+            TypicalCurve(showLevels: true).frame(height: 150)
             Text(L10n.t("intro_chart_text"))
             PhaseTexts()
         }
@@ -108,6 +121,7 @@ struct PhaseTexts: View {
 
 /// The textbook basal temperature curve of a 28-day cycle (illustration, not data).
 struct TypicalCurve: View {
+    var showLevels = false
     private let wiggle: [Double] = [0, 3, -2, 1, -1, 2, -3, 1, 0, -2, 2, -1, 1, -4, 4, 6, 8, 7, 9, 8, 6, 9, 7, 8, 6, 7, 5, 3]
 
     var body: some View {
@@ -147,6 +161,13 @@ struct TypicalCurve: View {
             if day == 0 { curve.move(to: point) } else { curve.addLine(to: point) }
         }
         context.stroke(curve, with: .color(Palette.rose), lineWidth: 2)
+        if showLevels {
+            // Example values, so the user sees how small the change is: a few tenths of a degree.
+            let low = Text("36.40 °C").font(.system(size: 10)).foregroundColor(.secondary)
+            let high = Text("36.80 °C").font(.system(size: 10)).foregroundColor(.secondary)
+            context.draw(low, at: CGPoint(x: 13.5 * dayWidth, y: yOf(36.40) + 10), anchor: .trailing)
+            context.draw(high, at: CGPoint(x: size.width, y: yOf(36.80) + 10), anchor: .trailing)
+        }
         for day in 0..<28 {
             let point = CGPoint(x: (CGFloat(day) + 0.5) * dayWidth, y: yOf(value(day)))
             let dot = Path(ellipseIn: CGRect(x: point.x - 2.5, y: point.y - 2.5, width: 5, height: 5))

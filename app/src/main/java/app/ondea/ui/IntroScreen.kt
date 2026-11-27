@@ -22,6 +22,10 @@ import androidx.compose.material.icons.outlined.EditNote
 import androidx.compose.material.icons.outlined.Opacity
 import androidx.compose.material.icons.outlined.Thermostat
 import androidx.compose.material.icons.outlined.WaterDrop
+import androidx.compose.material.icons.outlined.Bedtime
+import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material.icons.outlined.Straighten
+import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +50,7 @@ import androidx.compose.ui.window.DialogProperties
 import app.ondea.R
 import app.ondea.ui.theme.CycleColors
 
-private const val PAGES = 4
+private const val PAGES = 5
 
 /**
  * A short tour before the setup: what Ondea is, what to record, the temperature chart, how Ondea helps.
@@ -80,8 +84,17 @@ fun IntroScreen(onDone: () -> Unit, replay: Boolean = false) {
                     Item(Icons.Outlined.EditNote, palette.fertile, R.string.intro_record_other)
                 }
                 2 -> {
+                    Badge(Icons.Outlined.Thermostat, palette.ovulation)
+                    Title(R.string.intro_measure_title)
+                    Body(R.string.intro_measure_text)
+                    Item(Icons.Outlined.Straighten, palette.ovulation, R.string.intro_rule_thermometer)
+                    Item(Icons.Outlined.Schedule, palette.fertile, R.string.intro_rule_time)
+                    Item(Icons.Outlined.Bedtime, palette.mucus, R.string.intro_rule_sleep)
+                    Item(Icons.Outlined.WarningAmber, palette.period, R.string.intro_rule_disturbed)
+                }
+                3 -> {
                     Title(R.string.intro_chart_title)
-                    TypicalCurve()
+                    TypicalCurve(showLevels = true)
                     Body(R.string.intro_chart_text)
                     PhaseTexts()
                 }

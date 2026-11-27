@@ -71,7 +71,7 @@ fun DrawScope.drawPhases(phases: List<Phase>, dayWidth: Float, top: Float, heigh
  * day 14, then a higher level until the next period. Used to explain the chart.
  */
 @Composable
-fun TypicalCurve(modifier: Modifier = Modifier) {
+fun TypicalCurve(modifier: Modifier = Modifier, showLevels: Boolean = false) {
     val palette = CycleColors.current
     val measurer = rememberTextMeasurer()
     val line = MaterialTheme.colorScheme.primary
@@ -97,6 +97,14 @@ fun TypicalCurve(modifier: Modifier = Modifier) {
         val path = Path()
         values.forEachIndexed { d, v -> val p = Offset((d + 0.5f) * dw, y(v)); if (d == 0) path.moveTo(p.x, p.y) else path.lineTo(p.x, p.y) }
         drawPath(path, line, style = Stroke(2.dp.toPx()))
+        if (showLevels) {
+            // Example values, so the user sees how small the change is: a few tenths of a degree.
+            listOf(36.40 to "36.40 °C", 36.80 to "36.80 °C").forEach { (v, label) ->
+                val t = measurer.measure(label, style.copy(fontSize = 10.sp))
+                val x = if (v < 36.6) 13.5f * dw - t.size.width - 6.dp.toPx() else size.width - t.size.width
+                drawText(t, topLeft = Offset(x, y(v) + 4.dp.toPx()))
+            }
+        }
         values.forEachIndexed { d, v -> drawCircle(if (d >= 14) palette.ovulation else line, 2.5.dp.toPx(), Offset((d + 0.5f) * dw, y(v))) }
     }
 }

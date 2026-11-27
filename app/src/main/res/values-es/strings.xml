@@ -350,4 +350,11 @@
     <string name="temperature_type">Escribir la temperatura</string>
     <string name="temperature_use_wheels">Usar las ruedas</string>
     <string name="temperature_remove">Borrar esta medida</string>
+    <string name="legend_typical">Curva típica</string>
+    <string name="intro_measure_title">Cómo medir</string>
+    <string name="intro_measure_text">El cambio tras la ovulación es pequeño: unos 0,2 a 0,5 °C. Para verlo, las medidas deben ser precisas y tomarse igual cada día.</string>
+    <string name="intro_rule_thermometer">Un termómetro basal con 2 decimales (por ejemplo 36,47 °C). Un termómetro de fiebre no es lo bastante preciso.</string>
+    <string name="intro_rule_time">Cada mañana más o menos a la misma hora (con una hora de margen), nada más despertar: antes de levantarte, hablar, comer o beber.</string>
+    <string name="intro_rule_sleep">Tras al menos 3 horas de sueño. Siempre en el mismo sitio: boca, vagina o recto.</string>
+    <string name="intro_rule_disturbed">Marca una medida como alterada tras una enfermedad, alcohol, una noche corta o agitada, un viaje o una medida tardía. Ondea la ignora entonces.</string>
 </resources>
