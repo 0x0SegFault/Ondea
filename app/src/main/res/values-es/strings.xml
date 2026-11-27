@@ -158,7 +158,7 @@
     <string name="erase">Borrar</string>
     <string name="erase_confirm">Todas tus anotaciones y ajustes se eliminarán definitivamente de este teléfono. Las copias de seguridad guardadas en otro lugar no se verán afectadas.</string>
     <string name="section_about">Acerca de</string>
-    <string name="about_text">Ondea es software libre y de código abierto (GPL-3.0). Sin cuenta, sin anuncios, sin rastreo, sin internet.</string>
+    <string name="about_text">Ondea es software libre y de código abierto (EUPL-1.2). Sin cuenta, sin anuncios, sin rastreo, sin internet.</string>
     <string name="about_science">Métodos: subida de temperatura (regla de 3 sobre 6) y doble control con el moco cervical, tal como los utiliza el método sintotérmico (Sensiplan; Frank-Herrmann et al., Human Reproduction 2007). Probabilidad de concepción por día: Wilcox et al., NEJM 1995.</string>
     <string name="disclaimer_full">Ondea te ayuda a entender tu ciclo y a identificar tus días más fértiles. No es un producto sanitario y no debe usarse como método anticonceptivo. Consulta a un profesional sanitario para cualquier consejo médico.</string>
     <string name="msg_saved">Guardado</string>
