@@ -25,4 +25,4 @@ Run the app with the launch argument `--demo-data` to see sample cycles (not sav
 
 ## CI
 
-[`ios.yml`](../.github/workflows/ios.yml) builds and tests on a macOS runner and publishes the build log and simulator screenshots to the [`ios-preview`](https://github.com/0x0SegFault/ondea/releases/tag/ios-preview) release.
+[`ios.yml`](../.github/workflows/ios.yml) builds and tests on a macOS runner. The build log and simulator screenshots are kept with each run for 14 days (Actions → the run → Artifacts).
