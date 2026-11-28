@@ -195,4 +195,14 @@ class LearningTest {
         val entries = period() + (6..14).map { entry(it, temp = 36.40) } + (15..18).map { entry(it, temp = 36.65) }
         assertNull(engine(18, entries).signsCheck())
     }
+
+    @Test
+    fun aRiseAfterTheMucusPeakIsShownNotAwaited() {
+        // Peak on day 12, first high reading on day 16 (today): not confirmed yet.
+        val entries = period() + (6..15).map { entry(it, temp = 36.40, mucus = if (it == 12) 4 else if (it == 13) 2 else 0) } +
+            entry(16, temp = 36.62)
+        val status = engine(16, entries).todayStatus()!!
+        assertEquals(Detail.TEMP_RISING, status.detail)
+        assertEquals(1, status.detailNumber)
+    }
 }

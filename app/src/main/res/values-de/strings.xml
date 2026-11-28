@@ -160,7 +160,7 @@
     <string name="section_about">Über</string>
     <string name="about_text">Ondea ist freie Open-Source-Software (EUPL-1.2). Kein Konto, keine Werbung, kein Tracking, kein Internet.</string>
     <string name="about_science">Methoden: Temperaturanstieg (3-über-6-Regel) und doppelte Kontrolle durch den Zervixschleim nach der symptothermalen Methode (Sensiplan; Frank-Herrmann et al., Human Reproduction 2007). Empfängniswahrscheinlichkeit je Tag: Wilcox et al., NEJM 1995.</string>
-    <string name="disclaimer_full">Ondea hilft dir, deinen Zyklus zu verstehen und deine fruchtbarsten Tage zu finden. Es ist kein Medizinprodukt und darf nicht zur Verhütung verwendet werden. Wende dich für medizinischen Rat an medizinisches Fachpersonal.</string>
+    <string name="disclaimer_full">Ondea hilft dir, deinen Zyklus zu verstehen und deine fruchtbarsten Tage zu finden. Es ist kein Medizinprodukt und dient nicht der Diagnose, Behandlung, Heilung oder Vorbeugung von Krankheiten. Es darf nicht zur Verhütung verwendet werden. Wende dich für medizinischen Rat, Diagnose oder Behandlung an medizinisches Fachpersonal.</string>
     <string name="msg_saved">Gespeichert</string>
     <string name="msg_save_failed">Speichern fehlgeschlagen</string>
     <string name="msg_cycle_started">Neuer Zyklus gestartet</string>

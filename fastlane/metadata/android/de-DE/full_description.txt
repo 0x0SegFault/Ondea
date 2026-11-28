@@ -1,24 +1,27 @@
-<p>Ondea hilft dir, deine fruchtbaren Tage zu finden und den Eisprung anhand deiner Basaltemperatur und deines Zervixschleims zu bestätigen. Gedacht für alle mit Kinderwunsch.</p>
+<p>Ondea ist ein Perioden- und Eisprungrechner für Menschen mit Kinderwunsch. Es nutzt deine Morgentemperatur (Basaltemperatur) und deinen Zervixschleim, um deine fruchtbaren Tage zu zeigen und den Eisprung zu bestätigen.</p>
 
-<p><b>Einfache tägliche Eingabe:</b> Trage deine Morgentemperatur in wenigen Sekunden ein, dazu Periode, Zervixschleim, Geschlechtsverkehr und Notizen.</p>
+<p><b>Schnelle tägliche Eingabe:</b> Stelle deine Temperatur auf 0,01 °C genau ein, mit einem Rad pro Ziffer, oder tippe sie ein. Periode, Zervixschleim, Ovulationstests, Geschlechtsverkehr und Notizen mit einem Tipp.</p>
 
-<p><b>Wissenschaftlich fundiert:</b> Ondea bestätigt den Eisprung mit der 3-über-6-Regel und der doppelten Kontrolle durch den Zervixschleim nach der symptothermalen Methode (Sensiplan). Vorher sagt die App dein fruchtbares Fenster aus deinen eigenen Zyklen voraus und zeigt deine Empfängniswahrscheinlichkeit je Tag (Wilcox et al., NEJM 1995).</p>
-
+<p><b>Lernt Tag für Tag:</b></p>
 <ul>
-<li>Zyklusring, Temperaturkurve und Kalender</li>
-<li>Vorhersage der nächsten Periode und Hinweis bei Verspätung</li>
-<li>Einstellbarer üblicher Eisprungtag</li>
-<li>Diskrete tägliche Erinnerung</li>
-<li>°C und °F; Deutsch, Englisch, Französisch, Spanisch und Italienisch</li>
+<li>Vor jedem Zeichen nutzt die Vorhersage deinen Eisprungtag oder einen typischen Zyklus.</li>
+<li>Fruchtbarer Schleim oder eine erste hohe Temperatur verschiebt die Schätzung des laufenden Zyklus.</li>
+<li>„Passen deine Zeichen zusammen?“ vergleicht Temperatur und Schleim und bittet dich, gestörte Messungen zu prüfen, wenn sie nicht zusammenpassen.</li>
+<li>Nach einem Zyklus zeigt Ondea, worauf deine Zeichen hinweisen, und schlägt einen neuen Eisprungtag vor. Nur du änderst ihn.</li>
 </ul>
+
+<p><b>Sieh deinen Zyklus:</b> Zyklusring, Temperaturkurve mit Phasen und typischer Kurve, Kalender, nächste Periode und Empfängnischance pro Tag. Eine kurze Tour erklärt das Messen und das Lesen der Kurve.</p>
+
+<p><b>Auf veröffentlichten Studien aufgebaut:</b> Jede Regel und ihre Quelle stehen in der App (Einstellungen → Wissenschaft und Quellen).</p>
 
 <p><b>Privat von Grund auf:</b></p>
 <ul>
-<li>Keine Internetberechtigung, kein Konto, keine Werbung, keine Tracker</li>
-<li>Funktioniert ohne Google-Play-Dienste</li>
-<li>Daten auf dem Gerät verschlüsselt, Schlüssel im Android-Keystore</li>
-<li>App-Sperre per Fingerabdruck oder PIN, Screenshots blockiert</li>
-<li>Passwortverschlüsselte Sicherungen, speicherbar wo du willst (Proton Drive, Nextcloud …)</li>
+<li>Kein Internetzugang, kein Konto, keine Werbung, keine Tracker</li>
+<li>Funktioniert ohne Google Play-Dienste</li>
+<li>Daten verschlüsselt auf dem Telefon</li>
+<li>Optionale App-Sperre mit Fingerabdruck, Gesicht oder Displaysperre; Screenshots blockiert</li>
+<li>Mit deinem Passwort verschlüsselte Backups; Export als Tabelle (CSV)</li>
+<li>Englisch, Französisch, Deutsch, Spanisch und Italienisch; °C und °F</li>
 </ul>
 
-<p>Ondea ist kein Verhütungsmittel und kein Medizinprodukt.</p>
+<p>Ondea ist kein Medizinprodukt und dient nicht der Diagnose, Behandlung, Heilung oder Vorbeugung von Krankheiten. Es ist kein Verhütungsmittel. Wende dich für medizinischen Rat, Diagnose oder Behandlung an medizinisches Fachpersonal.</p>

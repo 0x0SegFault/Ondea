@@ -13,7 +13,6 @@ Wissenschaftlich fundiert: Ondea bestätigt den Eisprung mit der 3-über-6-Regel
 Privat von Grund auf:
 
 • Keine Internetberechtigung, kein Konto, keine Werbung, keine Tracker
-• Funktioniert ohne Google-Play-Dienste
 • Daten auf dem Gerät verschlüsselt, Schlüssel im Android-Keystore
 • App-Sperre per Fingerabdruck oder PIN, Screenshots blockiert
 • Passwortverschlüsselte Sicherungen, speicherbar wo du willst (Proton Drive, Nextcloud …)

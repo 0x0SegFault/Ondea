@@ -99,6 +99,9 @@ fun CycleEngine.todayStatus(): TodayStatus? {
             when {
                 f.ovulationSource == OvulationSource.TEMP_RISING ->
                     status(StatusTone.PEAK, Headline.PEAK_FERTILITY, 0, Detail.TEMP_RISING, f.risingDays, f.ovulation)
+                // After a mucus peak, a rise that has started is news: say it instead of "waiting for the rise".
+                f.ovulationSource == OvulationSource.MUCUS && f.risingDays > 0 ->
+                    status(tone, headline, 0, Detail.TEMP_RISING, f.risingDays, f.ovulation)
                 f.ovulationSource == OvulationSource.MUCUS_SIGN ->
                     if (f.ovulation == f.plannedOvulation) status(tone, headline, 0, Detail.MUCUS_SUGGESTS, null, f.ovulation)
                     else status(tone, headline, 0, Detail.MUCUS_MOVED, null, f.ovulation, f.plannedOvulation)
@@ -114,6 +117,7 @@ fun CycleEngine.todayStatus(): TodayStatus? {
         }
         today.isBefore(f.fertileStart) ->
             status(StatusTone.NEUTRAL, Headline.FERTILE_IN, daysBetween(today, f.fertileStart), Detail.OVULATION_EXPECTED, null, f.ovulation)
+        f.risingDays > 0 -> status(StatusTone.NEUTRAL, Headline.WAITING_FOR_SHIFT, 0, Detail.TEMP_RISING, f.risingDays, f.ovulation)
         else -> status(StatusTone.NEUTRAL, Headline.WAITING_FOR_SHIFT, 0, Detail.WAITING_FOR_SHIFT)
     }
 }

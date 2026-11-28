@@ -1,24 +1,27 @@
-<p>Ondea vous aide à repérer vos jours fertiles et à confirmer l'ovulation à partir de votre température basale et de votre glaire cervicale. Pensée pour les personnes qui souhaitent concevoir.</p>
+<p>Ondea est un suivi des règles et de l'ovulation pour les personnes qui souhaitent concevoir. Il utilise votre température du matin (basale) et votre glaire cervicale pour montrer vos jours fertiles et confirmer l'ovulation.</p>
 
-<p><b>Suivi quotidien simple :</b> notez votre température du matin en quelques secondes, ainsi que vos règles, votre glaire cervicale, vos rapports et des notes.</p>
+<p><b>Saisie rapide chaque jour :</b> réglez votre température au 0,01 °C avec une roue par chiffre, ou tapez-la. Notez vos règles, votre glaire, vos tests d'ovulation, vos rapports et des notes d'un seul geste.</p>
 
-<p><b>Fondée sur la science :</b> Ondea confirme l'ovulation avec la règle des « 3 sur 6 » et le double contrôle par la glaire de la méthode symptothermique (Sensiplan). Avant cela, elle prévoit votre période fertile d'après vos propres cycles et affiche vos chances de concevoir selon le jour (Wilcox et al., NEJM 1995).</p>
-
+<p><b>Apprend jour après jour :</b></p>
 <ul>
-<li>Anneau du cycle, courbe de température et calendrier</li>
-<li>Prévision des prochaines règles et alerte en cas de retard</li>
-<li>Jour d'ovulation habituel réglable</li>
-<li>Rappel quotidien discret</li>
-<li>°C et °F ; français, anglais, allemand, espagnol et italien</li>
+<li>Avant tout signe, la prévision utilise le jour d'ovulation que vous avez choisi, ou un cycle type.</li>
+<li>Une glaire fertile ou une première température haute déplace l'estimation du cycle en cours.</li>
+<li>« Vos signes concordent-ils ? » compare votre température et votre glaire, et vous invite à vérifier les mesures perturbées s'ils ne concordent pas.</li>
+<li>Après un cycle, Ondea montre ce qu'indiquent vos signes et propose un nouveau jour d'ovulation. Il ne change que si vous le changez.</li>
 </ul>
 
-<p><b>Confidentielle par conception :</b></p>
+<p><b>Voyez votre cycle :</b> anneau du cycle, graphique de température avec les phases et la courbe type, calendrier, prochaines règles et chance de conception par jour. Une courte visite explique comment mesurer et lire le graphique.</p>
+
+<p><b>Fondé sur des études publiées :</b> chaque règle et sa source sont dans l'application (Réglages → Science et sources).</p>
+
+<p><b>Privé par conception :</b></p>
 <ul>
-<li>Aucune autorisation internet, aucun compte, aucune publicité, aucun pisteur</li>
+<li>Pas d'accès à internet, pas de compte, pas de publicité, pas de pisteurs</li>
 <li>Fonctionne sans les services Google Play</li>
-<li>Données chiffrées sur l'appareil avec une clé protégée par le Keystore Android</li>
-<li>Verrouillage par empreinte ou code, captures d'écran bloquées</li>
-<li>Sauvegardes chiffrées par mot de passe, à enregistrer où vous voulez (Proton Drive, Nextcloud…)</li>
+<li>Données chiffrées sur le téléphone</li>
+<li>Verrouillage facultatif par empreinte, visage ou verrouillage de l'écran ; captures d'écran bloquées</li>
+<li>Sauvegardes chiffrées avec votre mot de passe ; export en tableur (CSV)</li>
+<li>Anglais, français, allemand, espagnol et italien ; °C et °F</li>
 </ul>
 
-<p>Ondea n'est pas un moyen de contraception ni un dispositif médical.</p>
+<p>Ondea n'est pas un dispositif médical et ne diagnostique, ne traite, ne guérit ni ne prévient aucune maladie. Ce n'est pas un moyen de contraception. Consultez un professionnel de santé pour tout avis médical, diagnostic ou traitement.</p>

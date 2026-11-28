@@ -1,6 +1,6 @@
 # Releasing Ondea
 
-This page is for maintainers. For Google Play and the App Store, see [STORES.md](STORES.md).
+This page is for maintainers.
 
 ## How a release works
 
@@ -10,7 +10,7 @@ A tag `vX.Y.Z` starts the [release workflow](../.github/workflows/release.yml). 
 2. runs the tests and builds the release APK,
 3. signs it with the release key (GitHub environment `release`),
 4. fails if the APK asks for the `INTERNET` permission,
-5. publishes `ondea-X.Y.Z.apk`, its `.sha256` file, `ondea-X.Y.Z.aab` (for Google Play) and the changelog as a GitHub release.
+5. publishes `ondea-X.Y.Z.apk`, its `.sha256` file, `ondea-X.Y.Z.aab` and the changelog as a GitHub release.
 
 ## Make a new release
 
@@ -48,16 +48,6 @@ git clone --branch vX.Y.Z https://github.com/0x0SegFault/ondea.git && cd ondea
 ./gradlew assembleRelease            # without keystore.properties: unsigned APK
 apksigcopier compare ondea-X.Y.Z.apk --unsigned app/build/outputs/apk/release/app-release-unsigned.apk
 ```
-
-## F-Droid
-
-F-Droid accepts apps after 3 months of active development (Inclusion Policy, quality point 6). Planned submission: on or after 2027-02-21.
-
-1. In [`fdroid/io.github.x0x0segfault.ondea.yml`](../fdroid/io.github.x0x0segfault.ondea.yml), set the build entry to the latest release: `versionName`, `versionCode`, and `commit` (full hash: `git rev-list -n 1 vX.Y.Z`).
-2. Check the file with `fdroid lint` and `fdroid build -l io.github.x0x0segfault.ondea:<versionCode>` in a local copy of [fdroiddata](https://gitlab.com/fdroid/fdroiddata).
-3. Fork fdroiddata, add the file as `metadata/io.github.x0x0segfault.ondea.yml`, and open a merge request titled "New app: Ondea". Use the text in [`fdroid/merge-request.md`](../fdroid/merge-request.md).
-
-After inclusion, F-Droid finds new `v*` tags automatically.
 
 ## Known notices
 

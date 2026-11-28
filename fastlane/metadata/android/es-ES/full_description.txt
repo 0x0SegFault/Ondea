@@ -1,24 +1,27 @@
-<p>Ondea te ayuda a identificar tus días fértiles y a confirmar la ovulación a partir de tu temperatura basal y tu moco cervical. Pensada para quienes buscan un embarazo.</p>
+<p>Ondea es un seguimiento de la regla y la ovulación para personas que buscan un embarazo. Usa tu temperatura de la mañana (basal) y tu moco cervical para mostrar tus días fértiles y confirmar la ovulación.</p>
 
-<p><b>Registro diario sencillo:</b> anota tu temperatura matinal en segundos, además de la regla, el moco cervical, las relaciones sexuales y notas.</p>
+<p><b>Registro diario rápido:</b> ajusta tu temperatura al 0,01 °C con una rueda por dígito, o escríbela. Anota tu regla, tu moco cervical, tests de ovulación, relaciones y notas con un toque.</p>
 
-<p><b>Basada en la ciencia:</b> Ondea confirma la ovulación con la regla de «3 sobre 6» y el doble control del moco cervical del método sintotérmico (Sensiplan). Antes de eso, predice tu ventana fértil a partir de tus propios ciclos y muestra tu probabilidad de concebir según el día (Wilcox et al., NEJM 1995).</p>
-
+<p><b>Aprende día a día:</b></p>
 <ul>
-<li>Anillo del ciclo, gráfica de temperatura y calendario</li>
-<li>Previsión de la próxima regla y aviso de retraso</li>
-<li>Día de ovulación habitual configurable</li>
-<li>Recordatorio diario discreto</li>
-<li>°C y °F; español, inglés, francés, alemán e italiano</li>
+<li>Antes de cualquier signo, la previsión usa el día de ovulación que elegiste, o un ciclo típico.</li>
+<li>Un moco fértil o una primera temperatura alta mueve la estimación del ciclo actual.</li>
+<li>«¿Coinciden tus signos?» compara tu temperatura y tu moco, y te pide revisar las medidas alteradas si no coinciden.</li>
+<li>Tras un ciclo, Ondea muestra lo que indican tus signos y propone un nuevo día de ovulación. Solo tú lo cambias.</li>
 </ul>
 
-<p><b>Privada desde el diseño:</b></p>
+<p><b>Ve tu ciclo:</b> anillo del ciclo, gráfico de temperatura con las fases y la curva típica, calendario, próxima regla y probabilidad de concepción por día. Un breve recorrido explica cómo medir y cómo leer el gráfico.</p>
+
+<p><b>Basado en estudios publicados:</b> cada regla y su fuente están en la app (Ajustes → Ciencia y fuentes).</p>
+
+<p><b>Privado desde el diseño:</b></p>
 <ul>
-<li>Sin permiso de internet, sin cuenta, sin anuncios, sin rastreadores</li>
+<li>Sin acceso a internet, sin cuenta, sin anuncios, sin rastreadores</li>
 <li>Funciona sin los servicios de Google Play</li>
-<li>Datos cifrados en el dispositivo con una clave protegida por el Keystore de Android</li>
-<li>Bloqueo con huella o PIN y capturas de pantalla bloqueadas</li>
-<li>Copias de seguridad cifradas con contraseña, guárdalas donde quieras (Proton Drive, Nextcloud…)</li>
+<li>Datos cifrados en el teléfono</li>
+<li>Bloqueo opcional con huella, cara o bloqueo de pantalla; capturas de pantalla bloqueadas</li>
+<li>Copias cifradas con tu contraseña; exportación a hoja de cálculo (CSV)</li>
+<li>Inglés, francés, alemán, español e italiano; °C y °F</li>
 </ul>
 
-<p>Ondea no es un método anticonceptivo ni un producto sanitario.</p>
+<p>Ondea no es un producto sanitario y no diagnostica, trata, cura ni previene ninguna enfermedad. No es un método anticonceptivo. Consulta a un profesional sanitario para consejo médico, diagnóstico o tratamiento.</p>

@@ -1,1 +1,1 @@
-Private, offline ovulation tracker using basal body temperature & cervical mucus
+Private, offline period & ovulation tracker: basal temperature, cervical mucus

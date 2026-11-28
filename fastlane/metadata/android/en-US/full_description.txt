@@ -1,24 +1,27 @@
-<p>Ondea helps you find your fertile days and confirm ovulation from your basal body temperature (BBT) and cervical mucus. It is designed for people who are trying to conceive.</p>
+<p>Ondea is a period and ovulation tracker for people who are trying to conceive. It uses your morning (basal) body temperature and your cervical mucus to show your fertile days and to confirm ovulation.</p>
 
-<p><b>Easy daily tracking:</b> log your morning temperature in a few seconds, plus your period, cervical mucus, intercourse and notes.</p>
+<p><b>Quick daily entry:</b> set your temperature to 0.01 °C with one wheel per digit, or type it. Log your period, cervical mucus, ovulation tests, intercourse and notes with one tap.</p>
 
-<p><b>Science-based:</b> Ondea confirms ovulation with the "3 over 6" temperature rule and the cervical mucus double check of the symptothermal method (Sensiplan). Before that, it predicts your fertile window from your own cycles and shows your chance of conceiving by day (Wilcox et al., NEJM 1995).</p>
-
+<p><b>Learns day by day:</b></p>
 <ul>
-<li>Cycle ring, temperature chart and calendar</li>
-<li>Next period forecast and late-period notice</li>
-<li>Optional usual ovulation day</li>
-<li>Discreet daily reminder</li>
-<li>°C and °F; English, French, German, Spanish and Italian</li>
+<li>Before any sign, the forecast uses the ovulation day you set, or a typical cycle.</li>
+<li>Fertile mucus or a first high temperature moves the estimate of the current cycle.</li>
+<li>"Do your signs agree?" compares your temperature and your mucus, and asks you to check disturbed readings when they do not agree.</li>
+<li>After a cycle, Ondea shows what your signs point to and suggests a new ovulation day. Only you change it.</li>
 </ul>
+
+<p><b>See your cycle:</b> cycle ring, temperature chart with phases and the typical curve, calendar, next period and chance of conception per day. A short tour explains how to measure and how to read the chart.</p>
+
+<p><b>Based on published studies:</b> each rule and its source are listed in the app (Settings → Science and sources).</p>
 
 <p><b>Private by design:</b></p>
 <ul>
-<li>No internet permission, no account, no ads, no trackers</li>
+<li>No internet access, no account, no ads, no trackers</li>
 <li>Works without Google Play Services</li>
-<li>Data encrypted on the device with a key held by the Android Keystore</li>
-<li>App lock with fingerprint or PIN; screenshots blocked</li>
-<li>Password-encrypted backups you can save anywhere (Proton Drive, Nextcloud…)</li>
+<li>Data encrypted on the phone</li>
+<li>Optional app lock with fingerprint, face or screen lock; screenshots blocked</li>
+<li>Backups encrypted with your password; export to a spreadsheet (CSV)</li>
+<li>English, French, German, Spanish and Italian; °C and °F</li>
 </ul>
 
-<p>Ondea is not a contraceptive and not a medical device.</p>
+<p>Ondea is not a medical device and does not diagnose, treat, cure, or prevent any medical condition. It is not a contraceptive. Consult a healthcare professional for medical advice, diagnosis, or treatment.</p>

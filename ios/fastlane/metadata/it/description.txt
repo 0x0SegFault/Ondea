@@ -13,7 +13,6 @@ Basata sulla scienza: Ondea conferma l'ovulazione con la regola del «3 su 6» e
 Privata per progettazione:
 
 • Nessuna autorizzazione internet, nessun account, nessuna pubblicità, nessun tracker
-• Funziona senza i servizi Google Play
 • Dati crittografati sul dispositivo con una chiave protetta dal Keystore di Android
 • Blocco con impronta o PIN e screenshot bloccati
 • Backup crittografati con password, salvali dove vuoi (Proton Drive, Nextcloud…)
