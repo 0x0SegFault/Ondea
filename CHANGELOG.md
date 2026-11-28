@@ -4,6 +4,11 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 
 ## [Unreleased]
 
+### Changed
+- Today: after the mucus peak, a temperature rise that has started is shown ("high day 2 of 3") instead of "waiting for the rise".
+- About and store texts: the disclaimer now says Ondea is not a medical device and does not diagnose, treat, cure or prevent any medical condition, and asks you to consult a healthcare professional. Store texts describe Ondea as a period and ovulation tracker and list the new features.
+- README: new screenshots and how Ondea works.
+
 ## [1.4.0] – 2026-11-27
 
 ### Added
