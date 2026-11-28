@@ -26,6 +26,8 @@ const STYLE = `
   .note { color: var(--muted); font-size: .9rem; }
   pre { white-space: pre-wrap; word-break: break-word; background: var(--card); border: 1px solid var(--line);
     border-radius: 12px; padding: 12px; font-size: .85rem; }
+  .hint { margin: 4px 0 0; font-size: .85rem; color: var(--muted); min-height: 1.2em; }
+  [aria-invalid="true"] { border-color: var(--rose); outline: 2px solid var(--rose); }
   #status { margin-top: 16px; font-weight: 600; }
   a { color: var(--rose); }
 `;
@@ -49,7 +51,8 @@ function formPage(query = {}) {
   <h1>Ondea · anonymous report</h1>
   <p class="lead">Anonymous: no account, no email. Nothing about you is kept: not your IP address, not a cookie.
   Never write health data here.</p>
-  <form id="report">
+  <noscript><p class="note" style="font-weight:600">This form needs JavaScript. Turn it on for this page, or send the report with GitHub.</p></noscript>
+  <form id="report" novalidate>
     <label for="kind">Type</label>
     <select id="kind" name="kind">
       <option value="bug"${kind === 'bug' ? ' selected' : ''}>Problem</option>
@@ -57,8 +60,10 @@ function formPage(query = {}) {
     </select>
     <label for="title">Summary</label>
     <input id="title" name="title" maxlength="120" required minlength="5" value="${v('title', 120)}">
+    <p id="title-hint" class="hint"></p>
     <label for="details">Details</label>
     <textarea id="details" name="details" maxlength="5000" required minlength="10">${v('what', 5000)}</textarea>
+    <p id="details-hint" class="hint"></p>
     <div class="row">
       <div><label for="version">App version</label><input id="version" name="version" maxlength="40" value="${v('version', 40)}"></div>
       <div><label for="device">Phone</label><input id="device" name="device" maxlength="120" value="${v('device', 120)}"></div>
@@ -70,6 +75,7 @@ function formPage(query = {}) {
     <pre id="preview" data-footer="${escapeHtml(FOOTER)}"></pre>
     <button id="send" type="submit">Send</button>
     <p id="status" role="status" aria-live="polite"></p>
+    <pre id="log" hidden></pre>
     <p class="note">Before sending, your browser solves a small puzzle for a second or two. It stops spam without tracking you.</p>
   </form>
 </main>
@@ -79,6 +85,22 @@ function formPage(query = {}) {
 }
 
 const formScript = `'use strict';
+// Debug mode (?debug=1 in the address): each step is shown on the page. Nothing is sent or stored.
+const logBox = document.getElementById('log');
+const debug = new URLSearchParams(location.search).has('debug');
+const t0 = Date.now();
+function log(text) {
+  if (!debug) return;
+  logBox.hidden = false;
+  logBox.textContent += ((Date.now() - t0) / 1000).toFixed(1) + ' s  ' + text + '\\n';
+}
+window.addEventListener('error', (e) => {
+  log('Error: ' + e.message + ' (line ' + e.lineno + ')');
+  document.getElementById('status').textContent = 'Page error: ' + e.message;
+});
+window.addEventListener('unhandledrejection', (e) => log('Error: ' + (e.reason && e.reason.message || e.reason)));
+log('Script loaded. ' + navigator.userAgent);
+log('Address: ' + location.origin + location.pathname);
 const form = document.getElementById('report');
 const status = document.getElementById('status');
 const button = document.getElementById('send');
@@ -158,8 +180,33 @@ function show(text) {
   if (text) status.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
 
+// Summary and details need a minimum length. Each box says how much is missing, so nothing fails in silence.
+const RULES = [['title', 5, 'Summary'], ['details', 10, 'Details']];
+function missing(name, min) { return Math.max(0, min - form.elements[name].value.trim().length); }
+function updateHints() {
+  for (const [name, min] of RULES) {
+    const n = missing(name, min);
+    document.getElementById(name + '-hint').textContent = n ? 'At least ' + min + ' characters: ' + n + ' more.' : '';
+    if (!n) form.elements[name].removeAttribute('aria-invalid');
+  }
+}
+form.addEventListener('input', updateHints);
+updateHints();
+
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
+  log('Send pressed.');
+  for (const [name, min, label] of RULES) {
+    if (missing(name, min)) {
+      const field = form.elements[name];
+      field.setAttribute('aria-invalid', 'true');
+      show('Please write at least ' + min + ' characters in ' + label + '.');
+      field.focus();
+      field.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      log(label + ' too short.');
+      return;
+    }
+  }
   button.disabled = true;
   button.textContent = 'Checking…';
   show('');
@@ -167,14 +214,18 @@ form.addEventListener('submit', async (event) => {
     const answer = await fetch('challenge', { cache: 'no-store' });
     if (!answer.ok) throw new Error('challenge ' + answer.status);
     const challenge = await answer.json();
+    log('Puzzle received (HTTP ' + answer.status + ').');
+    const started = Date.now();
     const proof = await solve(challenge, (percent) => { button.textContent = 'Checking… ' + percent + ' %'; });
     button.textContent = 'Sending…';
     const data = Object.fromEntries(new FormData(form));
+    log('Puzzle solved in ' + ((Date.now() - started) / 1000).toFixed(1) + ' s.');
     const response = await fetch('report', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...data, proof }),
     });
+    log('Report answer: HTTP ' + response.status + '.');
     if (response.ok) {
       const code = form.elements.followUp.value;
       form.reset();
@@ -189,6 +240,7 @@ form.addEventListener('submit', async (event) => {
         : 'The report could not be sent. Please try again later. (' + (error || response.status) + ')');
     }
   } catch (e) {
+    log('Error: ' + (e && e.message || e));
     show('The report could not be sent. Check your connection and try again. (' + (e && e.message || 'error') + ')');
   } finally {
     button.disabled = false;
