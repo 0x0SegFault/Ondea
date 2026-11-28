@@ -4,6 +4,10 @@ All notable changes to Ondea are listed here. The format follows [Keep a Changel
 
 ## [Unreleased]
 
+### Changed
+- Today: after the mucus peak, a temperature rise that has started is shown ("high day 2 of 3") instead of "waiting for the rise".
+- About: Ondea is not a medical device and does not diagnose, treat, cure or prevent any medical condition. Consult a healthcare professional for medical advice.
+
 ## [1.4.0] – 2026-11-27
 
 ### Added

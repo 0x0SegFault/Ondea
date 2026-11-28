@@ -13,7 +13,6 @@ Fondée sur la science : Ondea confirme l'ovulation avec la règle des « 3 sur 
 Confidentielle par conception :
 
 • Aucune autorisation internet, aucun compte, aucune publicité, aucun pisteur
-• Fonctionne sans les services Google Play
 • Données chiffrées sur l'appareil avec une clé protégée par le Keystore Android
 • Verrouillage par empreinte ou code, captures d'écran bloquées
 • Sauvegardes chiffrées par mot de passe, à enregistrer où vous voulez (Proton Drive, Nextcloud…)

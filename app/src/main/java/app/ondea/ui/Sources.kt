@@ -49,7 +49,7 @@ private val SOURCES = listOf(
         R.string.src_erden2022, "10.1093/humupd/dmac012"),
     Source("McGovern PG et al. Absence of secretory endometrium after false-positive home urine luteinizing hormone testing. Fertil Steril 2004;82:1273–77.",
         R.string.src_mcgovern2004, "10.1016/j.fertnstert.2004.03.070"),
-    Source("Frank-Herrmann P et al. The effectiveness of a fertility awareness based method to avoid pregnancy… Hum Reprod 2007;22:1310–19.",
+    Source("Frank-Herrmann P et al. The effectiveness of a fertility awareness based method… Hum Reprod 2007;22:1310–19.",
         R.string.src_frank2007, "10.1093/humrep/dem003"),
     Source("Fehring RJ, Schneider M, Raviele K. Variability in the phases of the menstrual cycle. J Obstet Gynecol Neonatal Nurs 2006;35:376–84.",
         R.string.src_fehring2006, "10.1111/j.1552-6909.2006.00051.x"),

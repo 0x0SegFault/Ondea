@@ -13,7 +13,6 @@ Science-based: Ondea confirms ovulation with the "3 over 6" temperature rule and
 Private by design:
 
 • No internet permission, no account, no ads, no trackers
-• Works without Google Play Services
 • Data encrypted on the device with a key held by the Android Keystore
 • App lock with fingerprint or PIN; screenshots blocked
 • Password-encrypted backups you can save anywhere (Proton Drive, Nextcloud…)
